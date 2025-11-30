@@ -15,6 +15,6 @@ public class Student {
     @Column(nullable = false)
     private String lastName;
     @JoinColumn(name = "group_id")
-    @ManyToOne
+    @OneToOne
     private Groups group;
 }
