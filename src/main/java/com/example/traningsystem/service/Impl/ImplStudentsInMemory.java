@@ -1,14 +1,16 @@
-package com.example.traningsystem.service;
+package com.example.traningsystem.service.Impl;
 
 import com.example.traningsystem.model.Student;
 import com.example.traningsystem.dao.StudentsDao;
+import com.example.traningsystem.service.ServiceStudent;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @AllArgsConstructor
 @Service
-public class ImplStudentsInMemory implements ServiceStudent{
+public class ImplStudentsInMemory implements ServiceStudent {
 
     private final StudentsDao repository;
 
@@ -24,17 +26,23 @@ public class ImplStudentsInMemory implements ServiceStudent{
 
     @Override
     public Student updateStudent(Student student) {
-        return repository.updateStudent(student);
+        Student studentById = findStudentById(student.getId());
+        if (studentById != null) {
+            studentById.setFirstName(student.getFirstName());
+            studentById.setLastName(student.getLastName());
+            return student;
+        }
+        throw new NullPointerException("Student with id " + student.getId() + " not found");
     }
 
     @Override
-    public void deleteStudent(Student student) {
-        repository.deleteStudent(student);
+    public void deleteStudent(Integer id) {
+        repository.deleteStudent(id);
     }
 
     @Override
     public void mergeStudent(Student student) {
-
+        repository.margeStudent(student);
     }
 
     @Override

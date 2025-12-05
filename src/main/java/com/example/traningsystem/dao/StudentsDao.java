@@ -12,8 +12,6 @@ import java.util.List;
 @Repository
 public class StudentsDao {
     private final List<Student> STUDENTS = new ArrayList<>();
-    private final List<Groups> GROUPS = new ArrayList<>();
-
 
     public List<Student> findAllStudents() {
         return STUDENTS;
@@ -40,15 +38,18 @@ public class StudentsDao {
         } throw new NullPointerException("Student with id " + student.getId() + " not found");
     }
 
-    public void deleteStudent(Student student) {
-        Student studentById = findStudentById(student.getId());
+    public void deleteStudent(Integer id) {
+        Student studentById = findStudentById(id);
         if (studentById != null) {
             STUDENTS.remove(studentById);
         }
     }
 
-    public void margeStudent(Student student, Groups group) {
-        //TODO
-
+    public void margeStudent(Student student) {
+        Groups group = student.getGroup();
+        if (group != null) {
+            List<Student> students = group.getStudents();
+            students.add(student);
+        }
     }
 }

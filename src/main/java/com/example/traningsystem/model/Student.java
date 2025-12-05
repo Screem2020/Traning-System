@@ -9,12 +9,13 @@ import lombok.Data;
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @JoinColumn(name = "group_id")
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "groups_id")
     private Groups group;
 }
+
