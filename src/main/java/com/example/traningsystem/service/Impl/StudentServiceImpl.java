@@ -7,6 +7,7 @@ import com.example.traningsystem.service.ServiceStudent;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -27,7 +28,13 @@ public class StudentServiceImpl implements ServiceStudent {
 
     @Override
     public Student updateStudent(Student student) {
-        return repository.updateByStudent(student);
+        Student studentById = findStudentById(student.getId());
+        if (studentById != null) {
+            studentById.setFirstName(student.getFirstName());
+            studentById.setLastName(student.getLastName());
+            return student;
+        }
+        throw new NullPointerException("Student with id " + student.getId() + " not found");
     }
 
     @Override
