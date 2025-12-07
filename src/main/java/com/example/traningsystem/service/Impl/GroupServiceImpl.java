@@ -13,7 +13,7 @@ import java.util.List;
 @Primary
 @AllArgsConstructor
 @Service
-public class GroupService implements ServiceGroups {
+public class GroupServiceImpl implements ServiceGroups {
 
     private final GroupRepository repository;
 

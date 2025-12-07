@@ -29,7 +29,7 @@ public class StudentController {
     public void mergeStudentByGroup(@RequestBody Student student) {
         service.mergeStudent(student);
     }
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     public Student findStudentById(@PathVariable ("id") Integer id) {
         return service.findStudentById(id);
     }
