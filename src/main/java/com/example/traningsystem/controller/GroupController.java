@@ -28,7 +28,7 @@ public class GroupController {
         service.deleteGroup(id);
     }
     @PutMapping("update_group")
-    public Groups updateGroup(@RequestBody Integer id) {
-        return service.updateGroup(id);
+    public Groups updateGroup(@RequestBody Groups group) {
+        return service.updateGroup(group);
     }
 }

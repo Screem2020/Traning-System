@@ -36,10 +36,13 @@ public class GroupService implements ServiceGroups {
     }
 
     @Override
-    public Groups updateGroup(Integer id) {
-        Groups groupById = findGroupById(id);
-        groupById.setGroupName(groupById.getGroupName());
-        return repository.save(groupById);
+    public Groups updateGroup(Groups group) {
+        Groups groupById = findGroupById(group.getGroupId());
+        if (groupById != null) {
+            groupById.setGroupName(groupById.getGroupName());
+            groupById.setStudents(group.getStudents());
+            return repository.save(groupById);
+        } throw new NullPointerException("Group not found with id " + group.getGroupId());
     }
 
     @Override

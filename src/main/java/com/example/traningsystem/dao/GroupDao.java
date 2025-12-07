@@ -26,10 +26,14 @@ public class GroupDao {
                 .orElse(null);
     }
 
-    public Groups updateGroup(Integer id) {
-        Groups groupById = findGroupById(id);
-        groupById.setGroupName(groupById.getGroupName());
-        return groupById;
+    public Groups updateGroup(Groups group) {
+        Groups groupById = findGroupById(group.getGroupId());
+        if (Objects.nonNull(groupById)) {
+            groupById.setGroupName(group.getGroupName());
+            groupById.setStudents(group.getStudents());
+            return groupById;
+        }
+        throw new NullPointerException("Group not found with id " + group.getGroupId());
     }
 
     public List<Groups> findAllGroups() {

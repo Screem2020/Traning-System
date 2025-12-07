@@ -7,6 +7,6 @@ public interface ServiceGroups {
     void  addGroup(Groups group);
     void deleteGroup(java.lang.Integer id);
     Groups findGroupById(java.lang.Integer id);
-    Groups updateGroup(Integer id);
+    Groups updateGroup(Groups group);
     List<Groups> findAllGroups();
 }

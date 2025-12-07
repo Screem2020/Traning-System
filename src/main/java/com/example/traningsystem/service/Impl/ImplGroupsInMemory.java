@@ -29,8 +29,8 @@ public class ImplGroupsInMemory implements ServiceGroups {
     }
 
     @Override
-    public Groups updateGroup(Integer id) {
-        return repository.updateGroup(id);
+    public Groups updateGroup(Groups group) {
+        return repository.updateGroup(group);
     }
 
     @Override
