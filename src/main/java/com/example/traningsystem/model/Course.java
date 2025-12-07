@@ -12,7 +12,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id")
-    private Groups courseId;
+    private Integer courseId;
     @Column(nullable = false)
     private String name;
     @Column(nullable = false)

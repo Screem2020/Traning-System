@@ -10,7 +10,7 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teacher_id")
-    private Groups teacherId;
+    private Integer teacherId;
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
