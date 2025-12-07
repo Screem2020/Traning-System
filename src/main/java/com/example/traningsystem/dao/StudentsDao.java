@@ -4,7 +4,6 @@ import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.model.Student;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class StudentsDao {
         } throw new NullPointerException("Student with id " + student.getId() + " not found");
     }
 
-    public void deleteStudent(Integer id) {
+    public void deleteStudent(java.lang.Integer id) {
         Student studentById = findStudentById(id);
         if (studentById != null) {
             STUDENTS.remove(studentById);

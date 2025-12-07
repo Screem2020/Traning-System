@@ -19,18 +19,18 @@ public class ImplGroupsInMemory implements ServiceGroups {
     }
 
     @Override
-    public void deleteGroup(Integer id) {
+    public void deleteGroup(java.lang.Integer id) {
         repository.deleteGroup(id);
     }
 
     @Override
-    public Groups findGroupById(int id) {
+    public Groups findGroupById(java.lang.Integer id) {
         return repository.findGroupById(id);
     }
 
     @Override
-    public Groups updateGroup(Groups group) {
-        return repository.updateGroup(group);
+    public Groups updateGroup(Integer id) {
+        return repository.updateGroup(id);
     }
 
     @Override

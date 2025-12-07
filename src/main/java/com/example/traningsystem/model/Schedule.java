@@ -11,7 +11,7 @@ import java.util.List;
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer scheduleId;
+    private java.lang.Integer scheduleId;
     @OneToMany(mappedBy = "schedule")
     private List<Groups> groups;
     @OneToMany(mappedBy = "schedule")

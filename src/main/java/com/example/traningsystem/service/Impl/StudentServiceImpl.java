@@ -38,14 +38,13 @@ public class StudentServiceImpl implements ServiceStudent {
     }
 
     @Override
-    public void deleteStudent(Integer id) {
+    public void deleteStudent(Groups id) {
         repository.deleteById(id);
     }
 
     @Override
     public void mergeStudent(Student student) {
-        Groups group = student.getGroup();
-        group.getStudents().add(student);
+
     }
 
     @Override

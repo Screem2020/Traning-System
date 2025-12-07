@@ -16,7 +16,7 @@ public class GroupController {
         service.addGroup(group);
     }
     @GetMapping("/{id}")
-    public  Groups findGroupById(@PathVariable Integer id) {
+    public Groups findGroupById(@PathVariable java.lang.Integer id) {
         return service.findGroupById(id);
     }
     @GetMapping()
@@ -24,11 +24,11 @@ public class GroupController {
         return service.findAllGroups();
     }
     @DeleteMapping("DELETE /groups/{id}")
-    public void deleteGroup(@RequestBody Integer id) {
+    public void deleteGroup(@RequestBody java.lang.Integer id) {
         service.deleteGroup(id);
     }
     @PutMapping("update_group")
-    public Groups updateGroup(@RequestBody Groups group) {
-        return service.updateGroup(group);
+    public Groups updateGroup(@RequestBody Integer id) {
+        return service.updateGroup(id);
     }
 }
