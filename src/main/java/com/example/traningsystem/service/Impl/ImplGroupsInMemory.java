@@ -1,6 +1,6 @@
 package com.example.traningsystem.service.Impl;
 
-import com.example.traningsystem.dao.GroupDao;
+import com.example.traningsystem.dao.memory.GroupDao;
 import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.service.ServiceGroups;
 import lombok.AllArgsConstructor;

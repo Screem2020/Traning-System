@@ -1,6 +1,6 @@
 package com.example.traningsystem.service.Impl;
 
-import com.example.traningsystem.dao.TeacherDao;
+import com.example.traningsystem.dao.memory.TeacherDao;
 import com.example.traningsystem.model.Teacher;
 import com.example.traningsystem.service.ServiceTeacher;
 import lombok.AllArgsConstructor;

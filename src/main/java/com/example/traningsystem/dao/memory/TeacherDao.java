@@ -1,6 +1,5 @@
-package com.example.traningsystem.dao;
+package com.example.traningsystem.dao.memory;
 
-import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.model.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;

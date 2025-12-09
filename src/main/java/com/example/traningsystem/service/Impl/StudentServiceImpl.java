@@ -1,7 +1,6 @@
 package com.example.traningsystem.service.Impl;
 
 import com.example.traningsystem.dao.StudentRepository;
-import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.model.Student;
 import com.example.traningsystem.service.ServiceStudent;
 import lombok.AllArgsConstructor;
@@ -32,7 +31,7 @@ public class StudentServiceImpl implements ServiceStudent {
         if (studentById != null) {
             studentById.setFirstName(student.getFirstName());
             studentById.setLastName(student.getLastName());
-            return student;
+            return repository.save(studentById);
         }
         throw new NullPointerException("Student with id " + student.getId() + " not found");
     }

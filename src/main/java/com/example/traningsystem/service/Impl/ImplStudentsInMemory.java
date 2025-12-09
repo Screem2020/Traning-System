@@ -1,7 +1,7 @@
 package com.example.traningsystem.service.Impl;
 
 import com.example.traningsystem.model.Student;
-import com.example.traningsystem.dao.StudentsDao;
+import com.example.traningsystem.dao.memory.StudentsDao;
 import com.example.traningsystem.service.ServiceStudent;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
