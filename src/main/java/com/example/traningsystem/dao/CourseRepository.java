@@ -4,5 +4,5 @@ import com.example.traningsystem.model.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CourseRepository extends JpaRepository<Course,Integer> {
-    Course findCourseByCourseName(String courseName);
+    Course findCourseByName(String name);
 }

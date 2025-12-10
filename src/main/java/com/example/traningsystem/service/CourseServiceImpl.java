@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Primary
 @AllArgsConstructor
 @Service
@@ -27,8 +29,8 @@ public class CourseServiceImpl implements ServiceCourse {
     }
 
     @Override
-    public Course findCourseByName(String courseName) {
-        return repository.findCourseByCourseName(courseName);
+    public Course findCourseByName(String name) {
+        return repository.findCourseByName(name);
     }
 
     @Override
@@ -40,8 +42,7 @@ public class CourseServiceImpl implements ServiceCourse {
     }
 
     @Override
-    public void saveTeacher(Course course) {
-        Teacher teacher = course.getTeacher();
+    public void saveTeacher(Course course, Teacher teacher) {
         teacher.setFirstName(course.getTeacher().getFirstName());
         teacher.setLastName(course.getTeacher().getLastName());
         repository.save(course);
@@ -51,5 +52,10 @@ public class CourseServiceImpl implements ServiceCourse {
     @Override
     public Course findCourseById(Integer id) {
         return repository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
+    }
+
+    @Override
+    public List<Course> findAllCourses() {
+        return repository.findAll();
     }
 }

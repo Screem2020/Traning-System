@@ -11,23 +11,23 @@ import java.util.List;
 @AllArgsConstructor
 public class GroupController {
     public final ServiceGroups service;
-    @PostMapping("save_group")
+    @PostMapping("/save_group")
     public void saveGroup(@RequestBody Groups group) {
         service.addGroup(group);
     }
-    @GetMapping("/{id}")
-    public Groups findGroupById(@PathVariable java.lang.Integer id) {
+    @GetMapping("/find/{id}")
+    public Groups findGroupById(@PathVariable Integer id) {
         return service.findGroupById(id);
     }
     @GetMapping()
     public List<Groups> findAllGroups() {
         return service.findAllGroups();
     }
-    @DeleteMapping("DELETE /groups/{id}")
-    public void deleteGroup(@RequestBody java.lang.Integer id) {
+    @DeleteMapping("/delete_groups/{id}")
+    public void deleteGroup(@PathVariable Integer id) {
         service.deleteGroup(id);
     }
-    @PutMapping("update_group")
+    @PutMapping("/update/group")
     public Groups updateGroup(@RequestBody Groups group) {
         return service.updateGroup(group);
     }

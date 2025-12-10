@@ -35,9 +35,9 @@ public class CourseDao {
     }
 
     @SneakyThrows
-    public Course findCourseByName(String courseName) {
+    public Course findCourseByName(String name) {
         return COURSES.stream()
-                .filter(element -> element.getName().equals(courseName))
+                .filter(element -> element.getName().equals(name))
                 .findFirst()
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
     }
@@ -52,5 +52,9 @@ public class CourseDao {
     public void deleteCourseById(Integer id) {
         Course courseById = findCourseById(id);
         COURSES.remove(courseById);
+    }
+
+    public List<Course> findAllCourses() {
+        return COURSES;
     }
 }

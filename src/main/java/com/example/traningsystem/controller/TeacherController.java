@@ -11,7 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/teacher")
 public class TeacherController {
-    private ServiceTeacher service;
+
+    private final ServiceTeacher service;
 
     @GetMapping
     public List<Teacher> findAll() {
