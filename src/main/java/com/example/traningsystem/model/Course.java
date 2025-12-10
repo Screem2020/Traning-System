@@ -20,7 +20,7 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
-    @OneToMany(mappedBy = "course")
-    private List <Teacher> teacher;
+    @OneToOne(mappedBy = "course")
+    private Teacher teacher;
 
 }
