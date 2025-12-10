@@ -1,4 +1,4 @@
-package com.example.traningsystem.service.Impl;
+package com.example.traningsystem.service.Implmemory;
 
 import com.example.traningsystem.dao.memory.GroupDao;
 import com.example.traningsystem.model.Groups;

@@ -1,4 +1,4 @@
-package com.example.traningsystem.service.Impl;
+package com.example.traningsystem.service;
 
 import com.example.traningsystem.dao.TeacherRepository;
 import com.example.traningsystem.model.Teacher;

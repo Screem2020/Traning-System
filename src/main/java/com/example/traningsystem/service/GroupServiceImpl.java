@@ -1,8 +1,7 @@
-package com.example.traningsystem.service.Impl;
+package com.example.traningsystem.service;
 
 import com.example.traningsystem.dao.GroupRepository;
 import com.example.traningsystem.model.Groups;
-import com.example.traningsystem.service.ServiceGroups;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Primary;
