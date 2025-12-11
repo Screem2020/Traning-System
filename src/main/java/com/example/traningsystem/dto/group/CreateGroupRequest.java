@@ -5,8 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class GroupDto {
-    private Integer id;
+public class CreateGroupRequest {
+    private Integer groupId;
     private String groupName;
     private List<StudentDto> students;
 }

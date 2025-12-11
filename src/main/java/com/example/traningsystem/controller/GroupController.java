@@ -1,5 +1,6 @@
 package com.example.traningsystem.controller;
 
+import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.service.ServiceGroups;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 public class GroupController {
     public final ServiceGroups service;
     @PostMapping("/save_group")
-    public void saveGroup(@RequestBody Groups group) {
+    public void saveGroup(@RequestBody CreateGroupRequest group) {
         service.addGroup(group);
     }
     @GetMapping("/find/{id}")

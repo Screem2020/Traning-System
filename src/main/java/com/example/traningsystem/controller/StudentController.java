@@ -1,6 +1,8 @@
 package com.example.traningsystem.controller;
 
 import com.example.traningsystem.dto.student.CreateStudentRequest;
+import com.example.traningsystem.dto.student.MergeStudentRequest;
+import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.model.Student;
 import com.example.traningsystem.service.ServiceStudent;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,7 @@ public class StudentController {
         service.addStudent(student);
     }
     @PutMapping("/update")
-    public Student updateStudent(@RequestBody Student student) {
+    public Student updateStudent(@RequestBody CreateStudentRequest student) {
         return service.updateStudent(student);
     }
     @DeleteMapping("/delete_student/{id}")
@@ -27,7 +29,7 @@ public class StudentController {
         service.deleteStudent(id);
     }
     @PutMapping("/merge")
-    public void mergeStudentByGroup(@RequestBody Student student) {
+    public void mergeStudentByGroup(@RequestBody MergeStudentRequest student) {
         service.mergeStudent(student);
     }
     @GetMapping("/find/{id}")
@@ -35,7 +37,7 @@ public class StudentController {
         return service.findStudentById(id);
     }
     @GetMapping()
-    public List<Student> findAllStudents() {
+    public List<StudentDto> findAllStudents() {
         return service.findAllStudents();
     }
 }

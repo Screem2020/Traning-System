@@ -3,6 +3,9 @@ package com.example.traningsystem.service;
 import com.example.traningsystem.dao.GroupRepository;
 import com.example.traningsystem.dao.StudentRepository;
 import com.example.traningsystem.dto.student.CreateStudentRequest;
+import com.example.traningsystem.dto.student.MergeStudentRequest;
+import com.example.traningsystem.dto.student.StudentDto;
+import com.example.traningsystem.dto.student.StudentMapperToEntity;
 import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
@@ -19,8 +22,11 @@ public class StudentServiceImpl implements ServiceStudent {
     private final GroupRepository groupRepository;
 
     @Override
-    public List<Student> findAllStudents() {
-        return repository.findAll();
+    public List<StudentDto> findAllStudents() {
+        return repository.findAll()
+                .stream()
+                .map(StudentMapperToEntity::toDto)
+                .toList();
     }
 
     @Override
@@ -36,14 +42,13 @@ public class StudentServiceImpl implements ServiceStudent {
     }
 
     @Override
-    public Student updateStudent(Student student) {
-        Student studentById = findStudentById(student.getId());
+    public Student updateStudent(CreateStudentRequest studentRequest) {
+        Student studentById = findStudentById(studentRequest.getGroupId());
         if (studentById != null) {
-            studentById.setFirstName(student.getFirstName());
-            studentById.setLastName(student.getLastName());
+            studentById.setFirstName(studentRequest.getFirstName());
+            studentById.setLastName(studentRequest.getLastName());
             return repository.save(studentById);
-        }
-        throw new NullPointerException("Student with id " + student.getId() + " not found");
+        } throw new RuntimeException("Student not found");
     }
 
     @Override
@@ -52,12 +57,15 @@ public class StudentServiceImpl implements ServiceStudent {
     }
 
     @Override
-    public void mergeStudent(Student student) {
-
+    public void mergeStudent(MergeStudentRequest student) {
+        Groups group = student.getGroup();
+        if (group != null) {
+            //TODO:
+        }
     }
 
     @Override
-    public Student findStudentById(int id) {
-        return repository.findById(id).orElse(null);
+    public Student findStudentById(Integer id) {
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Student not found"));
     }
 }

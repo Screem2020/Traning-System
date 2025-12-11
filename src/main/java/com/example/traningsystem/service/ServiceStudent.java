@@ -1,15 +1,17 @@
 package com.example.traningsystem.service;
 
 import com.example.traningsystem.dto.student.CreateStudentRequest;
+import com.example.traningsystem.dto.student.MergeStudentRequest;
+import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.model.Student;
 
 import java.util.List;
 
 public interface ServiceStudent {
-    List<Student> findAllStudents();
+    List<StudentDto> findAllStudents();
     void addStudent(CreateStudentRequest student);
-    Student updateStudent(Student student);
+    Student updateStudent(CreateStudentRequest student);
     void deleteStudent(Integer id);
-    void mergeStudent(Student student);
-    Student findStudentById(int id);
+    void mergeStudent(MergeStudentRequest student);
+    Student findStudentById(Integer id);
 }

@@ -1,7 +1,12 @@
 package com.example.traningsystem.service;
 
 import com.example.traningsystem.dao.GroupRepository;
+import com.example.traningsystem.dto.group.CreateGroupRequest;
+import com.example.traningsystem.dto.student.StudentDto;
+import com.example.traningsystem.dto.student.StudentMapperToDto;
+import com.example.traningsystem.dto.student.StudentMapperToEntity;
 import com.example.traningsystem.model.Groups;
+import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Primary;
@@ -16,10 +21,13 @@ public class GroupServiceImpl implements ServiceGroups {
 
     private final GroupRepository repository;
 
-
     @Override
-    public void addGroup(Groups group) {
-        repository.save(group);
+    public void addGroup(CreateGroupRequest groupRequest) {
+        Groups group = new Groups();
+        group.setGroupName(groupRequest.getGroupName());
+        group.setStudents(groupRequest.getStudents().stream()
+                .map(StudentMapperToDto::toEntity)
+                .toList());
     }
 
     @Override

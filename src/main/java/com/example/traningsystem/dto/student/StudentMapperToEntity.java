@@ -2,7 +2,7 @@ package com.example.traningsystem.dto.student;
 
 import com.example.traningsystem.model.Student;
 
-public class StudentMapper {
+public class StudentMapperToEntity {
 
     public static StudentDto toDto(Student student) {
         StudentDto studentDto = new StudentDto();
