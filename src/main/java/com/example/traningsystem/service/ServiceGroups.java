@@ -1,6 +1,7 @@
 package com.example.traningsystem.service;
 
 import com.example.traningsystem.dto.group.CreateGroupRequest;
+import com.example.traningsystem.dto.group.GroupDto;
 import com.example.traningsystem.model.Groups;
 import java.util.List;
 
@@ -9,5 +10,5 @@ public interface ServiceGroups {
     void deleteGroup(java.lang.Integer id);
     Groups findGroupById(java.lang.Integer id);
     Groups updateGroup(Groups group);
-    List<Groups> findAllGroups();
+    List<GroupDto> findAllGroups();
 }
