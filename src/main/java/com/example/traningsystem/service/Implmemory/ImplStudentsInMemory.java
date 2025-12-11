@@ -1,5 +1,6 @@
 package com.example.traningsystem.service.Implmemory;
 
+import com.example.traningsystem.dto.student.CreateStudentRequest;
 import com.example.traningsystem.model.Student;
 import com.example.traningsystem.dao.memory.StudentsDao;
 import com.example.traningsystem.service.ServiceStudent;
@@ -19,8 +20,9 @@ public class ImplStudentsInMemory implements ServiceStudent {
     }
 
     @Override
-    public void addStudent(Student student) {
-        repository.addStudent(student);
+    public void addStudent(CreateStudentRequest student) {
+//        repository.addStudent(student);
+        //TODO:
     }
 
     @Override
@@ -35,7 +37,7 @@ public class ImplStudentsInMemory implements ServiceStudent {
 
     @Override
     public void mergeStudent(Student student) {
-        repository.margeStudent(student);
+        repository.mergeStudent(student);
     }
 
     @Override

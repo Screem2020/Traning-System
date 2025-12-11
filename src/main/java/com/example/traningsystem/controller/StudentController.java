@@ -1,5 +1,6 @@
 package com.example.traningsystem.controller;
 
+import com.example.traningsystem.dto.student.CreateStudentRequest;
 import com.example.traningsystem.model.Student;
 import com.example.traningsystem.service.ServiceStudent;
 import lombok.AllArgsConstructor;
@@ -13,11 +14,11 @@ import java.util.List;
 public class StudentController {
     public final ServiceStudent service;
 
-    @PostMapping("/save_student")
-    public void saveStudent(@RequestBody Student student) {
+    @PostMapping("/save")
+    public void saveStudent(@RequestBody CreateStudentRequest student) {
         service.addStudent(student);
     }
-    @PutMapping("/update_student")
+    @PutMapping("/update")
     public Student updateStudent(@RequestBody Student student) {
         return service.updateStudent(student);
     }

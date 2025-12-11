@@ -44,7 +44,7 @@ public class StudentsDao {
         }
     }
 
-    public void margeStudent(Student student) {
+    public void mergeStudent(Student student) {
         Groups group = student.getGroup();
         if (group != null) {
             List<Student> students = group.getStudents();
