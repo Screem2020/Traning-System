@@ -3,17 +3,14 @@ package com.example.traningsystem.service;
 import com.example.traningsystem.dao.GroupRepository;
 import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.dto.group.GroupDto;
+import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.GroupMapper;
 import com.example.traningsystem.mapper.StudentMapper;
 import com.example.traningsystem.model.Groups;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.context.annotation.Primary;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Primary
 @AllArgsConstructor
 @Service
 public class GroupServiceImpl implements ServiceGroups {
@@ -37,11 +34,9 @@ public class GroupServiceImpl implements ServiceGroups {
         repository.deleteById(id);
     }
 
-    @SneakyThrows
-    @Override
     public Groups findGroupById(Long id) {
         return repository.findById(id)
-                .orElseThrow(ChangeSetPersister.NotFoundException::new);
+                .orElseThrow(() -> new NotFoundException("Group not found with id " + id));
     }
 
     @Override
@@ -51,7 +46,8 @@ public class GroupServiceImpl implements ServiceGroups {
             groupById.setGroupName(groupById.getGroupName());
             groupById.setStudents(group.getStudents());
             return repository.save(groupById);
-        } throw new NullPointerException("Group not found with id " + group.getGroupId());
+        }
+        throw new NotFoundException("Group not found with id " + group.getGroupId());
     }
 
     @Override
@@ -60,5 +56,18 @@ public class GroupServiceImpl implements ServiceGroups {
                 .stream()
                 .map(groupMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public Groups findByGroupName(String groupName) {
+         return repository.findByGroupName(groupName);
+    }
+
+    @Override
+    public void deleteGroupByName(String groupName) {
+        Groups byGroupName = findByGroupName(groupName);
+        if (byGroupName != null) {
+            repository.deleteById(byGroupName.getGroupId());
+        } throw new NotFoundException("Group not found with name " + groupName);
     }
 }

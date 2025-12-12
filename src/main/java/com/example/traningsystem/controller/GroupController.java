@@ -12,25 +12,35 @@ import java.util.List;
 @RequestMapping("/api/v1/groups")
 @RequiredArgsConstructor
 public class GroupController {
+
     public final ServiceGroups service;
-    @PostMapping("/save_group")
-    public void saveGroup(@RequestBody CreateGroupRequest group) {
+
+    @PostMapping("/save")
+    public void save(@RequestBody CreateGroupRequest group) {
         service.addGroup(group);
     }
     @GetMapping("/find/{id}")
-    public Groups findGroupById(@PathVariable Long id) {
+    public Groups findById(@PathVariable Long id) {
         return service.findGroupById(id);
     }
     @GetMapping()
-    public List<GroupDto> findAllGroups() {
+    public List<GroupDto> findAll() {
         return service.findAllGroups();
     }
-    @DeleteMapping("/delete_groups/{id}")
-    public void deleteGroup(@PathVariable Long id) {
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Long id) {
         service.deleteGroup(id);
     }
-    @PutMapping("/update/group")
-    public Groups updateGroup(@RequestBody Groups group) {
+    @PutMapping("/update")
+    public Groups update(@RequestBody Groups group) {
         return service.updateGroup(group);
+    }
+    @DeleteMapping("/find_name/{groupName}")
+    public Groups findGroupByName(@PathVariable String groupName) {
+        return service.findByGroupName(groupName);
+    }
+    @DeleteMapping("delete_name/{groupName}")
+    public void deleteByGroupName(@PathVariable String groupName) {
+        service.deleteGroupByName(groupName);
     }
 }

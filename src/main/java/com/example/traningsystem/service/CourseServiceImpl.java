@@ -5,14 +5,9 @@ import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.context.annotation.Primary;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Primary
 @AllArgsConstructor
 @Service
 public class CourseServiceImpl implements ServiceCourse {

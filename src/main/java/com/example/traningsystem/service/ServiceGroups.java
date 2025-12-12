@@ -11,4 +11,6 @@ public interface ServiceGroups {
     Groups findGroupById(Long id);
     Groups updateGroup(Groups group);
     List<GroupDto> findAllGroups();
+    Groups findByGroupName(String groupName);
+    void deleteGroupByName(String groupName);
 }

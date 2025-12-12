@@ -4,13 +4,13 @@ import com.example.traningsystem.dao.GroupRepository;
 import com.example.traningsystem.dao.StudentRepository;
 import com.example.traningsystem.dto.student.CreateStudentRequest;
 import com.example.traningsystem.dto.student.StudentDto;
+import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.StudentMapper;
 import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -33,7 +33,7 @@ public class StudentServiceImpl implements ServiceStudent {
     public void addStudent(CreateStudentRequest studentRequest) {
         Groups groupFound = groupRepository
                 .findById(studentRequest.getGroupId())
-                .orElseThrow(() -> new RuntimeException("Group not found"));
+                .orElseThrow(() -> new NotFoundException("Group not found with id: " + studentRequest.getGroupId()));
         Student student = new Student();
         student.setFirstName(studentRequest.getFirstName());
         student.setLastName(studentRequest.getLastName());
@@ -48,7 +48,8 @@ public class StudentServiceImpl implements ServiceStudent {
             studentById.setFirstName(studentRequest.getFirstName());
             studentById.setLastName(studentRequest.getLastName());
             return repository.save(studentById);
-        } throw new RuntimeException("Student not found");
+        }
+        throw new NotFoundException("Student not found with id: " + studentRequest.getGroupId());
     }
 
     @Override
@@ -58,6 +59,6 @@ public class StudentServiceImpl implements ServiceStudent {
 
     @Override
     public Student findStudentById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Student not found"));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Student not found with id: " + id));
     }
 }

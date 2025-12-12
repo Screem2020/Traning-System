@@ -4,7 +4,6 @@ import com.example.traningsystem.model.Teacher;
 import com.example.traningsystem.service.ServiceTeacher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -27,11 +26,11 @@ public class TeacherController {
         return service.updateTeacher(teacher);
     }
     @PutMapping("/find_teacher/{id}")
-    public  Teacher findTeacherById(@PathVariable Integer id) {
+    public  Teacher findTeacherById(@PathVariable Long id) {
         return service.findTeacherById(id);
     }
     @DeleteMapping("/delete_teacher/{id}")
-    public void deleteTeacherById(@PathVariable Integer id) {
+    public void deleteTeacherById(@PathVariable Long id) {
         service.deleteTeacherById(id);
     }
 

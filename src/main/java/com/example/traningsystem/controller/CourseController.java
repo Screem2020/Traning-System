@@ -5,14 +5,15 @@ import com.example.traningsystem.model.Teacher;
 import com.example.traningsystem.service.CourseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequestMapping("api/v1/course")
 @RestController
 @RequiredArgsConstructor
 public class CourseController {
+
     private final CourseServiceImpl service;
+
     @PostMapping("/save")
     public void save(@RequestBody Course course) {
         service.saveCourse(course);
