@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class MergeStudentRequest {
 
-    private Integer id;
+    private Long id;
     private String firstName;
     private String lastName;
     private Groups group;

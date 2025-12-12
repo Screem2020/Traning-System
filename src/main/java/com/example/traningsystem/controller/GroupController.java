@@ -4,13 +4,13 @@ import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.dto.group.GroupDto;
 import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.service.ServiceGroups;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/groups")
-@AllArgsConstructor
+@RequestMapping("/api/v1/groups")
+@RequiredArgsConstructor
 public class GroupController {
     public final ServiceGroups service;
     @PostMapping("/save_group")
@@ -18,7 +18,7 @@ public class GroupController {
         service.addGroup(group);
     }
     @GetMapping("/find/{id}")
-    public Groups findGroupById(@PathVariable Integer id) {
+    public Groups findGroupById(@PathVariable Long id) {
         return service.findGroupById(id);
     }
     @GetMapping()
@@ -26,7 +26,7 @@ public class GroupController {
         return service.findAllGroups();
     }
     @DeleteMapping("/delete_groups/{id}")
-    public void deleteGroup(@PathVariable Integer id) {
+    public void deleteGroup(@PathVariable Long id) {
         service.deleteGroup(id);
     }
     @PutMapping("/update/group")

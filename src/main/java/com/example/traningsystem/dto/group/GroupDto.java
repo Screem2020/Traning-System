@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class GroupDto {
-    private Integer id;
+    private Long id;
     private String groupName;
     private List<StudentDto> students;
 }

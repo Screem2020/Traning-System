@@ -3,8 +3,8 @@ package com.example.traningsystem.service;
 import com.example.traningsystem.dao.GroupRepository;
 import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.dto.group.GroupDto;
-import com.example.traningsystem.dto.group.GroupMapperToDto;
-import com.example.traningsystem.dto.student.StudentMapperToDto;
+import com.example.traningsystem.mapper.GroupMapper;
+import com.example.traningsystem.mapper.StudentMapper;
 import com.example.traningsystem.model.Groups;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -19,24 +19,27 @@ import java.util.List;
 public class GroupServiceImpl implements ServiceGroups {
 
     private final GroupRepository repository;
+    private final StudentMapper studentMapper;
+    private final GroupMapper groupMapper;
 
     @Override
     public void addGroup(CreateGroupRequest groupRequest) {
         Groups group = new Groups();
         group.setGroupName(groupRequest.getGroupName());
         group.setStudents(groupRequest.getStudents().stream()
-                .map(StudentMapperToDto::toEntity)
+                .map(studentMapper::toDto)
                 .toList());
+        repository.save(group);
     }
 
     @Override
-    public void deleteGroup(Integer id) {
+    public void deleteGroup(Long id) {
         repository.deleteById(id);
     }
 
     @SneakyThrows
     @Override
-    public Groups findGroupById(Integer id) {
+    public Groups findGroupById(Long id) {
         return repository.findById(id)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
     }
@@ -55,7 +58,7 @@ public class GroupServiceImpl implements ServiceGroups {
     public List<GroupDto> findAllGroups() {
         return repository.findAll()
                 .stream()
-                .map(GroupMapperToDto::toEntity)
+                .map(groupMapper::toDto)
                 .toList();
     }
 }

@@ -8,10 +8,10 @@ import java.util.List;
 public interface ServiceCourse {
 
     void saveCourse(Course course);
-    void deleteCourse(Integer id);
+    void deleteCourse(Long id);
     Course findCourseByName(String name);
     Course updateCourse(Course course);
     void saveTeacher(Course course, Teacher teacher);
-    Course findCourseById(Integer id);
+    Course findCourseById(Long id);
     List<Course> findAllCourses();
 }

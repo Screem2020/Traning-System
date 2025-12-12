@@ -6,13 +6,14 @@ import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.model.Student;
 import com.example.traningsystem.service.ServiceStudent;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/students")
-@AllArgsConstructor
+@RequestMapping("/api/v1/students")
+@RequiredArgsConstructor
 public class StudentController {
     public final ServiceStudent service;
 
@@ -25,15 +26,11 @@ public class StudentController {
         return service.updateStudent(student);
     }
     @DeleteMapping("/delete_student/{id}")
-    public void deleteStudent(@PathVariable Integer id) {
+    public void deleteStudent(@PathVariable Long id) {
         service.deleteStudent(id);
     }
-    @PutMapping("/merge")
-    public void mergeStudentByGroup(@RequestBody MergeStudentRequest student) {
-        service.mergeStudent(student);
-    }
     @GetMapping("/find/{id}")
-    public Student findStudentById(@PathVariable ("id") Integer id) {
+    public Student findStudentById(@PathVariable ("id") Long id) {
         return service.findStudentById(id);
     }
     @GetMapping()

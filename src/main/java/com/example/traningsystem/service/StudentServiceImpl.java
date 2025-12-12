@@ -3,9 +3,8 @@ package com.example.traningsystem.service;
 import com.example.traningsystem.dao.GroupRepository;
 import com.example.traningsystem.dao.StudentRepository;
 import com.example.traningsystem.dto.student.CreateStudentRequest;
-import com.example.traningsystem.dto.student.MergeStudentRequest;
 import com.example.traningsystem.dto.student.StudentDto;
-import com.example.traningsystem.dto.student.StudentMapperToEntity;
+import com.example.traningsystem.mapper.StudentMapper;
 import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
@@ -20,12 +19,13 @@ import java.util.List;
 public class StudentServiceImpl implements ServiceStudent {
     private final StudentRepository repository;
     private final GroupRepository groupRepository;
+    private final StudentMapper studentMapper;
 
     @Override
     public List<StudentDto> findAllStudents() {
         return repository.findAll()
                 .stream()
-                .map(StudentMapperToEntity::toDto)
+                .map(studentMapper::toEntity)
                 .toList();
     }
 
@@ -52,20 +52,12 @@ public class StudentServiceImpl implements ServiceStudent {
     }
 
     @Override
-    public void deleteStudent(Integer id) {
+    public void deleteStudent(Long id) {
         repository.deleteById(id);
     }
 
     @Override
-    public void mergeStudent(MergeStudentRequest student) {
-        Groups group = student.getGroup();
-        if (group != null) {
-            //TODO:
-        }
-    }
-
-    @Override
-    public Student findStudentById(Integer id) {
+    public Student findStudentById(Long id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("Student not found"));
     }
 }

@@ -11,7 +11,6 @@ public interface ServiceStudent {
     List<StudentDto> findAllStudents();
     void addStudent(CreateStudentRequest student);
     Student updateStudent(CreateStudentRequest student);
-    void deleteStudent(Integer id);
-    void mergeStudent(MergeStudentRequest student);
-    Student findStudentById(Integer id);
+    void deleteStudent(Long id);
+    Student findStudentById(Long id);
 }

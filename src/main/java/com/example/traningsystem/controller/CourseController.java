@@ -3,18 +3,18 @@ package com.example.traningsystem.controller;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
 import com.example.traningsystem.service.CourseServiceImpl;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("api/course")
+@RequestMapping("api/v1/course")
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CourseController {
     private final CourseServiceImpl service;
-    @PostMapping("/course_save")
-    public void saveCourse(@RequestBody Course course) {
+    @PostMapping("/save")
+    public void save(@RequestBody Course course) {
         service.saveCourse(course);
     }
     @GetMapping
@@ -22,11 +22,11 @@ public class CourseController {
         return service.findAllCourses();
     }
     @GetMapping("/find_course/{id}")
-    public Course findCourseById(@PathVariable Integer id) {
+    public Course findCourseById(@PathVariable Long id) {
         return service.findCourseById(id);
     }
     @DeleteMapping("/delete_course/{id}")
-    public void deleteCourseById(@PathVariable Integer id) {
+    public void deleteCourseById(@PathVariable Long id) {
         service.deleteCourse(id);
     }
     @PutMapping("/update_course")

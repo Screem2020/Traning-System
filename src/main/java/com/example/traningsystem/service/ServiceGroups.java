@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ServiceGroups {
     void  addGroup(CreateGroupRequest groupRequest);
-    void deleteGroup(java.lang.Integer id);
-    Groups findGroupById(java.lang.Integer id);
+    void deleteGroup(Long id);
+    Groups findGroupById(Long id);
     Groups updateGroup(Groups group);
     List<GroupDto> findAllGroups();
 }

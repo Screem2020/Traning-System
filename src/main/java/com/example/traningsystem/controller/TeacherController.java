@@ -2,14 +2,14 @@ package com.example.traningsystem.controller;
 
 import com.example.traningsystem.model.Teacher;
 import com.example.traningsystem.service.ServiceTeacher;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/teacher")
+@RequestMapping("/api/v1/teacher")
 public class TeacherController {
 
     private final ServiceTeacher service;

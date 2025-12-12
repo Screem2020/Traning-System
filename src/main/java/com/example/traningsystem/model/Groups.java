@@ -11,7 +11,7 @@ public class Groups {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "groups_id")
-    private Integer groupId;
+    private Long groupId;
     @Column(nullable = false)
     private String groupName;
     @OneToMany(mappedBy = "group")

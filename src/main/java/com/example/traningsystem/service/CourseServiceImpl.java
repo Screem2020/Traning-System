@@ -1,6 +1,7 @@
 package com.example.traningsystem.service;
 
 import com.example.traningsystem.dao.CourseRepository;
+import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ public class CourseServiceImpl implements ServiceCourse {
     }
 
     @Override
-    public void deleteCourse(Integer id) {
+    public void deleteCourse(Long id) {
         repository.deleteById(id);
     }
 
@@ -48,11 +49,11 @@ public class CourseServiceImpl implements ServiceCourse {
         repository.save(course);
     }
 
-    @SneakyThrows
     @Override
-    public Course findCourseById(Integer id) {
-        return repository.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
+    public Course findCourseById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found course with id: " + id));
     }
+
 
     @Override
     public List<Course> findAllCourses() {

@@ -1,13 +1,12 @@
 package com.example.traningsystem.dto.student;
 
-import com.example.traningsystem.dto.group.GroupDto;
 import lombok.Data;
 
 @Data
 public class StudentDto {
-    private Integer id;
+    private Long id;
     private String firstName;
     private String lastName;
-    private Integer groupId;
+    private Long groupId;
     private String groupName;
 }
