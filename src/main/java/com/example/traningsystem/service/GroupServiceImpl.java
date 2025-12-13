@@ -1,12 +1,14 @@
 package com.example.traningsystem.service;
 
 import com.example.traningsystem.dao.GroupRepository;
+import com.example.traningsystem.dao.StudentRepository;
 import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.dto.group.GroupDto;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.GroupMapper;
 import com.example.traningsystem.mapper.StudentMapper;
 import com.example.traningsystem.model.Groups;
+import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -16,17 +18,30 @@ import java.util.List;
 public class GroupServiceImpl implements ServiceGroups {
 
     private final GroupRepository repository;
+    private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
     private final GroupMapper groupMapper;
 
     @Override
-    public void addGroup(CreateGroupRequest groupRequest) {
+    public GroupDto addGroup(CreateGroupRequest groupRequest) {
         Groups group = new Groups();
         group.setGroupName(groupRequest.getGroupName());
         group.setStudents(groupRequest.getStudents().stream()
-                .map(studentMapper::toDto)
+                .map(studentDto -> {
+                    Student entity;
+                    if (studentDto != null && studentDto.getStudentId() != null) {
+                        entity = studentRepository.findById(studentDto.getStudentId())
+                                .orElseThrow(() ->new NotFoundException("Not found student with id "
+                                        + studentDto.getStudentId()));
+
+                    } else
+                        entity = studentMapper.toEntity(studentDto);
+                    entity.setGroup(group);
+                    return entity;
+                })
                 .toList());
-        repository.save(group);
+        Groups save = repository.save(group);
+        return groupMapper.toDto(save);
     }
 
     @Override
@@ -43,7 +58,7 @@ public class GroupServiceImpl implements ServiceGroups {
     public Groups updateGroup(Groups group) {
         Groups groupById = findGroupById(group.getGroupId());
         if (groupById != null) {
-            groupById.setGroupName(groupById.getGroupName());
+            groupById.setGroupName(group.getGroupName());
             groupById.setStudents(group.getStudents());
             return repository.save(groupById);
         }
@@ -68,6 +83,12 @@ public class GroupServiceImpl implements ServiceGroups {
         Groups byGroupName = findByGroupName(groupName);
         if (byGroupName != null) {
             repository.deleteById(byGroupName.getGroupId());
+            return;
         } throw new NotFoundException("Group not found with name " + groupName);
+    }
+
+    @Override
+    public void deleteAllGroups() {
+        repository.deleteAll();
     }
 }

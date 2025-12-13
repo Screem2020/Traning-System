@@ -23,20 +23,16 @@ public class CourseController {
         return service.findAllCourses();
     }
     @GetMapping("/find_course/{id}")
-    public Course findCourseById(@PathVariable Long id) {
+    public Course findById(@PathVariable Long id) {
         return service.findCourseById(id);
     }
     @DeleteMapping("/delete_course/{id}")
-    public void deleteCourseById(@PathVariable Long id) {
+    public void deleteById(@PathVariable Long id) {
         service.deleteCourse(id);
     }
     @PutMapping("/update_course")
-    public Course upadateCourse(@RequestBody Course course) {
+    public Course update(@RequestBody Course course) {
         return service.updateCourse(course);
-    }
-    @PostMapping("/save_course/teacher")
-    public void saveTeacher(@RequestBody Course course, Teacher teacher) {
-        service.saveTeacher(course, teacher);
     }
     @GetMapping("/find_by_name/{name}")
     public Course findCourseByName(@PathVariable String name) {

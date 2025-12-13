@@ -20,7 +20,7 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
-    @OneToOne(mappedBy = "course")
+    @OneToOne(mappedBy = "course", cascade = CascadeType.ALL)
     private Teacher teacher;
 
 }

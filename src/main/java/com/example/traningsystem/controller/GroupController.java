@@ -14,10 +14,13 @@ import java.util.List;
 public class GroupController {
 
     public final ServiceGroups service;
+    private final ServiceGroups serviceGroups;
 
     @PostMapping("/save")
-    public void save(@RequestBody CreateGroupRequest group) {
-        service.addGroup(group);
+    public GroupDto save(@RequestBody CreateGroupRequest group) {
+        GroupDto groupDto = serviceGroups.addGroup(group);
+        System.out.println(groupDto.getGroupId());
+        return groupDto;
     }
     @GetMapping("/find/{id}")
     public Groups findById(@PathVariable Long id) {
@@ -35,12 +38,16 @@ public class GroupController {
     public Groups update(@RequestBody Groups group) {
         return service.updateGroup(group);
     }
-    @DeleteMapping("/find_name/{groupName}")
+    @DeleteMapping("/find/name/{groupName}")
     public Groups findGroupByName(@PathVariable String groupName) {
         return service.findByGroupName(groupName);
     }
-    @DeleteMapping("delete_name/{groupName}")
+    @DeleteMapping("delete/name/{groupName}")
     public void deleteByGroupName(@PathVariable String groupName) {
         service.deleteGroupByName(groupName);
+    }
+    @DeleteMapping("delete/all")
+    public void deleteAllGroups() {
+        service.deleteAllGroups();
     }
 }

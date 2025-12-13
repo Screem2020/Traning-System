@@ -25,20 +25,17 @@ public class StudentServiceImpl implements ServiceStudent {
     public List<StudentDto> findAllStudents() {
         return repository.findAll()
                 .stream()
-                .map(studentMapper::toEntity)
+                .map(studentMapper::toDto)
                 .toList();
     }
 
     @Override
-    public void addStudent(CreateStudentRequest studentRequest) {
-        Groups groupFound = groupRepository
-                .findById(studentRequest.getGroupId())
-                .orElseThrow(() -> new NotFoundException("Group not found with id: " + studentRequest.getGroupId()));
-        Student student = new Student();
-        student.setFirstName(studentRequest.getFirstName());
-        student.setLastName(studentRequest.getLastName());
-        student.setGroup(groupFound);
-        repository.save(student);
+    public StudentDto addStudent(CreateStudentRequest studentRequest) {
+            Groups groups = groupRepository.findById(studentRequest.getGroupId())
+                    .orElseThrow(() -> new NotFoundException("Group not found with id: " + studentRequest.getGroupId()));
+        Student entity = studentMapper.toEntity(studentRequest);
+        entity.setGroup(groups);
+        return studentMapper.toDto(repository.save(entity));
     }
 
     @Override

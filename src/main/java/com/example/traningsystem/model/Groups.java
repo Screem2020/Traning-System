@@ -14,7 +14,7 @@ public class Groups {
     private Long groupId;
     @Column(nullable = false)
     private String groupName;
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Student> students;
     @ManyToOne
     @JoinColumn(name = "schedule_id")

@@ -6,11 +6,12 @@ import com.example.traningsystem.model.Groups;
 import java.util.List;
 
 public interface ServiceGroups {
-    void  addGroup(CreateGroupRequest groupRequest);
-    void deleteGroup(Long id);
-    Groups findGroupById(Long id);
+    GroupDto addGroup(CreateGroupRequest groupRequest);
+    void deleteGroup(Long groupId);
+    Groups findGroupById(Long groupId);
     Groups updateGroup(Groups group);
     List<GroupDto> findAllGroups();
     Groups findByGroupName(String groupName);
     void deleteGroupByName(String groupName);
+    void deleteAllGroups();
 }

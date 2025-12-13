@@ -19,6 +19,6 @@ public class Teacher {
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
     @OneToOne
-    @JoinColumn(name = "course_id")
+    @JoinColumn(name = "course_id",  nullable = false)
     private Course course;
 }

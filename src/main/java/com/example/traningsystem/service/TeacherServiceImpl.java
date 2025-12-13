@@ -6,6 +6,7 @@ import com.example.traningsystem.model.Teacher;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @AllArgsConstructor
@@ -30,15 +31,12 @@ public class TeacherServiceImpl implements ServiceTeacher {
 
     @Override
     public void deleteTeacherById(Long id) {
-
-    }
-
-    public void deleteTeacher(Long id) {
         if (repository.findById(id).isPresent()) {
             repository.deleteById(id);
         }
         throw new NotFoundException("Teacher not found with id: " + id);
     }
+
 
     public Teacher updateTeacher(Teacher teacher) {
         Teacher findByTeacher = findTeacherById(teacher.getTeacherId());
