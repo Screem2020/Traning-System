@@ -1,11 +1,17 @@
 package com.example.traningsystem.service;
 
+import com.example.traningsystem.dao.CourseRepository;
 import com.example.traningsystem.dao.TeacherRepository;
+import com.example.traningsystem.dto.teacher.CreateTeacherRequest;
+import com.example.traningsystem.dto.teacher.TeacherDto;
 import com.example.traningsystem.exceptions.NotFoundException;
+import com.example.traningsystem.mapper.TeacherMapper;
+import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,22 +19,34 @@ import java.util.List;
 @Primary
 @Service
 public class TeacherServiceImpl implements ServiceTeacher {
+    private final TeacherMapper teacherMapper;
+    private final CourseRepository courseRepository;
     private TeacherRepository repository;
 
-    public void save(Teacher teacher) {
-        repository.save(teacher);
+    @Transactional
+    @Override
+    public TeacherDto addTeacher(CreateTeacherRequest teacherRequest) {
+        Course teacherByCourse = courseRepository.findById(teacherRequest.getCourseId())
+                .orElseThrow(() -> new NotFoundException("Teacher not found"));
+        Teacher entity = teacherMapper.toEntity(teacherRequest);
+        entity.setCourse(teacherByCourse);
+        teacherByCourse.setTeacher(entity);
+        return teacherMapper.toDto(repository.save(entity));
     }
 
     @Override
-    public List<Teacher> findAllTeachers() {
-        return List.of();
+    public List<TeacherDto> findAllTeachers() {
+       return repository.findAll()
+               .stream()
+               .map(teacherMapper::toDto)
+               .toList();
     }
 
     @Override
     public Teacher findTeacherById(Long id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Teacher not found with id: " + id));
     }
-
+    @Transactional
     @Override
     public void deleteTeacherById(Long id) {
         if (repository.findById(id).isPresent()) {
@@ -36,15 +54,16 @@ public class TeacherServiceImpl implements ServiceTeacher {
         }
         throw new NotFoundException("Teacher not found with id: " + id);
     }
-
-
-    public Teacher updateTeacher(Teacher teacher) {
-        Teacher findByTeacher = findTeacherById(teacher.getTeacherId());
-        if (findByTeacher != null) {
-            findByTeacher.setFirstName(teacher.getFirstName());
-            findByTeacher.setLastName(teacher.getLastName());
-            return repository.save(findByTeacher);
+    @Transactional
+    @Override
+    public Teacher updateTeacher(TeacherDto teacherDto) {
+        Teacher teacherById = findTeacherById(teacherDto.getId());
+        if (teacherById != null) {
+            teacherById.setFirstName(teacherDto.getFirstName());
+            teacherById.setLastName(teacherDto.getLastName());
+            teacherById.setCourse(teacherDto.getCourse());
+            return teacherById;
         }
-        throw new NotFoundException("Teacher not found with id: " + teacher.getTeacherId());
+        throw new NotFoundException("Teacher not found with id: " + teacherDto.getId());
     }
 }

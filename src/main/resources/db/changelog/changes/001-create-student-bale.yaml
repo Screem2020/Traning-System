@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: create
+      author: misha
+      changes:
+        - createTable:
+            tableName: student
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+

@@ -1,5 +1,6 @@
 package com.example.traningsystem.dto.student;
 
+import com.example.traningsystem.model.Groups;
 import lombok.Data;
 
 @Data
@@ -8,5 +9,5 @@ public class StudentDto {
     private Long studentId;
     private String firstName;
     private String lastName;
-    private String groupName;
+    private Groups group;
 }

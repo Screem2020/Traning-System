@@ -11,6 +11,8 @@ import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -28,7 +30,7 @@ public class StudentServiceImpl implements ServiceStudent {
                 .map(studentMapper::toDto)
                 .toList();
     }
-
+    @Transactional
     @Override
     public StudentDto addStudent(CreateStudentRequest studentRequest) {
             Groups groups = groupRepository.findById(studentRequest.getGroupId())
@@ -37,18 +39,19 @@ public class StudentServiceImpl implements ServiceStudent {
         entity.setGroup(groups);
         return studentMapper.toDto(repository.save(entity));
     }
-
+    @Transactional
     @Override
     public Student updateStudent(CreateStudentRequest studentRequest) {
         Student studentById = findStudentById(studentRequest.getGroupId());
         if (studentById != null) {
             studentById.setFirstName(studentRequest.getFirstName());
             studentById.setLastName(studentRequest.getLastName());
-            return repository.save(studentById);
+            studentById.setGroup(studentRequest.getGroup());
+            return studentById;
         }
         throw new NotFoundException("Student not found with id: " + studentRequest.getGroupId());
     }
-
+    @Transactional
     @Override
     public void deleteStudent(Long id) {
         repository.deleteById(id);

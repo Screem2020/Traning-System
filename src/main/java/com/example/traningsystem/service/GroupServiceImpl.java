@@ -11,6 +11,8 @@ import com.example.traningsystem.model.Groups;
 import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,6 +24,7 @@ public class GroupServiceImpl implements ServiceGroups {
     private final StudentMapper studentMapper;
     private final GroupMapper groupMapper;
 
+    @Transactional
     @Override
     public GroupDto addGroup(CreateGroupRequest groupRequest) {
         Groups group = new Groups();
@@ -34,8 +37,9 @@ public class GroupServiceImpl implements ServiceGroups {
                                 .orElseThrow(() ->new NotFoundException("Not found student with id "
                                         + studentDto.getStudentId()));
 
-                    } else
+                    } else {
                         entity = studentMapper.toEntity(studentDto);
+                    }
                     entity.setGroup(group);
                     return entity;
                 })
