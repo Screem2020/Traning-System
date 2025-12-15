@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
     Student toEntity(StudentDto studentDto);
-    @Mapping(source = "group.groupName", target = "groupName")
     StudentDto toDto(Student student);
     @Mapping(target = "studentId", ignore = true)
     @Mapping(target = "groupName", ignore = true)

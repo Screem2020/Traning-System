@@ -1,7 +1,6 @@
 package com.example.traningsystem.controller;
 
 import com.example.traningsystem.dto.teacher.CreateTeacherRequest;
-import com.example.traningsystem.dto.teacher.TeacherDto;
 import com.example.traningsystem.model.Teacher;
 import com.example.traningsystem.service.ServiceTeacher;
 import lombok.RequiredArgsConstructor;
@@ -16,19 +15,19 @@ public class TeacherController {
     private final ServiceTeacher service;
 
     @GetMapping
-    public List<TeacherDto> findAll() {
+    public List<com.example.traningsystem.dto.teacher.TeacherDto> findAll() {
         return service.findAllTeachers();
     }
     @PostMapping("/save_teacher")
-    public TeacherDto save(@RequestBody CreateTeacherRequest teacherRequest) {
+    public com.example.traningsystem.dto.teacher.TeacherDto save(@RequestBody CreateTeacherRequest teacherRequest) {
         return service.addTeacher(teacherRequest);
     }
     @PutMapping("/upadate_teacher")
-    public Teacher updateTeacher(@RequestBody TeacherDto teacher) {
-        return service.updateTeacher(teacher);
+    public Teacher updateTeacher(@RequestBody com.example.traningsystem.dto.teacher.TeacherDto teacherDto) {
+        return service.updateTeacher(teacherDto);
     }
     @PutMapping("/find_teacher/{id}")
-    public  Teacher findTeacherById(@PathVariable Long id) {
+    public Teacher findTeacherById(@PathVariable Long id) {
         return service.findTeacherById(id);
     }
     @DeleteMapping("/delete_teacher/{id}")

@@ -2,16 +2,16 @@ package com.example.traningsystem.service;
 
 import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.dto.group.GroupDto;
-import com.example.traningsystem.model.Groups;
+import com.example.traningsystem.model.Group;
 import java.util.List;
 
 public interface ServiceGroups {
     GroupDto addGroup(CreateGroupRequest groupRequest);
     void deleteGroup(Long groupId);
-    Groups findGroupById(Long groupId);
-    Groups updateGroup(Groups group);
+    Group findGroupById(Long groupId);
+    Group updateGroup(Group group);
     List<GroupDto> findAllGroups();
-    Groups findByGroupName(String groupName);
+    Group findByGroupName(String groupName);
     void deleteGroupByName(String groupName);
     void deleteAllGroups();
 }

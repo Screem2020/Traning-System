@@ -2,7 +2,7 @@ package com.example.traningsystem.controller;
 
 import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.dto.group.GroupDto;
-import com.example.traningsystem.model.Groups;
+import com.example.traningsystem.model.Group;
 import com.example.traningsystem.service.ServiceGroups;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class GroupController {
         return groupDto;
     }
     @GetMapping("/find/{id}")
-    public Groups findById(@PathVariable Long id) {
+    public Group findById(@PathVariable Long id) {
         return service.findGroupById(id);
     }
     @GetMapping()
@@ -35,11 +35,11 @@ public class GroupController {
         service.deleteGroup(id);
     }
     @PutMapping("/update")
-    public Groups update(@RequestBody Groups group) {
+    public Group update(@RequestBody Group group) {
         return service.updateGroup(group);
     }
     @DeleteMapping("/find/name/{groupName}")
-    public Groups findGroupByName(@PathVariable String groupName) {
+    public Group findGroupByName(@PathVariable String groupName) {
         return service.findByGroupName(groupName);
     }
     @DeleteMapping("delete/name/{groupName}")

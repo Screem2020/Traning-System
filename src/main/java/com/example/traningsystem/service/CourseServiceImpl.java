@@ -1,22 +1,36 @@
 package com.example.traningsystem.service;
 
 import com.example.traningsystem.dao.CourseRepository;
+import com.example.traningsystem.dao.TeacherRepository;
+import com.example.traningsystem.dto.course.CourseDto;
+import com.example.traningsystem.dto.course.CreateCourseRequest;
 import com.example.traningsystem.exceptions.NotFoundException;
+import com.example.traningsystem.mapper.CourseMapper;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
+@Transactional
 @AllArgsConstructor
 @Service
 public class CourseServiceImpl implements ServiceCourse {
 
-    private CourseRepository repository;
+    private final TeacherRepository teacherRepository;
+    private final CourseMapper courseMapper;
+    private final CourseRepository repository;
 
     @Override
-    public void saveCourse(Course course) {
-        repository.save(course);
+    public CourseDto saveCourse(CreateCourseRequest courseRequest) {
+        Teacher teacherDto = teacherRepository
+                .findById(courseRequest.getTeacherDto().getId())
+                .orElseThrow(() -> new NotFoundException("Teacher not found"));
+        Course entity = courseMapper.fromCreateRequest(courseRequest);
+        entity.setTeacher(teacherDto);
+        Course save = repository.save(entity);
+        return courseMapper.toDto(save);
     }
 
     @Override
@@ -25,33 +39,38 @@ public class CourseServiceImpl implements ServiceCourse {
     }
 
     @Override
-    public Course findCourseByName(String name) {
-        return repository.findCourseByName(name);
+    public CourseDto findCourseByName(String name) {
+        return repository.findByName(name)
+                .map(courseMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Course not found"));
+    }
+    @Override
+    public CourseDto updateCourse(CourseDto courseDto) {
+        Course course = repository.findById(courseDto.getCourseId()).orElseThrow(() -> new NotFoundException("Course not found"));
+        course.setName(courseDto.getCourseName());
+        course.setDescription(courseDto.getDistriction());
+        if (courseDto.getTeacherDto() != null) {
+            Long teacherId = courseDto.getTeacherDto().getTeacherId();
+            Teacher teacher = teacherRepository.findById(teacherId)
+                    .orElseThrow(() -> new NotFoundException("Teacher not found"));
+            course.setTeacher(teacher);
+        }
+        return courseMapper.toDto(course);
+
     }
 
     @Override
-    public Course updateCourse(Course course) {
-        Course courseById = findCourseById(course.getCourseId());
-        courseById.setName(course.getName());
-        courseById.setDescription(course.getDescription());
-        return repository.save(courseById);
+    public CourseDto findCourseById(Long id) {
+        return repository.findById(id)
+                .map(courseMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Course not found"));
     }
 
     @Override
-    public void saveTeacher(Course course, Teacher teacher) {
-        teacher.setFirstName(course.getTeacher().getFirstName());
-        teacher.setLastName(course.getTeacher().getLastName());
-        repository.save(course);
-    }
-
-    @Override
-    public Course findCourseById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("Not found course with id: " + id));
-    }
-
-
-    @Override
-    public List<Course> findAllCourses() {
-        return repository.findAll();
+    public List<CourseDto> findAllCourses() {
+        return repository.findAll()
+                .stream()
+                .map(courseMapper::toDto)
+                .toList();
     }
 }

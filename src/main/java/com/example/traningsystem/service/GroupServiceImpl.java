@@ -7,14 +7,14 @@ import com.example.traningsystem.dto.group.GroupDto;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.GroupMapper;
 import com.example.traningsystem.mapper.StudentMapper;
-import com.example.traningsystem.model.Groups;
+import com.example.traningsystem.model.Group;
 import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
+@Transactional
 @AllArgsConstructor
 @Service
 public class GroupServiceImpl implements ServiceGroups {
@@ -24,10 +24,9 @@ public class GroupServiceImpl implements ServiceGroups {
     private final StudentMapper studentMapper;
     private final GroupMapper groupMapper;
 
-    @Transactional
     @Override
     public GroupDto addGroup(CreateGroupRequest groupRequest) {
-        Groups group = new Groups();
+        Group group = new Group();
         group.setGroupName(groupRequest.getGroupName());
         group.setStudents(groupRequest.getStudents().stream()
                 .map(studentDto -> {
@@ -44,7 +43,7 @@ public class GroupServiceImpl implements ServiceGroups {
                     return entity;
                 })
                 .toList());
-        Groups save = repository.save(group);
+        Group save = repository.save(group);
         return groupMapper.toDto(save);
     }
 
@@ -53,14 +52,14 @@ public class GroupServiceImpl implements ServiceGroups {
         repository.deleteById(id);
     }
 
-    public Groups findGroupById(Long id) {
+    public Group findGroupById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Group not found with id " + id));
     }
 
     @Override
-    public Groups updateGroup(Groups group) {
-        Groups groupById = findGroupById(group.getGroupId());
+    public Group updateGroup(Group group) {
+        Group groupById = findGroupById(group.getGroupId());
         if (groupById != null) {
             groupById.setGroupName(group.getGroupName());
             groupById.setStudents(group.getStudents());
@@ -78,13 +77,13 @@ public class GroupServiceImpl implements ServiceGroups {
     }
 
     @Override
-    public Groups findByGroupName(String groupName) {
+    public Group findByGroupName(String groupName) {
          return repository.findByGroupName(groupName);
     }
 
     @Override
     public void deleteGroupByName(String groupName) {
-        Groups byGroupName = findByGroupName(groupName);
+        Group byGroupName = findByGroupName(groupName);
         if (byGroupName != null) {
             repository.deleteById(byGroupName.getGroupId());
             return;

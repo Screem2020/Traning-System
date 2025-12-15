@@ -12,9 +12,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
+@Transactional
 @AllArgsConstructor
 @Primary
 @Service
@@ -23,17 +23,17 @@ public class TeacherServiceImpl implements ServiceTeacher {
     private final CourseRepository courseRepository;
     private TeacherRepository repository;
 
-    @Transactional
     @Override
     public TeacherDto addTeacher(CreateTeacherRequest teacherRequest) {
-        Course teacherByCourse = courseRepository.findById(teacherRequest.getCourseId())
+        Course teacherByCourseDto = courseRepository.findById(teacherRequest.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Teacher not found"));
         Teacher entity = teacherMapper.toEntity(teacherRequest);
-        entity.setCourse(teacherByCourse);
-        teacherByCourse.setTeacher(entity);
+        entity.setCourse(teacherByCourseDto);
+        teacherByCourseDto.setTeacher(entity);
         return teacherMapper.toDto(repository.save(entity));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<TeacherDto> findAllTeachers() {
        return repository.findAll()
@@ -46,7 +46,6 @@ public class TeacherServiceImpl implements ServiceTeacher {
     public Teacher findTeacherById(Long id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Teacher not found with id: " + id));
     }
-    @Transactional
     @Override
     public void deleteTeacherById(Long id) {
         if (repository.findById(id).isPresent()) {
@@ -54,14 +53,13 @@ public class TeacherServiceImpl implements ServiceTeacher {
         }
         throw new NotFoundException("Teacher not found with id: " + id);
     }
-    @Transactional
     @Override
     public Teacher updateTeacher(TeacherDto teacherDto) {
         Teacher teacherById = findTeacherById(teacherDto.getId());
         if (teacherById != null) {
             teacherById.setFirstName(teacherDto.getFirstName());
             teacherById.setLastName(teacherDto.getLastName());
-            teacherById.setCourse(teacherDto.getCourse());
+            teacherById.setCourse(teacherDto.getCourseDto());
             return teacherById;
         }
         throw new NotFoundException("Teacher not found with id: " + teacherDto.getId());

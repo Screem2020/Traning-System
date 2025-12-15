@@ -1,6 +1,6 @@
 package com.example.traningsystem.dto.student;
 
-import com.example.traningsystem.model.Groups;
+import com.example.traningsystem.model.Group;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -11,5 +11,5 @@ public class CreateStudentRequest {
     private String firstName;
     private String lastName;
     private Long groupId;
-    private Groups group;
+    private Group group;
 }

@@ -13,7 +13,7 @@ public class Schedule {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
-    private List<Groups> groups;
+    private List<Group> groups;
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
     private List<Teacher> teacher;
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)

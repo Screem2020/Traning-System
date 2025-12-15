@@ -7,6 +7,6 @@ import lombok.Data;
 public class CourseDto {
     private Long courseId;
     private String courseName;
-    private String distraction;
-    private Teacher teacher;
+    private String distriction;
+    private Teacher teacherDto;
 }

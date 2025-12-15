@@ -11,5 +11,5 @@ public interface ServiceTeacher {
     List<TeacherDto> findAllTeachers();
     Teacher findTeacherById(Long id);
     void deleteTeacherById(Long id);
-    Teacher updateTeacher(TeacherDto teacher);
+    Teacher updateTeacher(TeacherDto teacherDto);
 }

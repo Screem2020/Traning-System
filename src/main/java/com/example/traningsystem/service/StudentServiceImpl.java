@@ -6,18 +6,16 @@ import com.example.traningsystem.dto.student.CreateStudentRequest;
 import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.StudentMapper;
-import com.example.traningsystem.model.Groups;
+import com.example.traningsystem.model.Group;
 import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
+@Transactional
 @Service
 @AllArgsConstructor
-@Primary
 public class StudentServiceImpl implements ServiceStudent {
     private final StudentRepository repository;
     private final GroupRepository groupRepository;
@@ -30,16 +28,14 @@ public class StudentServiceImpl implements ServiceStudent {
                 .map(studentMapper::toDto)
                 .toList();
     }
-    @Transactional
     @Override
     public StudentDto addStudent(CreateStudentRequest studentRequest) {
-            Groups groups = groupRepository.findById(studentRequest.getGroupId())
+            Group groupDto = groupRepository.findById(studentRequest.getGroupId())
                     .orElseThrow(() -> new NotFoundException("Group not found with id: " + studentRequest.getGroupId()));
         Student entity = studentMapper.toEntity(studentRequest);
-        entity.setGroup(groups);
+        entity.setGroup(groupDto);
         return studentMapper.toDto(repository.save(entity));
     }
-    @Transactional
     @Override
     public Student updateStudent(CreateStudentRequest studentRequest) {
         Student studentById = findStudentById(studentRequest.getGroupId());
@@ -51,7 +47,6 @@ public class StudentServiceImpl implements ServiceStudent {
         }
         throw new NotFoundException("Student not found with id: " + studentRequest.getGroupId());
     }
-    @Transactional
     @Override
     public void deleteStudent(Long id) {
         repository.deleteById(id);
