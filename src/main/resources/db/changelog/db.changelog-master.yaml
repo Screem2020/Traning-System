@@ -1,7 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: main
-      author: misha
-      changes:
-        -include:
-          file: changes/001-create-student-bale.yaml

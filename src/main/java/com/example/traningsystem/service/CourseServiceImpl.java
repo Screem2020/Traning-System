@@ -32,7 +32,6 @@ public class CourseServiceImpl implements ServiceCourse {
         Course save = repository.save(entity);
         return courseMapper.toDto(save);
     }
-
     @Override
     public void deleteCourse(Long id) {
         repository.deleteById(id);
@@ -56,9 +55,7 @@ public class CourseServiceImpl implements ServiceCourse {
             course.setTeacher(teacher);
         }
         return courseMapper.toDto(course);
-
     }
-
     @Override
     public CourseDto findCourseById(Long id) {
         return repository.findById(id)

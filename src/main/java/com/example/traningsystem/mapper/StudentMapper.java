@@ -11,6 +11,5 @@ public interface StudentMapper {
     Student toEntity(StudentDto studentDto);
     StudentDto toDto(Student student);
     @Mapping(target = "studentId", ignore = true)
-    @Mapping(target = "groupName", ignore = true)
     Student toEntity(CreateStudentRequest student);
 }
