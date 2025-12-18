@@ -12,6 +12,7 @@ import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Transactional
@@ -30,26 +31,28 @@ public class StudentServiceImpl implements ServiceStudent {
                 .map(studentMapper::toDto)
                 .toList();
     }
+
     @Override
     public StudentDto addStudent(CreateStudentRequest studentRequest) {
-            Group groupDto = groupRepository.findById(studentRequest.getGroupId())
-                    .orElseThrow(() -> new NotFoundException("Group not found with id: " + studentRequest.getGroupId()));
+        Group groupDto = groupRepository.findById(studentRequest.getGroupId())
+                .orElseThrow(() -> new NotFoundException("Group not found with id: " + studentRequest.getGroupId()));
         Student entity = studentMapper.toEntity(studentRequest);
         entity.setGroup(groupDto);
         return studentMapper.toDto(repository.save(entity));
     }
+
     @Override
     public StudentDto updateStudent(CreateStudentRequest studentRequest) {
         Student studentById = repository.findById(studentRequest.getStudentId())
                 .orElseThrow(() -> new NotFoundException("Student not found with id: " + studentRequest.getStudentId()));
-        if (studentById != null) {
-            studentById.setFirstName(studentRequest.getFirstName());
-            studentById.setLastName(studentRequest.getLastName());
-            studentById.setGroup(studentRequest.getGroup());
-            return studentMapper.toDto(repository.save(studentById));
-        }
-        throw new NotFoundException("Student not found with id: " + studentRequest.getGroupId());
+        Group group = groupRepository.findById(studentRequest.getGroupId())
+                .orElseThrow(() -> new NotFoundException("Group not found with id: " + studentRequest.getGroupId()));
+        studentById.setFirstName(studentRequest.getFirstName());
+        studentById.setLastName(studentRequest.getLastName());
+        studentById.setGroup(group);
+        return studentMapper.toDto(repository.save(studentById));
     }
+
     @Override
     public void deleteStudent(Long id) {
         repository.deleteById(id);
