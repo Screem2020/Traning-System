@@ -3,7 +3,6 @@ package com.example.traningsystem.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -12,12 +11,15 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long scheduleId;
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
-    private List<Group> groups;
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
-    private List<Teacher> teacher;
-    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
-    private List<Course> course;
+    @ManyToOne
+    @JoinColumn(name = "groups_id")
+    private Group groups;
+    @ManyToOne()
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
     @Column
     private LocalDate date;
 }

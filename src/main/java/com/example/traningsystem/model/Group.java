@@ -10,13 +10,15 @@ import java.util.List;
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "groups_id")
+    @Column(nullable = false, name = "groups_id")
     private Long groupId;
     @Column(nullable = false)
+
     private String groupName;
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Student> students;
-    @ManyToOne
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<Schedule> schedule;
+    @OneToMany(mappedBy = "group",  cascade = CascadeType.ALL)
+    private List<GroupCourse> groupCourses;
     }

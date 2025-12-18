@@ -1,0 +1,199 @@
+  databaseChangeLog:
+    - changeSet:
+        id: 1
+        author: misha
+        changes:
+          - createTable:
+              tableName: groups
+              columns:
+                - column:
+                    name: groups_id
+                    type: bigserial
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: group_name
+                    type: varchar(200)
+                    constraints:
+                      nullable: false
+    - changeSet:
+        id: 2
+        author: misha
+        changes:
+          - createTable:
+              tableName: students
+              columns:
+                - column:
+                    name: student_id
+                    type: bigserial
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: first_name
+                    type: varchar(200)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: last_name
+                    type: varchar(200)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: groups_id
+                    type: bigint
+                    constraints:
+                      nullable: false
+          - addForeignKeyConstraint:
+              baseColumnNames: groups_id
+              baseTableName: students
+              constraintName: fk_students_group
+              onDelete: Cascade
+              onUpdate: Cascade
+              referencedColumnNames: groups_id
+              referencedTableName: groups
+    - changeSet:
+        id: 3
+        author: misha
+        changes:
+          - createTable:
+              tableName: course
+              columns:
+                - column:
+                    name: course_id
+                    type: bigserial
+                    constraints:
+                      nullable: false
+                      primaryKey: true
+                - column:
+                    name: name
+                    type: varchar(200)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: description
+                    type: text
+                    constraints:
+                      nullable: false
+    - changeSet:
+        id: 4
+        author: misha
+        changes:
+          - createTable:
+              tableName: teacher
+              columns:
+                - column:
+                    name: teacher_id
+                    type: bigserial
+                    constraints:
+                      nullable: false
+                      primaryKey: true
+                - column:
+                    name: first_name
+                    type: varchar(200)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: last_name
+                    type: varchar(200)
+                    constraints:
+                      nullable: false
+                - column:
+                    name: course_id
+                    type: bigint
+                    constraints:
+                      unique: true
+                      nullable: false
+          - addForeignKeyConstraint:
+              baseColumnNames: course_id
+              baseTableName: teacher
+              constraintName: fk_course_teacher
+              onDelete: Cascade
+              onUpdate: Cascade
+              referencedColumnNames: course_id
+              referencedTableName: course
+    - changeSet:
+        id: 5
+        author: misha
+        changes:
+          - createTable:
+              tableName: schedule
+              columns:
+                - column:
+                    name: schedule_id
+                    type: bigserial
+                    constraints:
+                      nullable: false
+                      primaryKey: true
+                - column:
+                    name: groups_id
+                    type: bigint
+                - column:
+                    name: teacher_id
+                    type: bigint
+                - column:
+                    name: course_id
+                    type: bigint
+                - column:
+                    name: date
+                    type: date
+          - addForeignKeyConstraint:
+              baseColumnNames: groups_id
+              baseTableName: schedule
+              constraintName: fk_group_schedule
+              onDelete: Cascade
+              onUpdate: Cascade
+              referencedColumnNames: groups_id
+              referencedTableName: groups
+          - addForeignKeyConstraint:
+              baseColumnNames: teacher_id
+              baseTableName: schedule
+              constraintName: fk_teacher_schedule
+              onDelete: Cascade
+              onUpdate: Cascade
+              referencedColumnNames: teacher_id
+              referencedTableName: teacher
+          - addForeignKeyConstraint:
+              baseColumnNames: course_id
+              baseTableName: schedule
+              constraintName: fk_course_schedule
+              onDelete: Cascade
+              onUpdate: Cascade
+              referencedColumnNames: course_id
+              referencedTableName: course
+    - changeSet:
+        id: 6
+        author: misha
+        changes:
+          - createTable:
+              tableName: group_course
+              columns:
+                - column:
+                    name: groups_id
+                    type: bigint
+                    constraints:
+                      nullable: false
+                      primaryKey: true
+                - column:
+                    name: course_id
+                    type: bigint
+                    constraints:
+                      nullable: false
+                      primaryKey: true
+          - addForeignKeyConstraint:
+              baseColumnNames: groups_id
+              baseTableName: group_course
+              constraintName: fk_group_group_course
+              onDelete: Cascade
+              onUpdate: Cascade
+              referencedColumnNames: groups_id
+              referencedTableName: groups
+          - addForeignKeyConstraint:
+              baseColumnNames: course_id
+              baseTableName: group_course
+              constraintName: fk_course_group_course
+              onDelete: Cascade
+              onUpdate: Cascade
+              referencedColumnNames: course_id
+              referencedTableName: course

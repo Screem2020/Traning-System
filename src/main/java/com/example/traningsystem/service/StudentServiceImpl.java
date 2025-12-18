@@ -6,6 +6,7 @@ import com.example.traningsystem.dto.student.CreateStudentRequest;
 import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.StudentMapper;
+import com.example.traningsystem.mapper.StudentMapperImpl;
 import com.example.traningsystem.model.Group;
 import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class StudentServiceImpl implements ServiceStudent {
     private final StudentRepository repository;
     private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
+    private final StudentMapperImpl studentMapperImpl;
 
     @Override
     public List<StudentDto> findAllStudents() {
@@ -37,13 +39,14 @@ public class StudentServiceImpl implements ServiceStudent {
         return studentMapper.toDto(repository.save(entity));
     }
     @Override
-    public Student updateStudent(CreateStudentRequest studentRequest) {
-        Student studentById = findStudentById(studentRequest.getGroupId());
+    public StudentDto updateStudent(CreateStudentRequest studentRequest) {
+        Student studentById = repository.findById(studentRequest.getStudentId())
+                .orElseThrow(() -> new NotFoundException("Student not found with id: " + studentRequest.getStudentId()));
         if (studentById != null) {
             studentById.setFirstName(studentRequest.getFirstName());
             studentById.setLastName(studentRequest.getLastName());
             studentById.setGroup(studentRequest.getGroup());
-            return studentById;
+            return studentMapper.toDto(repository.save(studentById));
         }
         throw new NotFoundException("Student not found with id: " + studentRequest.getGroupId());
     }

@@ -19,7 +19,7 @@ public class StudentController {
         service.addStudent(student);
     }
     @PutMapping("/update")
-    public Student update(@RequestBody CreateStudentRequest student) {
+    public StudentDto update(@RequestBody CreateStudentRequest student) {
         return service.updateStudent(student);
     }
     @DeleteMapping("/delete/{id}")
