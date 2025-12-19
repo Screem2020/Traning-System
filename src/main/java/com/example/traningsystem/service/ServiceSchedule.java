@@ -6,4 +6,5 @@ import com.example.traningsystem.dto.schedule.ScheduleDto;
 public interface ServiceSchedule {
     ScheduleDto addSchedule(CreateScheduleRequest scheduleRequest);
     ScheduleDto updateSchedule(CreateScheduleRequest scheduleRequest);
+    void deleteSchedule(ScheduleDto scheduleDto);
 }

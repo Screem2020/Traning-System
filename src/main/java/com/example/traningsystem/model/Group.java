@@ -13,7 +13,6 @@ public class Group {
     @Column(nullable = false, name = "groups_id")
     private Long groupId;
     @Column(nullable = false)
-
     private String groupName;
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Student> students;

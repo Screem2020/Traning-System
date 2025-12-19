@@ -23,12 +23,12 @@ import java.time.LocalDateTime;
 @Transactional
 @Service
 public class ScheduleServiceImpl implements ServiceSchedule{
+
     private final ScheduleRepository repository;
     private final GroupRepository groupRepository;
     private final CourseRepository courseRepository;
     private final TeacherRepository teacherRepository;
     private final ScheduleMapper scheduleMapper;
-
 
     @Override
     public ScheduleDto addSchedule(CreateScheduleRequest scheduleRequest) {
@@ -50,7 +50,7 @@ public class ScheduleServiceImpl implements ServiceSchedule{
         Schedule schedule = new Schedule();
         schedule.setTeacher(teacher);
         schedule.setCourse(course);
-        schedule.setGroups(group);
+        schedule.setGroup(group);
         schedule.setDate(scheduledTime);
         return scheduleMapper.toDto(repository.save(schedule));
     }
@@ -77,9 +77,14 @@ public class ScheduleServiceImpl implements ServiceSchedule{
         }
         schedule.setCourse(course);
         schedule.setTeacher(teacher);
-        schedule.setGroups(group);
+        schedule.setGroup(group);
         schedule.setDate(startDay);
         return scheduleMapper.toDto(repository.save(schedule));
+    }
+
+    @Override
+    public void deleteSchedule(ScheduleDto scheduleDto) {
+
     }
 
 }

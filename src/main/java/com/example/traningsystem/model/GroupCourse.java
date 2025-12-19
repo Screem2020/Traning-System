@@ -15,7 +15,7 @@ public class GroupCourse {
     private GroupCourseID  id;
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("groupId")
-    @JoinColumn(name = "group_id")
+    @JoinColumn(name = "groups_id")
     private Group group;
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("courseId")

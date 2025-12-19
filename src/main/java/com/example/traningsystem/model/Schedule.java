@@ -13,7 +13,7 @@ public class Schedule {
     private Long scheduleId;
     @ManyToOne
     @JoinColumn(name = "groups_id")
-    private Group groups;
+    private Group group;
     @ManyToOne()
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;

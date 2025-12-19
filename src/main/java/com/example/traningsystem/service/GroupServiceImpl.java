@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @AllArgsConstructor
@@ -52,20 +53,17 @@ public class GroupServiceImpl implements ServiceGroups {
         repository.deleteById(id);
     }
 
-    public Group findGroupById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Group not found with id " + id));
+    public GroupDto findGroupById(Long id) {
+        Group group = repository.findById(id).orElseThrow(() -> new NotFoundException("Not found group with id " + id));
+        return groupMapper.toDto(group);
     }
 
     @Override
-    public Group updateGroup(Group group) {
-        Group groupById = findGroupById(group.getGroupId());
-        if (groupById != null) {
-            groupById.setGroupName(group.getGroupName());
-            groupById.setStudents(group.getStudents());
-            return repository.save(groupById);
-        }
-        throw new NotFoundException("Group not found with id " + group.getGroupId());
+    public GroupDto updateGroup(GroupDto groupDto) {
+        Group group = repository.findById(groupDto.getGroupId())
+                .orElseThrow(() -> new NotFoundException("Group not found with id " + groupDto.getGroupId()));
+        group.setGroupName(groupDto.getGroupName());
+        return  groupMapper.toDto(repository.save(group));
     }
 
     @Override
@@ -77,17 +75,17 @@ public class GroupServiceImpl implements ServiceGroups {
     }
 
     @Override
-    public Group findByGroupName(String groupName) {
-         return repository.findByGroupName(groupName);
+    public GroupDto findByGroupName(String groupName) {
+        return repository.findByGroupName(groupName)
+                .map(groupMapper::toDto)
+                .orElseThrow(() ->  new NotFoundException("Not found group with name " + groupName));
     }
 
     @Override
     public void deleteGroupByName(String groupName) {
-        Group byGroupName = findByGroupName(groupName);
-        if (byGroupName != null) {
-            repository.deleteById(byGroupName.getGroupId());
-            return;
-        } throw new NotFoundException("Group not found with name " + groupName);
+        repository.findByGroupName(groupName)
+                .map(groupMapper::toDto)
+                .orElseThrow(() -> new NotFoundException("Not found group with name " + groupName));
     }
 
     @Override

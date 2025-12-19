@@ -17,13 +17,11 @@ public class GroupController {
     private final ServiceGroups serviceGroups;
 
     @PostMapping("/save")
-    public GroupDto save(@RequestBody CreateGroupRequest group) {
-        GroupDto groupDto = serviceGroups.addGroup(group);
-        System.out.println(groupDto.getGroupId());
-        return groupDto;
+    public GroupDto save(@RequestBody CreateGroupRequest groupRequest) {
+        return serviceGroups.addGroup(groupRequest);
     }
     @GetMapping("/find/{id}")
-    public Group findById(@PathVariable Long id) {
+    public GroupDto findById(@PathVariable Long id) {
         return service.findGroupById(id);
     }
     @GetMapping()
@@ -35,11 +33,11 @@ public class GroupController {
         service.deleteGroup(id);
     }
     @PutMapping("/update")
-    public Group update(@RequestBody Group group) {
-        return service.updateGroup(group);
+    public GroupDto update(@RequestBody GroupDto groupDto) {
+        return service.updateGroup(groupDto);
     }
     @DeleteMapping("/find/name/{groupName}")
-    public Group findGroupByName(@PathVariable String groupName) {
+    public GroupDto findGroupByName(@PathVariable String groupName) {
         return service.findByGroupName(groupName);
     }
     @DeleteMapping("delete/name/{groupName}")
