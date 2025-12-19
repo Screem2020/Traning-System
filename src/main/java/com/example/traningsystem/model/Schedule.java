@@ -2,7 +2,7 @@ package com.example.traningsystem.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -21,5 +21,5 @@ public class Schedule {
     @JoinColumn(name = "course_id")
     private Course course;
     @Column
-    private LocalDate date;
+    private LocalDateTime date;
 }

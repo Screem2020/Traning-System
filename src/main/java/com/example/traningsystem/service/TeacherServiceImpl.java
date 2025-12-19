@@ -9,14 +9,12 @@ import com.example.traningsystem.mapper.TeacherMapper;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
 import lombok.AllArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional
 @AllArgsConstructor
-@Primary
 @Service
 public class TeacherServiceImpl implements ServiceTeacher {
     private final TeacherMapper teacherMapper;

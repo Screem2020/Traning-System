@@ -47,7 +47,7 @@ public class CourseServiceImpl implements ServiceCourse {
     public CourseDto updateCourse(CourseDto courseDto) {
         Course course = repository.findById(courseDto.getCourseId()).orElseThrow(() -> new NotFoundException("Course not found"));
         course.setName(courseDto.getCourseName());
-        course.setDescription(courseDto.getDistriction());
+        course.setDescription(courseDto.getDistraction());
         if (courseDto.getTeacherDto() != null) {
             Long teacherId = courseDto.getTeacherDto().getTeacherId();
             Teacher teacher = teacherRepository.findById(teacherId)

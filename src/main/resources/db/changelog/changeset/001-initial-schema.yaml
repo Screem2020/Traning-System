@@ -137,7 +137,8 @@
                     type: bigint
                 - column:
                     name: date
-                    type: date
+                    type: timestamp
+                  *//TODO:
           - addForeignKeyConstraint:
               baseColumnNames: groups_id
               baseTableName: schedule
