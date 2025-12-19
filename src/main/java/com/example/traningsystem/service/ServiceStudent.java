@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface ServiceStudent {
     List<StudentDto> findAllStudents();
-    StudentDto addStudent(CreateStudentRequest student);
-    StudentDto updateStudent(CreateStudentRequest student);
+    StudentDto addStudent(CreateStudentRequest studentRequest);
+    StudentDto updateStudent(CreateStudentRequest studentRequest);
     void deleteStudent(Long id);
-    Student findStudentById(Long id);
+    StudentDto findStudentById(Long id);
 }

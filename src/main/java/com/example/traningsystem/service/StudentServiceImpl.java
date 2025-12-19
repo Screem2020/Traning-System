@@ -6,13 +6,11 @@ import com.example.traningsystem.dto.student.CreateStudentRequest;
 import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.StudentMapper;
-import com.example.traningsystem.mapper.StudentMapperImpl;
 import com.example.traningsystem.model.Group;
 import com.example.traningsystem.model.Student;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Transactional
@@ -22,7 +20,6 @@ public class StudentServiceImpl implements ServiceStudent {
     private final StudentRepository repository;
     private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
-    private final StudentMapperImpl studentMapperImpl;
 
     @Override
     public List<StudentDto> findAllStudents() {
@@ -55,11 +52,15 @@ public class StudentServiceImpl implements ServiceStudent {
 
     @Override
     public void deleteStudent(Long id) {
-        repository.deleteById(id);
+        Student student = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Student not found with id: " + id));
+        repository.delete(student);
     }
 
     @Override
-    public Student findStudentById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new NotFoundException("Student not found with id: " + id));
+    public StudentDto findStudentById(Long id) {
+        Student student = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Student not found with id: " + id));
+        return studentMapper.toDto(student);
     }
 }
