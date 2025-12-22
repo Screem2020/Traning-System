@@ -14,7 +14,7 @@ public class Course {
     @Column(name = "course_id", nullable = false)
     private Long courseId;
     @Column(nullable = false)
-    private String name;
+    private String courseName;
     @Column(nullable = false)
     private String description;
     @OneToMany(mappedBy = "course",  cascade = CascadeType.ALL)
@@ -23,5 +23,4 @@ public class Course {
     private Teacher teacher;
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<GroupCourse>  groupCourse;
-
 }

@@ -2,6 +2,7 @@ package com.example.traningsystem.controller;
 
 import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.dto.group.GroupDto;
+import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.model.Group;
 import com.example.traningsystem.service.ServiceGroups;
 import lombok.RequiredArgsConstructor;
@@ -47,5 +48,9 @@ public class GroupController {
     @DeleteMapping("delete/all")
     public void deleteAllGroups() {
         service.deleteAllGroups();
+    }
+    @GetMapping("find/all_students/{groupId}")
+    public List<StudentDto> findAllStudents(@PathVariable Long groupId) {
+        return service.findAllStudents(groupId);
     }
 }

@@ -2,6 +2,7 @@ package com.example.traningsystem.service;
 
 import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.dto.group.GroupDto;
+import com.example.traningsystem.dto.student.StudentDto;
 import java.util.List;
 
 public interface ServiceGroups {
@@ -13,4 +14,5 @@ public interface ServiceGroups {
     GroupDto findByGroupName(String groupName);
     void deleteGroupByName(String groupName);
     void deleteAllGroups();
+    List<StudentDto> findAllStudents(Long groupId);
 }

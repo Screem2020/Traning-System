@@ -1,12 +1,34 @@
 package com.example.traningsystem.controller;
 
+import com.example.traningsystem.dto.schedule.CreateScheduleRequest;
+import com.example.traningsystem.dto.schedule.ScheduleDto;
+import com.example.traningsystem.service.ScheduleServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/schedule")
+@RequestMapping("/api/v1/schedule")
 @RequiredArgsConstructor
 public class ScheduleController {
+
+    private final ScheduleServiceImpl service;
+
+    @PostMapping("/save")
+    public ScheduleDto save(@RequestBody CreateScheduleRequest schedule) {
+        return service.addSchedule(schedule);
+    }
+    @PutMapping("/update")
+    public ScheduleDto update(@RequestBody CreateScheduleRequest schedule) {
+        return service.updateSchedule(schedule);
+    }
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Long id) {
+        service.deleteSchedule(id);
+    }
+    @GetMapping("/list/course/{courseId}")
+    public List<ScheduleDto> getScheduleByIdCourse(@PathVariable Long courseId) {
+        return service.getScheduleForCourse(courseId);
+    }
 
 }

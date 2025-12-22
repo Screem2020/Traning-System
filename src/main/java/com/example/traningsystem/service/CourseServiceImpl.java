@@ -24,14 +24,10 @@ public class CourseServiceImpl implements ServiceCourse {
 
     @Override
     public CourseDto saveCourse(CreateCourseRequest courseRequest) {
-        Teacher teacherDto = teacherRepository
-                .findById(courseRequest.getTeacherDto().getId())
-                .orElseThrow(() -> new NotFoundException("Teacher not found"));
-        Course entity = courseMapper.fromCreateRequest(courseRequest);
-        entity.setTeacher(teacherDto);
-        Course save = repository.save(entity);
-        return courseMapper.toDto(save);
+        Course entity = courseMapper.toEntity(courseRequest);
+        return courseMapper.toDto(repository.save(entity));
     }
+
     @Override
     public void deleteCourse(Long id) {
         repository.deleteById(id);
@@ -43,19 +39,19 @@ public class CourseServiceImpl implements ServiceCourse {
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Course not found"));
     }
+
     @Override
     public CourseDto updateCourse(CourseDto courseDto) {
-        Course course = repository.findById(courseDto.getCourseId()).orElseThrow(() -> new NotFoundException("Course not found"));
-        course.setName(courseDto.getCourseName());
+        Course course = repository.findById(courseDto.getCourseId())
+                .orElseThrow(() -> new NotFoundException("Course not found"));
+        Teacher teacher = teacherRepository.findById(courseDto.getTeacherId())
+                .orElseThrow(() -> new NotFoundException("Teacher not found"));
+        course.setCourseName(courseDto.getCourseName());
         course.setDescription(courseDto.getDistraction());
-        if (courseDto.getTeacherDto() != null) {
-            Long teacherId = courseDto.getTeacherDto().getTeacherId();
-            Teacher teacher = teacherRepository.findById(teacherId)
-                    .orElseThrow(() -> new NotFoundException("Teacher not found"));
-            course.setTeacher(teacher);
-        }
-        return courseMapper.toDto(course);
+        course.setTeacher(teacher);
+        return courseMapper.toDto(repository.save(course));
     }
+
     @Override
     public CourseDto findCourseById(Long id) {
         return repository.findById(id)

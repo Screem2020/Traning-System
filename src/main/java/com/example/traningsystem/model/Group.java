@@ -2,6 +2,7 @@ package com.example.traningsystem.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.util.List;
 
 @Entity
@@ -14,10 +15,10 @@ public class Group {
     private Long groupId;
     @Column(nullable = false)
     private String groupName;
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group")
     private List<Student> students;
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Schedule> schedule;
-    @OneToMany(mappedBy = "group",  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<GroupCourse> groupCourses;
-    }
+}
