@@ -2,7 +2,7 @@ package com.example.traningsystem.controller;
 
 import com.example.traningsystem.dto.schedule.CreateScheduleRequest;
 import com.example.traningsystem.dto.schedule.ScheduleDto;
-import com.example.traningsystem.service.ScheduleServiceImpl;
+import com.example.traningsystem.service.ServiceSchedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduleController {
 
-    private final ScheduleServiceImpl service;
+    private final ServiceSchedule service;
 
     @PostMapping("/save")
     public ScheduleDto save(@RequestBody CreateScheduleRequest schedule) {
@@ -30,5 +30,13 @@ public class ScheduleController {
     public List<ScheduleDto> getScheduleByIdCourse(@PathVariable Long courseId) {
         return service.getScheduleForCourse(courseId);
     }
-
+    @GetMapping("/list/group/{groupId}")
+    public List<ScheduleDto> getScheduleCourseForGroupId(@PathVariable Long groupId) {
+        return service.getScheduleCourseForGroup(groupId);
+    }
+    @GetMapping("/list/teacher/{teacherId}")
+    public List<ScheduleDto> getScheduleForTeacher(@PathVariable Long teacherId) {
+        return service.getScheduleForTeacher(teacherId);
+    }
 }
+

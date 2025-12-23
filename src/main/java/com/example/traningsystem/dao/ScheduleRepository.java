@@ -15,4 +15,5 @@ public interface ScheduleRepository extends CrudRepository<Schedule, Long> {
     List<Schedule> findAllByCourse_CourseId(Long courseCourseId);
     boolean existsById(Long courseId);
     List<Schedule> findAllByTeacher_TeacherId(Long teacherId);
+    List<Schedule> findAllByGroup_GroupId(Long groupId);
 }

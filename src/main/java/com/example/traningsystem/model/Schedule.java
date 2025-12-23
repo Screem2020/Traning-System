@@ -20,6 +20,6 @@ public class Schedule {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
-    @Column
+    @Column(name = "date", columnDefinition = "TIMESTAMP(0)")
     private LocalDateTime date;
 }

@@ -138,7 +138,6 @@
                 - column:
                     name: date
                     type: timestamp
-                  *//TODO:
           - addForeignKeyConstraint:
               baseColumnNames: groups_id
               baseTableName: schedule

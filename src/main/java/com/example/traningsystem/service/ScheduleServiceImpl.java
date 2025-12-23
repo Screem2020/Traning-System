@@ -97,13 +97,10 @@ public class ScheduleServiceImpl implements ServiceSchedule {
 
     @Override
     public List<ScheduleDto> getScheduleForCourse(@NotNull Long courseId) {
-        if (!repository.existsById(courseId)) {
+        if (!courseRepository.existsById(courseId)) {
             throw new NotFoundException("Course not found");
         }
-        return repository.findAllByCourse_CourseId(courseId)
-                .stream()
-                .map(scheduleMapper::toDto)
-                .toList();
+        return mapList(repository.findAllByCourse_CourseId(courseId));
     }
 
     public ScheduleDto getScheduleForId(Long id) {
@@ -113,15 +110,21 @@ public class ScheduleServiceImpl implements ServiceSchedule {
 
     @Override
     public List<ScheduleDto> getScheduleCourseForGroup(Long groupId) {
-        List<Schedule> schedules = repository.findAllByCourse_CourseId(groupId);
-        return schedules.stream()
-                .map(scheduleMapper::toDto)
-                .collect(Collectors.toList());
+        if (!groupRepository.existsById(groupId)) {
+            throw new NotFoundException("Group not found");
+        }
+        return mapList(repository.findAllByGroup_GroupId(groupId));
     }
 
     @Override
     public List<ScheduleDto> getScheduleForTeacher(Long teacherId) {
-        List<Schedule> schedules = repository.findAllByTeacher_TeacherId(teacherId);
+        if (!teacherRepository.existsById(teacherId)) {
+            throw new NotFoundException("Teacher not found");
+        }
+        return mapList(repository.findAllByTeacher_TeacherId(teacherId));
+    }
+
+    private List<ScheduleDto> mapList(List<Schedule> schedules) {
         return schedules.stream()
                 .map(scheduleMapper::toDto)
                 .collect(Collectors.toList());
