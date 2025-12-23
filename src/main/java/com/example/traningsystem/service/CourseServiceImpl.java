@@ -35,7 +35,7 @@ public class CourseServiceImpl implements ServiceCourse {
 
     @Override
     public CourseDto findCourseByName(String name) {
-        return repository.findByName(name)
+        return repository.findByCourseName(name)
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Course not found"));
     }
