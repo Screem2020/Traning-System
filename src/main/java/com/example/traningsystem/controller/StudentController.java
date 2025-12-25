@@ -13,19 +13,19 @@ import java.util.List;
 public class StudentController {
     public final ServiceStudent service;
 
-    @PostMapping("/save")
+    @PostMapping()
     public StudentDto save(@RequestBody CreateStudentRequest student) {
         return service.addStudent(student);
     }
-    @PutMapping("/update")
+    @PutMapping()
     public StudentDto update(@RequestBody CreateStudentRequest student) {
         return service.updateStudent(student);
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.deleteStudent(id);
     }
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     public StudentDto findById(@PathVariable ("id") Long id) {
         return service.findStudentById(id);
     }

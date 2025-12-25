@@ -19,19 +19,19 @@ public class TeacherController {
     public List<TeacherDto> findAll() {
         return service.findAllTeachers();
     }
-    @PostMapping("/save_teacher")
+    @PostMapping()
     public TeacherDto save(@RequestBody CreateTeacherRequest teacherRequest) {
         return service.addTeacher(teacherRequest);
     }
-    @PutMapping("/upadate_teacher")
+    @PutMapping()
     public TeacherDto updateTeacher(@RequestBody com.example.traningsystem.dto.teacher.TeacherDto teacherDto) {
         return service.updateTeacher(teacherDto);
     }
-    @PutMapping("/find_teacher/{id}")
+    @PutMapping("/{id}")
     public TeacherDto findTeacherById(@PathVariable Long id) {
         return service.findTeacherById(id);
     }
-    @DeleteMapping("/delete_teacher/{id}")
+    @DeleteMapping("/{id}")
     public void deleteTeacherById(@PathVariable Long id) {
         service.deleteTeacherById(id);
     }

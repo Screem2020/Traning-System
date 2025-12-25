@@ -14,27 +14,27 @@ public class ScheduleController {
 
     private final ServiceSchedule service;
 
-    @PostMapping("/save")
+    @PostMapping()
     public ScheduleDto save(@RequestBody CreateScheduleRequest schedule) {
         return service.addSchedule(schedule);
     }
-    @PutMapping("/update")
+    @PutMapping()
     public ScheduleDto update(@RequestBody CreateScheduleRequest schedule) {
         return service.updateSchedule(schedule);
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.deleteSchedule(id);
     }
-    @GetMapping("/list/course/{courseId}")
+    @GetMapping("/{courseId}")
     public List<ScheduleDto> getScheduleByIdCourse(@PathVariable Long courseId) {
         return service.getScheduleForCourse(courseId);
     }
-    @GetMapping("/list/group/{groupId}")
+    @GetMapping("/{groupId}")
     public List<ScheduleDto> getScheduleCourseForGroupId(@PathVariable Long groupId) {
         return service.getScheduleCourseForGroup(groupId);
     }
-    @GetMapping("/list/teacher/{teacherId}")
+    @GetMapping("/{teacherId}")
     public List<ScheduleDto> getScheduleForTeacher(@PathVariable Long teacherId) {
         return service.getScheduleForTeacher(teacherId);
     }

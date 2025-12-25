@@ -17,11 +17,11 @@ public class GroupController {
     public final ServiceGroups service;
     private final ServiceGroups serviceGroups;
 
-    @PostMapping("/save")
+    @PostMapping()
     public GroupDto save(@RequestBody CreateGroupRequest groupRequest) {
         return serviceGroups.addGroup(groupRequest);
     }
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     public GroupDto findById(@PathVariable Long id) {
         return service.findGroupById(id);
     }
@@ -29,27 +29,27 @@ public class GroupController {
     public List<GroupDto> findAll() {
         return service.findAllGroups();
     }
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.deleteGroup(id);
     }
-    @PutMapping("/update")
+    @PutMapping()
     public GroupDto update(@RequestBody GroupDto groupDto) {
         return service.updateGroup(groupDto);
     }
-    @DeleteMapping("/find/name/{groupName}")
+    @DeleteMapping("/{groupName}")
     public GroupDto findGroupByName(@PathVariable String groupName) {
         return service.findByGroupName(groupName);
     }
-    @DeleteMapping("delete/name/{groupName}")
+    @DeleteMapping("/{groupName}")
     public void deleteByGroupName(@PathVariable String groupName) {
         service.deleteGroupByName(groupName);
     }
-    @DeleteMapping("delete/all")
+    @DeleteMapping()
     public void deleteAllGroups() {
         service.deleteAllGroups();
     }
-    @GetMapping("find/all_students/{groupId}")
+    @GetMapping("/{groupId}")
     public List<StudentDto> findAllStudents(@PathVariable Long groupId) {
         return service.findAllStudents(groupId);
     }
