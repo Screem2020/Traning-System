@@ -1,16 +1,15 @@
 package com.example.traningsystem.service;
 
-import com.example.traningsystem.dto.course.CourseDto;
-import com.example.traningsystem.dto.course.CreateCourseRequest;
+import com.example.traningsystem.dto.course.CourseRequest;
 
 import java.util.List;
 
 public interface CourseService {
 
-    CourseDto saveCourse(CreateCourseRequest courseRequest);
+    CourseRequest saveCourse(CourseRequest courseRequest);
     void deleteCourse(Long id);
-    CourseDto findCourseByName(String name);
-    CourseDto updateCourse(CourseDto courseDto);
-    CourseDto findCourseById(Long id);
-    List<CourseDto> findAllCourses();
+    CourseRequest findCourseByName(String name);
+    CourseRequest updateCourse(CourseRequest courseRequest);
+    CourseRequest findCourseById(Long id);
+    List<CourseRequest> findAllCourses();
 }

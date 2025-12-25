@@ -2,8 +2,7 @@ package com.example.traningsystem.service;
 
 import com.example.traningsystem.dao.CourseRepository;
 import com.example.traningsystem.dao.TeacherRepository;
-import com.example.traningsystem.dto.course.CourseDto;
-import com.example.traningsystem.dto.course.CreateCourseRequest;
+import com.example.traningsystem.dto.course.CourseRequest;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.CourseMapper;
 import com.example.traningsystem.model.Course;
@@ -23,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository repository;
 
     @Override
-    public CourseDto saveCourse(CreateCourseRequest courseRequest) {
+    public CourseRequest saveCourse(CourseRequest courseRequest) {
         Course entity = courseMapper.toEntity(courseRequest);
         return courseMapper.toDto(repository.save(entity));
     }
@@ -34,33 +33,33 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseDto findCourseByName(String name) {
+    public CourseRequest findCourseByName(String name) {
         return repository.findByCourseName(name)
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Course not found"));
     }
 
     @Override
-    public CourseDto updateCourse(CourseDto courseDto) {
-        Course course = repository.findById(courseDto.getCourseId())
+    public CourseRequest updateCourse(CourseRequest courseRequest) {
+        Course course = repository.findById(courseRequest.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Course not found"));
-        Teacher teacher = teacherRepository.findById(courseDto.getTeacherId())
+        Teacher teacher = teacherRepository.findById(courseRequest.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Teacher not found"));
-        course.setCourseName(courseDto.getCourseName());
-        course.setDescription(courseDto.getDistraction());
+        course.setCourseName(courseRequest.getCourseName());
+        course.setDescription(courseRequest.getDistraction());
         course.setTeacher(teacher);
         return courseMapper.toDto(repository.save(course));
     }
 
     @Override
-    public CourseDto findCourseById(Long id) {
+    public CourseRequest findCourseById(Long id) {
         return repository.findById(id)
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Course not found"));
     }
 
     @Override
-    public List<CourseDto> findAllCourses() {
+    public List<CourseRequest> findAllCourses() {
         return repository.findAll()
                 .stream()
                 .map(courseMapper::toDto)

@@ -1,7 +1,6 @@
 package com.example.traningsystem.controller;
 
-import com.example.traningsystem.dto.course.CourseDto;
-import com.example.traningsystem.dto.course.CreateCourseRequest;
+import com.example.traningsystem.dto.course.CourseRequest;
 import com.example.traningsystem.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +13,15 @@ public class CourseController {
 
     private final CourseService service;
     @PostMapping()
-    public CourseDto save(@RequestBody CreateCourseRequest courseRequest) {
+    public CourseRequest save(@RequestBody CourseRequest courseRequest) {
         return service.saveCourse(courseRequest);
     }
     @GetMapping
-    public List<CourseDto> allCourses() {
+    public List<CourseRequest> allCourses() {
         return service.findAllCourses();
     }
     @GetMapping("/{id}")
-    public CourseDto findById(@PathVariable Long id) {
+    public CourseRequest findById(@PathVariable Long id) {
         return service.findCourseById(id);
     }
     @DeleteMapping("/{id}")
@@ -30,11 +29,11 @@ public class CourseController {
         service.deleteCourse(id);
     }
     @PutMapping()
-    public CourseDto update(@RequestBody CourseDto courseDto) {
-        return service.updateCourse(courseDto);
+    public CourseRequest update(@RequestBody CourseRequest courseRequest) {
+        return service.updateCourse(courseRequest);
     }
     @GetMapping("/{name}")
-    public CourseDto findCourseByName(@PathVariable String name) {
+    public CourseRequest findCourseByName(@PathVariable String name) {
         return service.findCourseByName(name);
     }
 }

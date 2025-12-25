@@ -35,7 +35,7 @@ public class GroupController {
     public GroupDto update(@RequestBody GroupDto groupDto) {
         return service.updateGroup(groupDto);
     }
-    @DeleteMapping("/{groupName}")
+    @GetMapping("/{groupName}")
     public GroupDto findGroupByName(@PathVariable String groupName) {
         return service.findByGroupName(groupName);
     }
