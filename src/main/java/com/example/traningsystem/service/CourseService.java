@@ -12,4 +12,5 @@ public interface CourseService {
     CourseRequest updateCourse(CourseRequest courseRequest);
     CourseRequest findCourseById(Long id);
     List<CourseRequest> findAllCourses();
+
 }

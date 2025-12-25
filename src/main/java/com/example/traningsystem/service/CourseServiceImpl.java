@@ -45,9 +45,8 @@ public class CourseServiceImpl implements CourseService {
                 .orElseThrow(() -> new NotFoundException("Course not found"));
         Teacher teacher = teacherRepository.findById(courseRequest.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Teacher not found"));
-        course.setCourseName(courseRequest.getCourseName());
-        course.setDescription(courseRequest.getDistraction());
-        course.setTeacher(teacher);
+       courseMapper.updateEntityFromDto(courseRequest, course);
+       course.setTeacher(teacher);
         return courseMapper.toDto(repository.save(course));
     }
 
