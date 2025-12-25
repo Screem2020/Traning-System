@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 @AllArgsConstructor
 @Service
-public class TeacherServiceImpl implements ServiceTeacher {
+public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper teacherMapper;
     private final CourseRepository courseRepository;
     private final TeacherRepository repository;

@@ -2,7 +2,7 @@ package com.example.traningsystem.controller;
 
 import com.example.traningsystem.dto.course.CourseDto;
 import com.example.traningsystem.dto.course.CreateCourseRequest;
-import com.example.traningsystem.service.CourseServiceImpl;
+import com.example.traningsystem.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseController {
 
-    private final CourseServiceImpl service;
+    private final CourseService service;
     @PostMapping()
     public CourseDto save(@RequestBody CreateCourseRequest courseRequest) {
         return service.saveCourse(courseRequest);

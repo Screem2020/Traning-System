@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 @Service
 @AllArgsConstructor
-public class StudentServiceImpl implements ServiceStudent {
+public class StudentServiceImpl implements StudentService {
     private final StudentRepository repository;
     private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;

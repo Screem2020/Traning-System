@@ -2,7 +2,7 @@ package com.example.traningsystem.controller;
 
 import com.example.traningsystem.dto.student.CreateStudentRequest;
 import com.example.traningsystem.dto.student.StudentDto;
-import com.example.traningsystem.service.ServiceStudent;
+import com.example.traningsystem.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping("/api/v1/students")
 @RequiredArgsConstructor
 public class StudentController {
-    public final ServiceStudent service;
+    public final StudentService service;
 
     @PostMapping()
     public StudentDto save(@RequestBody CreateStudentRequest student) {

@@ -17,7 +17,7 @@ import java.util.List;
 @Transactional
 @AllArgsConstructor
 @Service
-public class GroupServiceImpl implements ServiceGroups {
+public class GroupsServiceImpl implements GroupsService {
 
     private final GroupRepository repository;
     private final GroupMapper groupMapper;

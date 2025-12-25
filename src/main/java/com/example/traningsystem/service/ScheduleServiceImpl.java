@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Transactional
 @Service
-public class ScheduleServiceImpl implements ServiceSchedule {
+public class ScheduleServiceImpl implements ScheduleService {
 
     private final ScheduleRepository repository;
     private final GroupRepository groupRepository;

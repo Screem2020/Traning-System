@@ -5,7 +5,7 @@ import com.example.traningsystem.dto.group.GroupDto;
 import com.example.traningsystem.dto.student.StudentDto;
 import java.util.List;
 
-public interface ServiceGroups {
+public interface GroupsService {
     GroupDto addGroup(CreateGroupRequest groupRequest);
     void deleteGroup(Long groupId);
     GroupDto findGroupById(Long groupId);

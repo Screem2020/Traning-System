@@ -2,7 +2,7 @@ package com.example.traningsystem.controller;
 
 import com.example.traningsystem.dto.schedule.CreateScheduleRequest;
 import com.example.traningsystem.dto.schedule.ScheduleDto;
-import com.example.traningsystem.service.ServiceSchedule;
+import com.example.traningsystem.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ScheduleController {
 
-    private final ServiceSchedule service;
+    private final ScheduleService service;
 
     @PostMapping()
     public ScheduleDto save(@RequestBody CreateScheduleRequest schedule) {

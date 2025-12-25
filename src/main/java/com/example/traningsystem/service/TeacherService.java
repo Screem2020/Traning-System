@@ -5,7 +5,7 @@ import com.example.traningsystem.dto.teacher.TeacherDto;
 
 import java.util.List;
 
-public interface ServiceTeacher {
+public interface TeacherService {
     TeacherDto addTeacher(CreateTeacherRequest teacherRequest);
     List<TeacherDto> findAllTeachers();
     TeacherDto findTeacherById(Long id);

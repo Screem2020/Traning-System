@@ -2,8 +2,7 @@ package com.example.traningsystem.controller;
 
 import com.example.traningsystem.dto.teacher.CreateTeacherRequest;
 import com.example.traningsystem.dto.teacher.TeacherDto;
-import com.example.traningsystem.model.Teacher;
-import com.example.traningsystem.service.ServiceTeacher;
+import com.example.traningsystem.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/v1/teacher")
 public class TeacherController {
 
-    private final ServiceTeacher service;
+    private final TeacherService service;
 
     @GetMapping
     public List<TeacherDto> findAll() {

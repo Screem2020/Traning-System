@@ -4,7 +4,7 @@ import com.example.traningsystem.dto.schedule.CreateScheduleRequest;
 import com.example.traningsystem.dto.schedule.ScheduleDto;
 import java.util.List;
 
-public interface ServiceSchedule {
+public interface ScheduleService {
     ScheduleDto addSchedule(CreateScheduleRequest scheduleRequest);
     ScheduleDto updateSchedule(CreateScheduleRequest scheduleRequest);
     void deleteSchedule(Long id);

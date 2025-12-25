@@ -3,8 +3,7 @@ package com.example.traningsystem.controller;
 import com.example.traningsystem.dto.group.CreateGroupRequest;
 import com.example.traningsystem.dto.group.GroupDto;
 import com.example.traningsystem.dto.student.StudentDto;
-import com.example.traningsystem.model.Group;
-import com.example.traningsystem.service.ServiceGroups;
+import com.example.traningsystem.service.GroupsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -14,12 +13,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupController {
 
-    public final ServiceGroups service;
-    private final ServiceGroups serviceGroups;
+    public final GroupsService service;
 
     @PostMapping()
     public GroupDto save(@RequestBody CreateGroupRequest groupRequest) {
-        return serviceGroups.addGroup(groupRequest);
+        return service.addGroup(groupRequest);
     }
     @GetMapping("/{id}")
     public GroupDto findById(@PathVariable Long id) {
