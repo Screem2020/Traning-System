@@ -9,20 +9,20 @@ import com.example.traningsystem.mapper.TeacherMapper;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
 import com.example.traningsystem.service.TeacherService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper teacherMapper;
     private final CourseRepository courseRepository;
     private final TeacherRepository repository;
 
+    @Transactional(readOnly = true)
     @Override
     public TeacherDto addTeacher(CreateTeacherRequest teacherRequest) {
         Course course = courseRepository.findById(teacherRequest.getCourseId())
@@ -43,13 +43,13 @@ public class TeacherServiceImpl implements TeacherService {
                 .orElseThrow(() -> new NotFoundException("Teacher not found"));
         return teacherMapper.toDto(teacher);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public void deleteTeacherById(Long id) {
         Teacher teacher = repository.findById(id).orElseThrow(() -> new NotFoundException("Teacher not found"));
         repository.delete(teacher);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public TeacherDto updateTeacher(TeacherDto teacherDto) {
         Teacher teacher = repository.findById(teacherDto.getId())

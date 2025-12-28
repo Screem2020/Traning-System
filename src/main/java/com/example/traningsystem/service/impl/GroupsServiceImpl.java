@@ -11,14 +11,13 @@ import com.example.traningsystem.mapper.GroupMapper;
 import com.example.traningsystem.mapper.StudentMapper;
 import com.example.traningsystem.model.Group;
 import com.example.traningsystem.service.GroupsService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class    GroupsServiceImpl implements GroupsService {
 
@@ -27,12 +26,13 @@ public class    GroupsServiceImpl implements GroupsService {
     private final StudentMapper studentMapper;
     private final StudentRepository studentRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public GroupDto addGroup(CreateGroupRequest groupRequest) {
         Group entity = groupMapper.toEntity(groupRequest);
         return groupMapper.toDto(repository.save(entity));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public void deleteGroup(Long id) {
         Group group = repository.findById(id)
@@ -48,7 +48,7 @@ public class    GroupsServiceImpl implements GroupsService {
                 .orElseThrow(() -> new NotFoundException("Not found group with id " + id));
         return groupMapper.toDto(group);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public GroupDto updateGroup(GroupDto groupDto) {
         Group group = repository.findById(groupDto.getGroupId())
@@ -68,7 +68,7 @@ public class    GroupsServiceImpl implements GroupsService {
                 .map(groupMapper::toDto)
                 .orElseThrow(() ->  new NotFoundException("Not found group with name " + groupName));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public void deleteByGroupName(String groupName) {
         Group group = repository.findByGroupName(groupName)
@@ -78,7 +78,7 @@ public class    GroupsServiceImpl implements GroupsService {
         }
         repository.delete(group);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public void deleteAllGroups() {
         repository.deleteAll();

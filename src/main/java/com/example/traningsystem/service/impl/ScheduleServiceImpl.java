@@ -8,27 +8,22 @@ import com.example.traningsystem.dto.schedule.CreateScheduleRequest;
 import com.example.traningsystem.dto.schedule.ScheduleDto;
 import com.example.traningsystem.exceptions.ExistException;
 import com.example.traningsystem.exceptions.NotFoundException;
-import com.example.traningsystem.mapper.CourseMapper;
 import com.example.traningsystem.mapper.ScheduleMapper;
-import com.example.traningsystem.mapper.TeacherMapper;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Group;
 import com.example.traningsystem.model.Schedule;
 import com.example.traningsystem.model.Teacher;
 import com.example.traningsystem.service.ScheduleService;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
-@AllArgsConstructor
-@Transactional
+@RequiredArgsConstructor
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
@@ -37,9 +32,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final CourseRepository courseRepository;
     private final TeacherRepository teacherRepository;
     private final ScheduleMapper scheduleMapper;
-    private final CourseMapper courseMapper;
-    private final TeacherMapper teacherMapper;
 
+    @Transactional(readOnly = true)
     @Override
     public ScheduleDto addSchedule(CreateScheduleRequest scheduleRequest) {
         Teacher teacher = teacherRepository.findById(scheduleRequest.getTeacherId())
@@ -67,7 +61,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setDate(scheduledTime);
         return scheduleMapper.toDto(repository.save(schedule));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public ScheduleDto updateSchedule(CreateScheduleRequest requestSchedule) {
         Course course = courseRepository.findById(requestSchedule.getCourseId())
@@ -94,7 +88,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setDate(startDay);
         return scheduleMapper.toDto(repository.save(schedule));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public void deleteSchedule(Long id) {
         Schedule schedule = repository.findById(id)

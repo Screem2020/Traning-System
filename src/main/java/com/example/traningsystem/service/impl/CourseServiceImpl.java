@@ -8,16 +8,14 @@ import com.example.traningsystem.mapper.CourseMapper;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
 import com.example.traningsystem.service.CourseService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
 
-@Transactional
-@AllArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
 
     private final TeacherRepository teacherRepository;
@@ -25,11 +23,12 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository repository;
 
     @Override
+    @Transactional(readOnly = true)
     public CourseRequest saveCourse(CourseRequest courseRequest) {
         Course entity = courseMapper.toEntity(courseRequest);
         return courseMapper.toDto(repository.save(entity));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public void deleteCourse(Long id) {
         repository.deleteById(id);
@@ -41,7 +40,7 @@ public class CourseServiceImpl implements CourseService {
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Course not found"));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public CourseRequest updateCourse(CourseRequest courseRequest) {
         Course course = repository.findById(courseRequest.getCourseId())

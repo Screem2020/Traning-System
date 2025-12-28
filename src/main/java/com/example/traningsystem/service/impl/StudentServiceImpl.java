@@ -9,15 +9,14 @@ import com.example.traningsystem.mapper.StudentMapper;
 import com.example.traningsystem.model.Group;
 import com.example.traningsystem.model.Student;
 import com.example.traningsystem.service.StudentService;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
     private final StudentRepository repository;
     private final GroupRepository groupRepository;
@@ -27,7 +26,7 @@ public class StudentServiceImpl implements StudentService {
     public Page<StudentDto> findAllStudents(Pageable pageable) {
         return repository.findAll(pageable).map(studentMapper::toDto);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public StudentDto addStudent(CreateStudentRequest studentRequest) {
         Group groupDto = groupRepository.findById(studentRequest.getGroupId())
@@ -36,7 +35,7 @@ public class StudentServiceImpl implements StudentService {
         entity.setGroup(groupDto);
         return studentMapper.toDto(repository.save(entity));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public StudentDto updateStudent(CreateStudentRequest studentRequest) {
         Student studentById = repository.findById(studentRequest.getStudentId())
@@ -48,7 +47,7 @@ public class StudentServiceImpl implements StudentService {
         studentById.setGroup(group);
         return studentMapper.toDto(repository.save(studentById));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public void deleteStudent(Long id) {
         Student student = repository.findById(id)
