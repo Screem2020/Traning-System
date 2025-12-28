@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class CourseServiceImpl implements CourseService {
@@ -23,24 +24,24 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository repository;
 
     @Override
-    @Transactional(readOnly = true)
     public CourseRequest saveCourse(CourseRequest courseRequest) {
         Course entity = courseMapper.toEntity(courseRequest);
         return courseMapper.toDto(repository.save(entity));
     }
-    @Transactional(readOnly = true)
+
     @Override
     public void deleteCourse(Long id) {
         repository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public CourseRequest findCourseByName(String name) {
         return repository.findByCourseName(name)
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Course not found"));
     }
-    @Transactional(readOnly = true)
+
     @Override
     public CourseRequest updateCourse(CourseRequest courseRequest) {
         Course course = repository.findById(courseRequest.getCourseId())
@@ -51,7 +52,7 @@ public class CourseServiceImpl implements CourseService {
        course.setTeacher(teacher);
         return courseMapper.toDto(repository.save(course));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public CourseRequest findCourseById(Long id) {
         return repository.findById(id)
@@ -59,6 +60,7 @@ public class CourseServiceImpl implements CourseService {
                 .orElseThrow(() -> new NotFoundException("Course not found"));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<CourseRequest> findAllCourses(Pageable pageable) {
         return repository.findAll(pageable).map(courseMapper::toDto);

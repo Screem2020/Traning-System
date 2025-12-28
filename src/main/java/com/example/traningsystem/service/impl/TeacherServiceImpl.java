@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class TeacherServiceImpl implements TeacherService {
@@ -22,7 +23,6 @@ public class TeacherServiceImpl implements TeacherService {
     private final CourseRepository courseRepository;
     private final TeacherRepository repository;
 
-    @Transactional(readOnly = true)
     @Override
     public TeacherDto addTeacher(CreateTeacherRequest teacherRequest) {
         Course course = courseRepository.findById(teacherRequest.getCourseId())
@@ -32,24 +32,26 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherMapper.toDto(repository.save(teacher));
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<TeacherDto> findAllTeachers(Pageable pageable) {
         return repository.findAll(pageable).map(teacherMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public TeacherDto findTeacherById(Long id) {
         Teacher teacher = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Teacher not found"));
         return teacherMapper.toDto(teacher);
     }
-    @Transactional(readOnly = true)
+
     @Override
     public void deleteTeacherById(Long id) {
         Teacher teacher = repository.findById(id).orElseThrow(() -> new NotFoundException("Teacher not found"));
         repository.delete(teacher);
     }
-    @Transactional(readOnly = true)
+
     @Override
     public TeacherDto updateTeacher(TeacherDto teacherDto) {
         Teacher teacher = repository.findById(teacherDto.getId())

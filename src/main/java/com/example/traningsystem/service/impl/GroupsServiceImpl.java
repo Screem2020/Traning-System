@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class    GroupsServiceImpl implements GroupsService {
@@ -26,13 +27,12 @@ public class    GroupsServiceImpl implements GroupsService {
     private final StudentMapper studentMapper;
     private final StudentRepository studentRepository;
 
-    @Transactional(readOnly = true)
     @Override
     public GroupDto addGroup(CreateGroupRequest groupRequest) {
         Group entity = groupMapper.toEntity(groupRequest);
         return groupMapper.toDto(repository.save(entity));
     }
-    @Transactional(readOnly = true)
+
     @Override
     public void deleteGroup(Long id) {
         Group group = repository.findById(id)
@@ -42,13 +42,13 @@ public class    GroupsServiceImpl implements GroupsService {
         }
         repository.deleteById(id);
     }
-
+    @Transactional(readOnly = true)
     public GroupDto findGroupById(Long id) {
         Group group = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found group with id " + id));
         return groupMapper.toDto(group);
     }
-    @Transactional(readOnly = true)
+
     @Override
     public GroupDto updateGroup(GroupDto groupDto) {
         Group group = repository.findById(groupDto.getGroupId())
@@ -56,19 +56,19 @@ public class    GroupsServiceImpl implements GroupsService {
         group.setGroupName(groupDto.getGroupName());
         return  groupMapper.toDto(repository.save(group));
     }
-
+    @Transactional(readOnly = true)
     @Override
     public Page<GroupDto> findAllGroups(Pageable pageable) {
         return repository.findAll(pageable).map(groupMapper::toDto);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public GroupDto findGroupByName(String groupName) {
         return repository.findByGroupName(groupName)
                 .map(groupMapper::toDto)
                 .orElseThrow(() ->  new NotFoundException("Not found group with name " + groupName));
     }
-    @Transactional(readOnly = true)
+
     @Override
     public void deleteByGroupName(String groupName) {
         Group group = repository.findByGroupName(groupName)
@@ -78,12 +78,13 @@ public class    GroupsServiceImpl implements GroupsService {
         }
         repository.delete(group);
     }
-    @Transactional(readOnly = true)
+
     @Override
     public void deleteAllGroups() {
         repository.deleteAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<StudentDto> findAllStudentsByGroup(Pageable pageable, Long groupId) {
         return studentRepository.findAllByGroup_GroupId(pageable, groupId).map(studentMapper::toDto);

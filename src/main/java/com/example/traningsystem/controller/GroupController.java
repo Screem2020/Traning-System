@@ -17,7 +17,7 @@ public class GroupController {
 
     public final GroupsService service;
 
-    @PostMapping()
+    @PostMapping("save")
     public GroupDto save(@RequestBody CreateGroupRequest groupRequest) {
         return service.addGroup(groupRequest);
     }

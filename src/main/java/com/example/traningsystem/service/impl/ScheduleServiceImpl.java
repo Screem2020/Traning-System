@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -33,7 +34,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final TeacherRepository teacherRepository;
     private final ScheduleMapper scheduleMapper;
 
-    @Transactional(readOnly = true)
     @Override
     public ScheduleDto addSchedule(CreateScheduleRequest scheduleRequest) {
         Teacher teacher = teacherRepository.findById(scheduleRequest.getTeacherId())
@@ -61,7 +61,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setDate(scheduledTime);
         return scheduleMapper.toDto(repository.save(schedule));
     }
-    @Transactional(readOnly = true)
+
     @Override
     public ScheduleDto updateSchedule(CreateScheduleRequest requestSchedule) {
         Course course = courseRepository.findById(requestSchedule.getCourseId())
@@ -88,7 +88,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         schedule.setDate(startDay);
         return scheduleMapper.toDto(repository.save(schedule));
     }
-    @Transactional(readOnly = true)
+
     @Override
     public void deleteSchedule(Long id) {
         Schedule schedule = repository.findById(id)
@@ -96,6 +96,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         repository.delete(schedule);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<ScheduleDto> getScheduleForCourse(Pageable pageable, @NotNull Long courseId) {
         if (!courseRepository.existsById(courseId)) {
@@ -105,6 +106,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .map(scheduleMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<ScheduleDto> getScheduleCourseForGroup(Pageable pageable, Long groupId) {
         if (!groupRepository.existsById(groupId)) {
@@ -114,6 +116,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .map(scheduleMapper::toDto);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Page<ScheduleDto> getScheduleForTeacher(Pageable pageable, Long teacherId) {
         if (!teacherRepository.existsById(teacherId)) {

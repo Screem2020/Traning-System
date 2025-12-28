@@ -34,7 +34,7 @@ public class StudentController {
     @GetMapping()
     public Page<StudentDto> findAllStudents(@RequestParam(defaultValue = "0") int page,
                                             @RequestParam(defaultValue = "10") int size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "studentName"));
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "firstName"));
         return  service.findAllStudents(pageRequest);
     }
 }

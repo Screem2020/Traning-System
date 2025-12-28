@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
@@ -22,11 +23,12 @@ public class StudentServiceImpl implements StudentService {
     private final GroupRepository groupRepository;
     private final StudentMapper studentMapper;
 
+    @Transactional(readOnly = true)
     @Override
     public Page<StudentDto> findAllStudents(Pageable pageable) {
         return repository.findAll(pageable).map(studentMapper::toDto);
     }
-    @Transactional(readOnly = true)
+
     @Override
     public StudentDto addStudent(CreateStudentRequest studentRequest) {
         Group groupDto = groupRepository.findById(studentRequest.getGroupId())
@@ -35,7 +37,7 @@ public class StudentServiceImpl implements StudentService {
         entity.setGroup(groupDto);
         return studentMapper.toDto(repository.save(entity));
     }
-    @Transactional(readOnly = true)
+
     @Override
     public StudentDto updateStudent(CreateStudentRequest studentRequest) {
         Student studentById = repository.findById(studentRequest.getStudentId())
@@ -47,7 +49,7 @@ public class StudentServiceImpl implements StudentService {
         studentById.setGroup(group);
         return studentMapper.toDto(repository.save(studentById));
     }
-    @Transactional(readOnly = true)
+
     @Override
     public void deleteStudent(Long id) {
         Student student = repository.findById(id)
@@ -55,6 +57,7 @@ public class StudentServiceImpl implements StudentService {
         repository.delete(student);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public StudentDto findStudentById(Long id) {
         Student student = repository.findById(id)
