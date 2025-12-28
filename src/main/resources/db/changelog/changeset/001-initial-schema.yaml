@@ -67,7 +67,7 @@
                       nullable: false
                       primaryKey: true
                 - column:
-                    name: name
+                    name: course_name
                     type: varchar(200)
                     constraints:
                       nullable: false

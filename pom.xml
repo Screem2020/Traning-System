@@ -31,7 +31,7 @@
 		<java.version>17</java.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <jakarta.version>3.1.1</jakarta.version>
-        <liquibase.version>3.18.0</liquibase.version>
+<!--        <liquibase.version>4.31.1</liquibase.version>-->
 	</properties>
 	<dependencies>
 		<dependency>
@@ -75,9 +75,9 @@
             <version>${jakarta.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${liquibase.version}</version>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>5.0.0</version>
         </dependency>
     </dependencies>
 
@@ -107,4 +107,5 @@
 
         </plugins>
 	</build>
+
 </project>

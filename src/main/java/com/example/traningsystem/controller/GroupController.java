@@ -49,7 +49,7 @@ public class GroupController {
     public void deleteByGroupName(@PathVariable String groupName) {
         service.deleteByGroupName(groupName);
     }
-    @DeleteMapping()
+    @DeleteMapping("all")
     public void deleteAllGroups() {
         service.deleteAllGroups();
     }

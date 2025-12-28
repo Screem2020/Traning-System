@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "schedule_groups_for_courses")
+@Table(name = "group_course")
 public class GroupCourse {
     @EmbeddedId
     private GroupCourseID  id;
