@@ -2,11 +2,13 @@ package com.example.traningsystem.service;
 
 import com.example.traningsystem.dto.student.CreateStudentRequest;
 import com.example.traningsystem.dto.student.StudentDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface StudentService {
-    List<StudentDto> findAllStudents();
+    Page<StudentDto> findAllStudents(Pageable pageable);
     StudentDto addStudent(CreateStudentRequest studentRequest);
     StudentDto updateStudent(CreateStudentRequest studentRequest);
     void deleteStudent(Long id);

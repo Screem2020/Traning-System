@@ -4,8 +4,10 @@ import com.example.traningsystem.dto.schedule.CreateScheduleRequest;
 import com.example.traningsystem.dto.schedule.ScheduleDto;
 import com.example.traningsystem.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/schedule")
@@ -27,16 +29,28 @@ public class ScheduleController {
         service.deleteSchedule(id);
     }
     @GetMapping("/{courseId}")
-    public List<ScheduleDto> getScheduleByIdCourse(@PathVariable Long courseId) {
-        return service.getScheduleForCourse(courseId);
+    public Page<ScheduleDto> getScheduleByIdCourse(
+            @PathVariable Long courseId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id", "courseName"));
+        return service.getScheduleForCourse(pageRequest, courseId);
     }
     @GetMapping("/{groupId}")
-    public List<ScheduleDto> getScheduleCourseForGroupId(@PathVariable Long groupId) {
-        return service.getScheduleCourseForGroup(groupId);
+    public Page<ScheduleDto> getScheduleCourseForGroupId(
+            @PathVariable Long groupId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id", "groupName"));
+        return service.getScheduleCourseForGroup(pageRequest, groupId);
     }
     @GetMapping("/{teacherId}")
-    public List<ScheduleDto> getScheduleForTeacher(@PathVariable Long teacherId) {
-        return service.getScheduleForTeacher(teacherId);
+    public Page<ScheduleDto> getScheduleForTeacher(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @PathVariable Long teacherId) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id", "teacherName"));
+        return service.getScheduleForTeacher(pageRequest, teacherId);
     }
 }
 

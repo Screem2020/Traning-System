@@ -2,14 +2,14 @@ package com.example.traningsystem.service;
 
 import com.example.traningsystem.dto.schedule.CreateScheduleRequest;
 import com.example.traningsystem.dto.schedule.ScheduleDto;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ScheduleService {
     ScheduleDto addSchedule(CreateScheduleRequest scheduleRequest);
     ScheduleDto updateSchedule(CreateScheduleRequest scheduleRequest);
     void deleteSchedule(Long id);
-    List<ScheduleDto> getScheduleForCourse(Long courseId);
-    ScheduleDto getScheduleForId(Long id);
-    List<ScheduleDto> getScheduleCourseForGroup(Long groupId);
-    List<ScheduleDto> getScheduleForTeacher(Long teacherId);
+    Page<ScheduleDto> getScheduleForCourse(Pageable pageable, Long courseId);
+    Page<ScheduleDto> getScheduleCourseForGroup(Pageable pageable, Long groupId);
+    Page<ScheduleDto> getScheduleForTeacher(Pageable pageable,Long teacherId);
 }

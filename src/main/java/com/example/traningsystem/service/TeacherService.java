@@ -2,12 +2,12 @@ package com.example.traningsystem.service;
 
 import com.example.traningsystem.dto.teacher.CreateTeacherRequest;
 import com.example.traningsystem.dto.teacher.TeacherDto;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface TeacherService {
     TeacherDto addTeacher(CreateTeacherRequest teacherRequest);
-    List<TeacherDto> findAllTeachers();
+    Page<TeacherDto> findAllTeachers(Pageable pageable);
     TeacherDto findTeacherById(Long id);
     void deleteTeacherById(Long id);
     TeacherDto updateTeacher(TeacherDto teacherDto);

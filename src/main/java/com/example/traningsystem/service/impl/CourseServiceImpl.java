@@ -1,4 +1,4 @@
-package com.example.traningsystem.service;
+package com.example.traningsystem.service.impl;
 
 import com.example.traningsystem.dao.CourseRepository;
 import com.example.traningsystem.dao.TeacherRepository;
@@ -7,7 +7,10 @@ import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.CourseMapper;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
+import com.example.traningsystem.service.CourseService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
@@ -58,11 +61,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<CourseRequest> findAllCourses() {
-        /* TODO:Pagenation <Page> */
-        return repository.findAll()
-                .stream()
-                .map(courseMapper::toDto)
-                .toList();
+    public Page<CourseRequest> findAllCourses(Pageable pageable) {
+        return repository.findAll(pageable).map(courseMapper::toDto);
     }
 }

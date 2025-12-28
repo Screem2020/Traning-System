@@ -3,8 +3,10 @@ package com.example.traningsystem.controller;
 import com.example.traningsystem.dto.course.CourseRequest;
 import com.example.traningsystem.service.CourseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RequestMapping("api/v1/course")
 @RestController
@@ -17,8 +19,11 @@ public class CourseController {
         return service.saveCourse(courseRequest);
     }
     @GetMapping
-    public List<CourseRequest> allCourses() {
-        return service.findAllCourses();
+    public Page<CourseRequest> all(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "name", "id"));
+        return service.findAllCourses(pageable);
     }
     @GetMapping("/{id}")
     public CourseRequest findById(@PathVariable Long id) {

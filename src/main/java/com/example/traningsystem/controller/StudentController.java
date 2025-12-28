@@ -4,8 +4,10 @@ import com.example.traningsystem.dto.student.CreateStudentRequest;
 import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/students")
@@ -30,7 +32,9 @@ public class StudentController {
         return service.findStudentById(id);
     }
     @GetMapping()
-    public List<StudentDto> findAllStudents() {
-        return service.findAllStudents();
+    public Page<StudentDto> findAllStudents(@RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "10") int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "studentName"));
+        return  service.findAllStudents(pageRequest);
     }
 }

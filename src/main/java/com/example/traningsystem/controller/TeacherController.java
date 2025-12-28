@@ -4,8 +4,10 @@ import com.example.traningsystem.dto.teacher.CreateTeacherRequest;
 import com.example.traningsystem.dto.teacher.TeacherDto;
 import com.example.traningsystem.service.TeacherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,8 +17,10 @@ public class TeacherController {
     private final TeacherService service;
 
     @GetMapping
-    public List<TeacherDto> findAll() {
-        return service.findAllTeachers();
+    public Page<TeacherDto> findAll(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size) {
+        PageRequest pageRequest =  PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"teacherName"));
+        return service.findAllTeachers(pageRequest);
     }
     @PostMapping()
     public TeacherDto save(@RequestBody CreateTeacherRequest teacherRequest) {

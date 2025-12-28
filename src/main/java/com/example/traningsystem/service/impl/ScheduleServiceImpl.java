@@ -1,4 +1,4 @@
-package com.example.traningsystem.service;
+package com.example.traningsystem.service.impl;
 
 import com.example.traningsystem.dao.CourseRepository;
 import com.example.traningsystem.dao.GroupRepository;
@@ -8,13 +8,18 @@ import com.example.traningsystem.dto.schedule.CreateScheduleRequest;
 import com.example.traningsystem.dto.schedule.ScheduleDto;
 import com.example.traningsystem.exceptions.ExistException;
 import com.example.traningsystem.exceptions.NotFoundException;
+import com.example.traningsystem.mapper.CourseMapper;
 import com.example.traningsystem.mapper.ScheduleMapper;
+import com.example.traningsystem.mapper.TeacherMapper;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Group;
 import com.example.traningsystem.model.Schedule;
 import com.example.traningsystem.model.Teacher;
+import com.example.traningsystem.service.ScheduleService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.security.InvalidParameterException;
@@ -32,6 +37,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final CourseRepository courseRepository;
     private final TeacherRepository teacherRepository;
     private final ScheduleMapper scheduleMapper;
+    private final CourseMapper courseMapper;
+    private final TeacherMapper teacherMapper;
 
     @Override
     public ScheduleDto addSchedule(CreateScheduleRequest scheduleRequest) {
@@ -96,37 +103,29 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public List<ScheduleDto> getScheduleForCourse(@NotNull Long courseId) {
+    public Page<ScheduleDto> getScheduleForCourse(Pageable pageable, @NotNull Long courseId) {
         if (!courseRepository.existsById(courseId)) {
             throw new NotFoundException("Course not found");
         }
-        return mapList(repository.findAllByCourse_CourseId(courseId));
-    }
-
-    public ScheduleDto getScheduleForId(Long id) {
-        Schedule schedule = repository.findById(id).orElseThrow(() -> new NotFoundException("Teacher not found"));
-        return scheduleMapper.toDto(schedule);
+        return repository.findAllByCourse_CourseId(pageable, courseId)
+                .map(scheduleMapper::toDto);
     }
 
     @Override
-    public List<ScheduleDto> getScheduleCourseForGroup(Long groupId) {
+    public Page<ScheduleDto> getScheduleCourseForGroup(Pageable pageable, Long groupId) {
         if (!groupRepository.existsById(groupId)) {
             throw new NotFoundException("Group not found");
         }
-        return mapList(repository.findAllByGroup_GroupId(groupId));
+        return repository.findAllByGroup_GroupId(pageable, groupId)
+                .map(scheduleMapper::toDto);
     }
 
     @Override
-    public List<ScheduleDto> getScheduleForTeacher(Long teacherId) {
+    public Page<ScheduleDto> getScheduleForTeacher(Pageable pageable, Long teacherId) {
         if (!teacherRepository.existsById(teacherId)) {
             throw new NotFoundException("Teacher not found");
         }
-        return mapList(repository.findAllByTeacher_TeacherId(teacherId));
-    }
-
-    private List<ScheduleDto> mapList(List<Schedule> schedules) {
-        return schedules.stream()
-                .map(scheduleMapper::toDto)
-                .collect(Collectors.toList());
+        return repository.findAllByTeacher_TeacherId(pageable, teacherId)
+                .map(scheduleMapper::toDto);
     }
 }

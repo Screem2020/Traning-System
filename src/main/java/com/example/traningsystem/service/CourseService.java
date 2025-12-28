@@ -1,8 +1,8 @@
 package com.example.traningsystem.service;
 
 import com.example.traningsystem.dto.course.CourseRequest;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface CourseService {
 
@@ -11,6 +11,6 @@ public interface CourseService {
     CourseRequest findCourseByName(String name);
     CourseRequest updateCourse(CourseRequest courseRequest);
     CourseRequest findCourseById(Long id);
-    List<CourseRequest> findAllCourses();
+    Page<CourseRequest> findAllCourses(Pageable pageable);
 
 }

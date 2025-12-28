@@ -5,8 +5,10 @@ import com.example.traningsystem.dto.group.GroupDto;
 import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.service.GroupsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/groups")
@@ -24,8 +26,12 @@ public class GroupController {
         return service.findGroupById(id);
     }
     @GetMapping()
-    public List<GroupDto> findAll() {
-        return service.findAllGroups();
+    public Page<GroupDto> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+            ) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "groupName","groupId"));
+        return service.findAllGroups(pageRequest);
     }
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
@@ -37,18 +43,23 @@ public class GroupController {
     }
     @GetMapping("/{groupName}")
     public GroupDto findGroupByName(@PathVariable String groupName) {
-        return service.findByGroupName(groupName);
+        return service.findGroupByName(groupName);
     }
     @DeleteMapping("/{groupName}")
     public void deleteByGroupName(@PathVariable String groupName) {
-        service.deleteGroupByName(groupName);
+        service.deleteByGroupName(groupName);
     }
     @DeleteMapping()
     public void deleteAllGroups() {
         service.deleteAllGroups();
     }
     @GetMapping("/{groupId}")
-    public List<StudentDto> findAllStudents(@PathVariable Long groupId) {
-        return service.findAllStudents(groupId);
+    public Page<StudentDto> findAll(
+            @PathVariable Long groupId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Sort studentId = Sort.by(Sort.Direction.DESC, "studentId");
+        PageRequest pageRequest = PageRequest.of(page, size, studentId);
+        return service.findAllStudentsByGroup(pageRequest,groupId);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.traningsystem.service;
+package com.example.traningsystem.service.impl;
 
 import com.example.traningsystem.dao.GroupRepository;
 import com.example.traningsystem.dao.StudentRepository;
@@ -8,10 +8,12 @@ import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.StudentMapper;
 import com.example.traningsystem.model.Group;
 import com.example.traningsystem.model.Student;
+import com.example.traningsystem.service.StudentService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.List;
 
 @Transactional
 @Service
@@ -22,11 +24,8 @@ public class StudentServiceImpl implements StudentService {
     private final StudentMapper studentMapper;
 
     @Override
-    public List<StudentDto> findAllStudents() {
-        return repository.findAll()
-                .stream()
-                .map(studentMapper::toDto)
-                .toList();
+    public Page<StudentDto> findAllStudents(Pageable pageable) {
+        return repository.findAll(pageable).map(studentMapper::toDto);
     }
 
     @Override

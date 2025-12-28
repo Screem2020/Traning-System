@@ -1,19 +1,19 @@
-package com.example.traningsystem.service;
+package com.example.traningsystem.service.impl;
 
 import com.example.traningsystem.dao.CourseRepository;
 import com.example.traningsystem.dao.TeacherRepository;
 import com.example.traningsystem.dto.teacher.CreateTeacherRequest;
 import com.example.traningsystem.dto.teacher.TeacherDto;
 import com.example.traningsystem.exceptions.NotFoundException;
-import com.example.traningsystem.mapper.GroupMapper;
 import com.example.traningsystem.mapper.TeacherMapper;
 import com.example.traningsystem.model.Course;
 import com.example.traningsystem.model.Teacher;
+import com.example.traningsystem.service.TeacherService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Transactional
 @AllArgsConstructor
@@ -22,7 +22,6 @@ public class TeacherServiceImpl implements TeacherService {
     private final TeacherMapper teacherMapper;
     private final CourseRepository courseRepository;
     private final TeacherRepository repository;
-    private final GroupMapper groupMapper;
 
     @Override
     public TeacherDto addTeacher(CreateTeacherRequest teacherRequest) {
@@ -34,11 +33,8 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public List<TeacherDto> findAllTeachers() {
-        return repository.findAll()
-                .stream()
-                .map(teacherMapper::toDto)
-                .toList();
+    public Page<TeacherDto> findAllTeachers(Pageable pageable) {
+        return repository.findAll(pageable).map(teacherMapper::toDto);
     }
 
     @Override

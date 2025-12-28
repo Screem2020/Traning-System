@@ -8,7 +8,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface TeacherMapper {
-    TeacherDto toDto(Teacher teacherDto);
+    TeacherDto toDto(Teacher teacher);
     @Mapping(target = "course", ignore = true)
     Teacher toEntity(CreateTeacherRequest teacherRequest);
+    Teacher toEntity(TeacherDto teacherDto);
 }

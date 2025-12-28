@@ -7,6 +7,6 @@ import lombok.Data;
 public class CourseRequest {
     private Long courseId;
     private String courseName;
-    private String distraction;
+    private String description;
     private TeacherDto teacherDto;
 }
