@@ -8,19 +8,19 @@ import java.util.List;
 @Table(name = "course")
 @Entity
 @Data
-public class Course {
+public class CourseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id", nullable = false)
-    private Long courseId;
+    private Long id;
     @Column(nullable = false)
     private String courseName;
     @Column(nullable = false)
     private String description;
     @OneToMany(mappedBy = "course",  cascade = CascadeType.ALL)
-    private List<Schedule> schedule;
+    private List<ScheduleEntity> schedule;
     @OneToOne(mappedBy = "course", cascade = CascadeType.ALL)
-    private Teacher teacher;
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
-    private List<GroupCourse>  groupCourse;
+    private TeacherEntity teacher;
+    @OneToMany(mappedBy = "course")
+    private List<GroupCourseEntity> groupCourse;
 }

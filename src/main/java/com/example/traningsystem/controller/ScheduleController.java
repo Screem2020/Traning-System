@@ -6,8 +6,11 @@ import com.example.traningsystem.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/v1/schedule")
@@ -31,26 +34,35 @@ public class ScheduleController {
     @GetMapping("/{courseId}")
     public Page<ScheduleDto> getScheduleByIdCourse(
             @PathVariable Long courseId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id", "courseName"));
-        return service.getScheduleForCourse(pageRequest, courseId);
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort = {"id", "courseName"},
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable) {
+        return service.getScheduleCourseForGroup(pageable, courseId);
     }
     @GetMapping("/{groupId}")
     public Page<ScheduleDto> getScheduleCourseForGroupId(
             @PathVariable Long groupId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id", "groupName"));
-        return service.getScheduleCourseForGroup(pageRequest, groupId);
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort = {"id", "groupName"},
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable) {
+        return service.getScheduleCourseForGroup(pageable, groupId);
     }
     @GetMapping("/{teacherId}")
     public Page<ScheduleDto> getScheduleForTeacher(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
-            @PathVariable Long teacherId) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id", "teacherName"));
-        return service.getScheduleForTeacher(pageRequest, teacherId);
+            @PathVariable Long teacherId,
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort = {"id", "firstName"},
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable) {
+        return service.getScheduleForTeacher(pageable, teacherId);
     }
 }
 

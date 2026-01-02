@@ -5,7 +5,9 @@ import com.example.traningsystem.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("api/v1/course")
@@ -20,9 +22,12 @@ public class CourseController {
     }
     @GetMapping
     public Page<CourseRequest> all(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "name", "id"));
+            @PageableDefault(
+                page = 0,
+                size = 10,
+                sort = {"id", "courseName"},
+                direction = Sort.Direction.DESC
+            ) Pageable pageable) {
         return service.findAllCourses(pageable);
     }
     @GetMapping("/{id}")

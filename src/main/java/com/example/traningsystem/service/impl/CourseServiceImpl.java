@@ -5,8 +5,8 @@ import com.example.traningsystem.dao.TeacherRepository;
 import com.example.traningsystem.dto.course.CourseRequest;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.CourseMapper;
-import com.example.traningsystem.model.Course;
-import com.example.traningsystem.model.Teacher;
+import com.example.traningsystem.model.CourseEntity;
+import com.example.traningsystem.model.TeacherEntity;
 import com.example.traningsystem.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,7 +25,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseRequest saveCourse(CourseRequest courseRequest) {
-        Course entity = courseMapper.toEntity(courseRequest);
+        CourseEntity entity = courseMapper.toEntity(courseRequest);
         return courseMapper.toDto(repository.save(entity));
     }
 
@@ -44,10 +44,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseRequest updateCourse(CourseRequest courseRequest) {
-        Course course = repository.findById(courseRequest.getCourseId())
+        CourseEntity course = repository.findById(courseRequest.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Course not found"));
-        Teacher teacher = teacherRepository.findById(courseRequest.getCourseId())
-                .orElseThrow(() -> new NotFoundException("Teacher not found"));
+        TeacherEntity teacher = teacherRepository.findById(courseRequest.getCourseId())
+                .orElseThrow(() -> new NotFoundException("TeacherEntity not found"));
        courseMapper.updateEntityFromDto(courseRequest, course);
        course.setTeacher(teacher);
         return courseMapper.toDto(repository.save(course));

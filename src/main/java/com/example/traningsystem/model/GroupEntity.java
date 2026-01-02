@@ -8,17 +8,17 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "groups")
-public class Group {
+public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, name = "groups_id")
-    private Long groupId;
+    private Long id;
     @Column(nullable = false)
     private String groupName;
     @OneToMany(mappedBy = "group")
-    private List<Student> students;
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<Schedule> schedule;
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<GroupCourse> groupCourses;
+    private List<StudentEntity> students;
+    @OneToMany(mappedBy = "group")
+    private List<ScheduleEntity> schedule;
+    @OneToMany(mappedBy = "group")
+    private List<GroupCourseEntity> groupCourse;
 }

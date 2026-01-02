@@ -10,15 +10,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "group_course")
-public class GroupCourse {
+public class GroupCourseEntity {
     @EmbeddedId
     private GroupCourseID  id;
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("groupId")
     @JoinColumn(name = "groups_id")
-    private Group group;
+    private GroupEntity group;
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("courseId")
     @JoinColumn(name = "course_id")
-    private Course course;
+    private CourseEntity course;
 }

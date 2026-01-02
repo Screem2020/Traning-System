@@ -9,10 +9,10 @@ import com.example.traningsystem.dto.schedule.ScheduleDto;
 import com.example.traningsystem.exceptions.ExistException;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.ScheduleMapper;
-import com.example.traningsystem.model.Course;
-import com.example.traningsystem.model.Group;
-import com.example.traningsystem.model.Schedule;
-import com.example.traningsystem.model.Teacher;
+import com.example.traningsystem.model.CourseEntity;
+import com.example.traningsystem.model.GroupEntity;
+import com.example.traningsystem.model.ScheduleEntity;
+import com.example.traningsystem.model.TeacherEntity;
 import com.example.traningsystem.service.ScheduleService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -36,25 +36,25 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ScheduleDto addSchedule(CreateScheduleRequest scheduleRequest) {
-        Teacher teacher = teacherRepository.findById(scheduleRequest.getTeacherId())
-                .orElseThrow(() -> new NotFoundException("Teacher not found"));
-        Course course = courseRepository.findById(scheduleRequest.getCourseId())
+        TeacherEntity teacher = teacherRepository.findById(scheduleRequest.getTeacherId())
+                .orElseThrow(() -> new NotFoundException("TeacherEntity not found"));
+        CourseEntity course = courseRepository.findById(scheduleRequest.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Course not found"));
-        Group group = groupRepository.findById(scheduleRequest.getGroupId())
-                .orElseThrow(() -> new NotFoundException("Group not found"));
+        GroupEntity group = groupRepository.findById(scheduleRequest.getGroupId())
+                .orElseThrow(() -> new NotFoundException("GroupEntity not found"));
         LocalDateTime scheduledTime = scheduleRequest.getScheduledTime();
         boolean existTeacherByDate = repository.existsByTeacherAndDate(teacher, scheduledTime);
         if (existTeacherByDate) {
-            throw new ExistException("Teacher teaching lesson");
+            throw new ExistException("TeacherEntity teaching lesson");
         }
         boolean existsGroupByDate = repository.existsByGroupAndDate(group, scheduledTime);
         if (existsGroupByDate) {
-            throw new ExistException("Group for lesson");
+            throw new ExistException("GroupEntity for lesson");
         }
-        if (!teacher.getCourse().getCourseId().equals(course.getCourseId())) {
-            throw new InvalidParameterException("Teacher or Course not found");
+        if (!teacher.getCourse().getId().equals(course.getId())) {
+            throw new InvalidParameterException("TeacherEntity or Course not found");
         }
-        Schedule schedule = new Schedule();
+        ScheduleEntity schedule = new ScheduleEntity();
         schedule.setTeacher(teacher);
         schedule.setCourse(course);
         schedule.setGroup(group);
@@ -64,23 +64,23 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ScheduleDto updateSchedule(CreateScheduleRequest requestSchedule) {
-        Course course = courseRepository.findById(requestSchedule.getCourseId())
+        CourseEntity course = courseRepository.findById(requestSchedule.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Course not found"));
-        Group group = groupRepository.findById(requestSchedule.getGroupId())
-                .orElseThrow(() -> new NotFoundException("Group not found"));
-        Teacher teacher = teacherRepository.findById(requestSchedule.getTeacherId())
-                .orElseThrow(() -> new NotFoundException("Teacher not found"));
-        Schedule schedule = repository.findById(requestSchedule.getScheduleId())
-                .orElseThrow(() -> new NotFoundException("Schedule not found"));
+        GroupEntity group = groupRepository.findById(requestSchedule.getGroupId())
+                .orElseThrow(() -> new NotFoundException("GroupEntity not found"));
+        TeacherEntity teacher = teacherRepository.findById(requestSchedule.getTeacherId())
+                .orElseThrow(() -> new NotFoundException("TeacherEntity not found"));
+        ScheduleEntity schedule = repository.findById(requestSchedule.getScheduleId())
+                .orElseThrow(() -> new NotFoundException("ScheduleEntity not found"));
 
         LocalDateTime startDay = requestSchedule.getScheduledTime().toLocalDate().atStartOfDay();
-        boolean existsTeacherToTime = repository.existsByTeacherAndDateAndScheduleId(teacher, startDay, schedule.getScheduleId());
+        boolean existsTeacherToTime = repository.existsByTeacherAndDateAndId(teacher, startDay, schedule.getId());
         if (existsTeacherToTime) {
-            throw new ExistException("Teacher teaching lesson");
+            throw new ExistException("TeacherEntity teaching lesson");
         }
-        boolean existsGroupToTime = repository.existsByGroupAndDateAndScheduleId(group, startDay, schedule.getScheduleId());
+        boolean existsGroupToTime = repository.existsByGroupAndDateAndId(group, startDay, schedule.getId());
         if (existsGroupToTime) {
-            throw new ExistException("Group for lesson");
+            throw new ExistException("GroupEntity for lesson");
         }
         schedule.setCourse(course);
         schedule.setTeacher(teacher);
@@ -91,8 +91,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public void deleteSchedule(Long id) {
-        Schedule schedule = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Schedule not found"));
+        ScheduleEntity schedule = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ScheduleEntity not found"));
         repository.delete(schedule);
     }
 
@@ -102,7 +102,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         if (!courseRepository.existsById(courseId)) {
             throw new NotFoundException("Course not found");
         }
-        return repository.findAllByCourse_CourseId(pageable, courseId)
+        return repository.findAllByCourse_id(pageable, courseId)
                 .map(scheduleMapper::toDto);
     }
 
@@ -110,9 +110,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Page<ScheduleDto> getScheduleCourseForGroup(Pageable pageable, Long groupId) {
         if (!groupRepository.existsById(groupId)) {
-            throw new NotFoundException("Group not found");
+            throw new NotFoundException("GroupEntity not found");
         }
-        return repository.findAllByGroup_GroupId(pageable, groupId)
+        return repository.findAllByGroup_id(pageable, groupId)
                 .map(scheduleMapper::toDto);
     }
 
@@ -120,9 +120,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public Page<ScheduleDto> getScheduleForTeacher(Pageable pageable, Long teacherId) {
         if (!teacherRepository.existsById(teacherId)) {
-            throw new NotFoundException("Teacher not found");
+            throw new NotFoundException("TeacherEntity not found");
         }
-        return repository.findAllByTeacher_TeacherId(pageable, teacherId)
+        return repository.findAllByTeacher_id(pageable, teacherId)
                 .map(scheduleMapper::toDto);
     }
 }

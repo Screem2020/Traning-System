@@ -9,7 +9,7 @@ import com.example.traningsystem.exceptions.ExistStudentsInGroupException;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.GroupMapper;
 import com.example.traningsystem.mapper.StudentMapper;
-import com.example.traningsystem.model.Group;
+import com.example.traningsystem.model.GroupEntity;
 import com.example.traningsystem.service.GroupsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,30 +29,30 @@ public class    GroupsServiceImpl implements GroupsService {
 
     @Override
     public GroupDto addGroup(CreateGroupRequest groupRequest) {
-        Group entity = groupMapper.toEntity(groupRequest);
+        GroupEntity entity = groupMapper.toEntity(groupRequest);
         return groupMapper.toDto(repository.save(entity));
     }
 
     @Override
     public void deleteGroup(Long id) {
-        Group group = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Group not found"));
+        GroupEntity group = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("GroupEntity not found"));
         if (!group.getStudents().isEmpty()) {
-            throw new ExistStudentsInGroupException("Group already exists in this group");
+            throw new ExistStudentsInGroupException("GroupEntity already exists in this group");
         }
         repository.deleteById(id);
     }
     @Transactional(readOnly = true)
     public GroupDto findGroupById(Long id) {
-        Group group = repository.findById(id)
+        GroupEntity group = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Not found group with id " + id));
         return groupMapper.toDto(group);
     }
 
     @Override
     public GroupDto updateGroup(GroupDto groupDto) {
-        Group group = repository.findById(groupDto.getGroupId())
-                .orElseThrow(() -> new NotFoundException("Group not found with id " + groupDto.getGroupId()));
+        GroupEntity group = repository.findById(groupDto.getGroupId())
+                .orElseThrow(() -> new NotFoundException("GroupEntity not found with id " + groupDto.getGroupId()));
         group.setGroupName(groupDto.getGroupName());
         return  groupMapper.toDto(repository.save(group));
     }
@@ -71,10 +71,10 @@ public class    GroupsServiceImpl implements GroupsService {
 
     @Override
     public void deleteByGroupName(String groupName) {
-        Group group = repository.findByGroupName(groupName)
+        GroupEntity group = repository.findByGroupName(groupName)
                 .orElseThrow(() -> new NotFoundException("Not found group with name " + groupName));
         if (!group.getStudents().isEmpty()) {
-            throw new ExistStudentsInGroupException("Group already exists in this group");
+            throw new ExistStudentsInGroupException("GroupEntity already exists in this group");
         }
         repository.delete(group);
     }
@@ -87,6 +87,6 @@ public class    GroupsServiceImpl implements GroupsService {
     @Transactional(readOnly = true)
     @Override
     public Page<StudentDto> findAllStudentsByGroup(Pageable pageable, Long groupId) {
-        return studentRepository.findAllByGroup_GroupId(pageable, groupId).map(studentMapper::toDto);
+        return studentRepository.findAllByGroup_id(pageable, groupId).map(studentMapper::toDto);
     }
 }

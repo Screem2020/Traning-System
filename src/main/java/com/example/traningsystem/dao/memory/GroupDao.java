@@ -33,7 +33,7 @@
 //            groupById.setStudents(group.getStudents());
 //            return groupById;
 //        }
-//        throw new NullPointerException("Group not found with id " + group.getGroupId());
+//        throw new NullPointerException("GroupEntity not found with id " + group.getGroupId());
 //    }
 //
 //    public List<Groups> findAllGroups() {

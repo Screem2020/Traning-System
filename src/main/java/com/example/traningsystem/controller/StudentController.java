@@ -5,8 +5,9 @@ import com.example.traningsystem.dto.student.StudentDto;
 import com.example.traningsystem.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,9 +33,13 @@ public class StudentController {
         return service.findStudentById(id);
     }
     @GetMapping()
-    public Page<StudentDto> findAllStudents(@RequestParam(defaultValue = "0") int page,
-                                            @RequestParam(defaultValue = "10") int size) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "firstName"));
-        return  service.findAllStudents(pageRequest);
+    public Page<StudentDto> findAllStudents(
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort = {"id", "lastName"},
+                    direction = Sort.Direction.DESC
+            )Pageable pageable) {
+        return  service.findAllStudents(pageable);
     }
 }

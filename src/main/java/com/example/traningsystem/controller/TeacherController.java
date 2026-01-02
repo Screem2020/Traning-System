@@ -6,7 +6,9 @@ import com.example.traningsystem.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -17,10 +19,14 @@ public class TeacherController {
     private final TeacherService service;
 
     @GetMapping
-    public Page<TeacherDto> findAll(@RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "10") int size) {
-        PageRequest pageRequest =  PageRequest.of(page, size, Sort.by(Sort.Direction.DESC,"teacherName"));
-        return service.findAllTeachers(pageRequest);
+    public Page<TeacherDto> findAll(
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort = {"id", "firstName"},
+                    direction = Sort.Direction.DESC
+            )Pageable pageable) {
+        return service.findAllTeachers(pageable);
     }
     @PostMapping()
     public TeacherDto save(@RequestBody CreateTeacherRequest teacherRequest) {

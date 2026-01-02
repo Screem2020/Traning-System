@@ -7,19 +7,19 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Table(name = "schedule")
-public class Schedule {
+public class ScheduleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long scheduleId;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "groups_id")
-    private Group group;
+    private GroupEntity group;
     @ManyToOne()
     @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    private TeacherEntity teacher;
     @ManyToOne
     @JoinColumn(name = "course_id")
-    private Course course;
+    private CourseEntity course;
     @Column(name = "date", columnDefinition = "TIMESTAMP(0)")
     private LocalDateTime date;
 }

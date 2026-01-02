@@ -6,8 +6,8 @@ import com.example.traningsystem.dto.teacher.CreateTeacherRequest;
 import com.example.traningsystem.dto.teacher.TeacherDto;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.TeacherMapper;
-import com.example.traningsystem.model.Course;
-import com.example.traningsystem.model.Teacher;
+import com.example.traningsystem.model.CourseEntity;
+import com.example.traningsystem.model.TeacherEntity;
 import com.example.traningsystem.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,9 +25,9 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherDto addTeacher(CreateTeacherRequest teacherRequest) {
-        Course course = courseRepository.findById(teacherRequest.getCourseId())
+        CourseEntity course = courseRepository.findById(teacherRequest.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Course not found"));
-        Teacher teacher = teacherMapper.toEntity(teacherRequest);
+        TeacherEntity teacher = teacherMapper.toEntity(teacherRequest);
         teacher.setCourse(course);
         return teacherMapper.toDto(repository.save(teacher));
     }
@@ -41,22 +41,22 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional(readOnly = true)
     @Override
     public TeacherDto findTeacherById(Long id) {
-        Teacher teacher = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Teacher not found"));
+        TeacherEntity teacher = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("TeacherEntity not found"));
         return teacherMapper.toDto(teacher);
     }
 
     @Override
     public void deleteTeacherById(Long id) {
-        Teacher teacher = repository.findById(id).orElseThrow(() -> new NotFoundException("Teacher not found"));
+        TeacherEntity teacher = repository.findById(id).orElseThrow(() -> new NotFoundException("TeacherEntity not found"));
         repository.delete(teacher);
     }
 
     @Override
     public TeacherDto updateTeacher(TeacherDto teacherDto) {
-        Teacher teacher = repository.findById(teacherDto.getId())
-                .orElseThrow(() -> new NotFoundException("Teacher not found with id: " + teacherDto.getId()));
-        Course course = courseRepository.findById(teacherDto.getCourseId())
+        TeacherEntity teacher = repository.findById(teacherDto.getId())
+                .orElseThrow(() -> new NotFoundException("TeacherEntity not found with id: " + teacherDto.getId()));
+        CourseEntity course = courseRepository.findById(teacherDto.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Course not found with id: " + teacherDto.getCourseId()));
         teacher.setFirstName(teacherDto.getFirstName());
         teacher.setLastName(teacherDto.getLastName());

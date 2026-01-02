@@ -1,7 +1,7 @@
 //package com.example.traningsystem.dao.memory;
 //
 //import com.example.traningsystem.model.Course;
-//import com.example.traningsystem.model.Teacher;
+//import com.example.traningsystem.model.TeacherEntity;
 //import lombok.Data;
 //import lombok.SneakyThrows;
 //import org.springframework.data.crossstore.ChangeSetPersister;
@@ -27,7 +27,7 @@
 //    }
 //
 //    public void saveTeacher(Course course) {
-//        Teacher teacher = course.getTeacher();
+//        TeacherEntity teacher = course.getTeacher();
 //        if (teacher != null) {
 //            teacher.setFirstName(teacher.getFirstName());
 //            teacher.setLastName(teacher.getLastName());

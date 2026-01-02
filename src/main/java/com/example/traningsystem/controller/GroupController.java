@@ -7,7 +7,9 @@ import com.example.traningsystem.service.GroupsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -27,12 +29,15 @@ public class GroupController {
     }
     @GetMapping()
     public Page<GroupDto> findAll(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
-            ) {
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "groupName","groupId"));
-        return service.findAllGroups(pageRequest);
+            @PageableDefault(
+                page = 0,
+                size = 10,
+                sort = {"id", "groupName"},
+                direction = Sort.Direction.DESC
+            ) Pageable pageable ){
+        return service.findAllGroups(pageable);
     }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         service.deleteGroup(id);
@@ -56,10 +61,12 @@ public class GroupController {
     @GetMapping("/{groupId}")
     public Page<StudentDto> findAll(
             @PathVariable Long groupId,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Sort studentId = Sort.by(Sort.Direction.DESC, "studentId");
-        PageRequest pageRequest = PageRequest.of(page, size, studentId);
-        return service.findAllStudentsByGroup(pageRequest,groupId);
+            @PageableDefault(
+                    page = 0,
+                    size = 10,
+                    sort = {"id", "groupName"},
+                    direction = Sort.Direction.DESC
+            ) Pageable pageable){
+        return service.findAllStudentsByGroup(pageable,groupId);
     }
 }

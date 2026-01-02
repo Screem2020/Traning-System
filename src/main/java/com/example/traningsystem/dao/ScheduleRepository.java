@@ -1,20 +1,20 @@
 package com.example.traningsystem.dao;
 
-import com.example.traningsystem.model.Group;
-import com.example.traningsystem.model.Schedule;
-import com.example.traningsystem.model.Teacher;
+import com.example.traningsystem.model.GroupEntity;
+import com.example.traningsystem.model.ScheduleEntity;
+import com.example.traningsystem.model.TeacherEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import java.time.LocalDateTime;
 
-public interface ScheduleRepository extends CrudRepository<Schedule, Long> {
-    boolean existsByTeacherAndDate(Teacher teacher, LocalDateTime date);
-    boolean existsByGroupAndDate(Group group, LocalDateTime date);
-    boolean existsByTeacherAndDateAndScheduleId(Teacher teacher, LocalDateTime date, Long scheduleId);
-    boolean existsByGroupAndDateAndScheduleId(Group group, LocalDateTime date, Long scheduleId);
-    Page<Schedule> findAllByCourse_CourseId(Pageable pageable, Long courseCourseId);
-    boolean existsById(Long courseId);
-    Page<Schedule> findAllByTeacher_TeacherId(Pageable pageable, Long teacherId);
-    Page<Schedule> findAllByGroup_GroupId(Pageable pageable, Long groupId);
+public interface ScheduleRepository extends CrudRepository<ScheduleEntity, Long> {
+    boolean existsByTeacherAndDate(TeacherEntity teacher, LocalDateTime date);
+    boolean existsByGroupAndDate(GroupEntity group, LocalDateTime date);
+    boolean existsByTeacherAndDateAndId(TeacherEntity teacher, LocalDateTime date, Long scheduleId);
+    boolean existsByGroupAndDateAndId(GroupEntity group, LocalDateTime date, Long scheduleId);
+    Page<ScheduleEntity> findAllByCourse_id(Pageable pageable, Long id);
+    boolean existsById(Long id);
+    Page<ScheduleEntity> findAllByTeacher_id(Pageable pageable, Long id);
+    Page<ScheduleEntity> findAllByGroup_id(Pageable pageable, Long id);
 }

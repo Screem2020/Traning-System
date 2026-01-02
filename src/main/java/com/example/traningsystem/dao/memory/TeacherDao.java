@@ -1,6 +1,6 @@
 //package com.example.traningsystem.dao.memory;
 //
-//import com.example.traningsystem.model.Teacher;
+//import com.example.traningsystem.model.TeacherEntity;
 //import lombok.AllArgsConstructor;
 //import lombok.SneakyThrows;
 //import org.springframework.data.crossstore.ChangeSetPersister;
@@ -10,18 +10,18 @@
 //@AllArgsConstructor
 //@Repository
 //public class TeacherDao {
-//    private final List<Teacher> TEACHERS;
+//    private final List<TeacherEntity> TEACHERS;
 //
-//    public void save(Teacher teacher) {
+//    public void save(TeacherEntity teacher) {
 //        TEACHERS.add(teacher);
 //    }
 //
-//    public List<Teacher> findAllTeachers() {
+//    public List<TeacherEntity> findAllTeachers() {
 //        return TEACHERS;
 //    }
 //
 //    @SneakyThrows
-//    public Teacher findTeacherById(Integer id) {
+//    public TeacherEntity findTeacherById(Integer id) {
 //       return TEACHERS.stream()
 //                .filter(element -> element.getTeacherId().equals(id))
 //                .findFirst()
@@ -32,8 +32,8 @@
 //        TEACHERS.removeIf(element -> element.getTeacherId().equals(id));
 //    }
 //
-//    public Teacher updateTeacher(Teacher teacher) {
-//        Teacher findTeacher = findTeacherById(teacher.getTeacherId());
+//    public TeacherEntity updateTeacher(TeacherEntity teacher) {
+//        TeacherEntity findTeacher = findTeacherById(teacher.getTeacherId());
 //        findTeacher.setFirstName(teacher.getFirstName());
 //        findTeacher.setLastName(teacher.getLastName());
 //        findTeacher.setCourse(teacher.getCourse());
