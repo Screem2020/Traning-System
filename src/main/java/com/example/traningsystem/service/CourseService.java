@@ -1,16 +1,16 @@
 package com.example.traningsystem.service;
 
-import com.example.traningsystem.dto.course.CourseRequest;
+import com.example.traningsystem.dto.course.CreateCourseRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CourseService {
 
-    CourseRequest saveCourse(CourseRequest courseRequest);
+    CreateCourseRequest saveCourse(CreateCourseRequest courseRequest);
     void deleteCourse(Long id);
-    CourseRequest findCourseByName(String name);
-    CourseRequest updateCourse(CourseRequest courseRequest);
-    CourseRequest findCourseById(Long id);
-    Page<CourseRequest> findAllCourses(Pageable pageable);
+    CreateCourseRequest findCourseByName(String name);
+    CreateCourseRequest updateCourse(CreateCourseRequest courseRequest);
+    CreateCourseRequest findCourseById(Long id);
+    Page<CreateCourseRequest> findAllCourses(Pageable pageable);
 
 }

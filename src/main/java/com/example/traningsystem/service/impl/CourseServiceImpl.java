@@ -2,7 +2,7 @@ package com.example.traningsystem.service.impl;
 
 import com.example.traningsystem.dao.CourseRepository;
 import com.example.traningsystem.dao.TeacherRepository;
-import com.example.traningsystem.dto.course.CourseRequest;
+import com.example.traningsystem.dto.course.CreateCourseRequest;
 import com.example.traningsystem.exceptions.NotFoundException;
 import com.example.traningsystem.mapper.CourseMapper;
 import com.example.traningsystem.model.CourseEntity;
@@ -24,7 +24,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository repository;
 
     @Override
-    public CourseRequest saveCourse(CourseRequest courseRequest) {
+    public CreateCourseRequest saveCourse(CreateCourseRequest courseRequest) {
         CourseEntity entity = courseMapper.toEntity(courseRequest);
         return courseMapper.toDto(repository.save(entity));
     }
@@ -36,14 +36,14 @@ public class CourseServiceImpl implements CourseService {
 
     @Transactional(readOnly = true)
     @Override
-    public CourseRequest findCourseByName(String name) {
+    public CreateCourseRequest findCourseByName(String name) {
         return repository.findByCourseName(name)
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Course not found"));
     }
 
     @Override
-    public CourseRequest updateCourse(CourseRequest courseRequest) {
+    public CreateCourseRequest updateCourse(CreateCourseRequest courseRequest) {
         CourseEntity course = repository.findById(courseRequest.getCourseId())
                 .orElseThrow(() -> new NotFoundException("Course not found"));
         TeacherEntity teacher = teacherRepository.findById(courseRequest.getCourseId())
@@ -54,7 +54,7 @@ public class CourseServiceImpl implements CourseService {
     }
     @Transactional(readOnly = true)
     @Override
-    public CourseRequest findCourseById(Long id) {
+    public CreateCourseRequest findCourseById(Long id) {
         return repository.findById(id)
                 .map(courseMapper::toDto)
                 .orElseThrow(() -> new NotFoundException("Course not found"));
@@ -62,7 +62,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<CourseRequest> findAllCourses(Pageable pageable) {
+    public Page<CreateCourseRequest> findAllCourses(Pageable pageable) {
         return repository.findAll(pageable).map(courseMapper::toDto);
     }
 }

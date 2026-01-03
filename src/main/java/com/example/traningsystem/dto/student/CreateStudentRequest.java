@@ -1,15 +1,17 @@
 package com.example.traningsystem.dto.student;
 
-import com.example.traningsystem.model.GroupEntity;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
 public class CreateStudentRequest {
     @NotNull
     private Long studentId;
+    @Size(min = 3, max = 200)
     private String firstName;
+    @Size(min = 3, max = 200)
     private String lastName;
+    @NotNull
     private Long groupId;
-    private GroupEntity group;
 }

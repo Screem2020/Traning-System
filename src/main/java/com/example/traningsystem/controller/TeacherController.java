@@ -32,7 +32,7 @@ public class TeacherController {
         return service.addTeacher(teacherRequest);
     }
     @PutMapping()
-    public TeacherDto updateTeacher(@RequestBody com.example.traningsystem.dto.teacher.TeacherDto teacherDto) {
+    public TeacherDto updateTeacher(@RequestBody TeacherDto teacherDto) {
         return service.updateTeacher(teacherDto);
     }
     @PutMapping("/{id}")

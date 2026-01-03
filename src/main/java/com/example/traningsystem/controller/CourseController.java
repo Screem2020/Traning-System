@@ -1,6 +1,6 @@
 package com.example.traningsystem.controller;
 
-import com.example.traningsystem.dto.course.CourseRequest;
+import com.example.traningsystem.dto.course.CreateCourseRequest;
 import com.example.traningsystem.service.CourseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,11 +16,11 @@ public class CourseController {
 
     private final CourseService service;
     @PostMapping()
-    public CourseRequest save(@RequestBody CourseRequest courseRequest) {
+    public CreateCourseRequest save(@RequestBody CreateCourseRequest courseRequest) {
         return service.saveCourse(courseRequest);
     }
     @GetMapping
-    public Page<CourseRequest> all(
+    public Page<CreateCourseRequest> all(
             @PageableDefault(
                 page = 0,
                 size = 10,
@@ -30,7 +30,7 @@ public class CourseController {
         return service.findAllCourses(pageable);
     }
     @GetMapping("/{id}")
-    public CourseRequest findById(@PathVariable Long id) {
+    public CreateCourseRequest findById(@PathVariable Long id) {
         return service.findCourseById(id);
     }
     @DeleteMapping("/{id}")
@@ -38,11 +38,11 @@ public class CourseController {
         service.deleteCourse(id);
     }
     @PutMapping()
-    public CourseRequest update(@RequestBody CourseRequest courseRequest) {
+    public CreateCourseRequest update(@RequestBody CreateCourseRequest courseRequest) {
         return service.updateCourse(courseRequest);
     }
     @GetMapping("/{name}")
-    public CourseRequest findCourseByName(@PathVariable String name) {
+    public CreateCourseRequest findCourseByName(@PathVariable String name) {
         return service.findCourseByName(name);
     }
 }
