@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class GroupDto {
     @NotNull
-    private Long groupId;
+    private Long id;
     @Size(min = 3, max = 200)
     private String groupName;
     private List<CreateCourseRequest> courses;

@@ -70,7 +70,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .orElseThrow(() -> new NotFoundException("GroupEntity not found"));
         TeacherEntity teacher = teacherRepository.findById(requestSchedule.getTeacherId())
                 .orElseThrow(() -> new NotFoundException("TeacherEntity not found"));
-        ScheduleEntity schedule = repository.findById(requestSchedule.getScheduleId())
+        ScheduleEntity schedule = repository.findById(requestSchedule.getId())
                 .orElseThrow(() -> new NotFoundException("ScheduleEntity not found"));
 
         LocalDateTime startDay = requestSchedule.getScheduledTime().toLocalDate().atStartOfDay();

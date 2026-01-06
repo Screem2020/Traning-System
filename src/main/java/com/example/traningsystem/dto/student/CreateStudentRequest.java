@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class CreateStudentRequest {
     @NotNull
-    private Long studentId;
+    private Long id;
     @Size(min = 3, max = 200)
     private String firstName;
     @Size(min = 3, max = 200)

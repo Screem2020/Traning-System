@@ -10,7 +10,7 @@ import java.util.List;
 public class GroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false, name = "groups_id")
+    @Column(nullable = false)
     private Long id;
     @Column(nullable = false)
     private String groupName;

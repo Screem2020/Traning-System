@@ -40,8 +40,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDto updateStudent(CreateStudentRequest studentRequest) {
-        StudentEntity studentById = repository.findById(studentRequest.getStudentId())
-                .orElseThrow(() -> new NotFoundException("StudentEntity not found with id: " + studentRequest.getStudentId()));
+        StudentEntity studentById = repository.findById(studentRequest.getId())
+                .orElseThrow(() -> new NotFoundException("StudentEntity not found with id: " + studentRequest.getId()));
         GroupEntity group = groupRepository.findById(studentRequest.getGroupId())
                 .orElseThrow(() -> new NotFoundException("GroupEntity not found with id: " + studentRequest.getGroupId()));
         studentById.setFirstName(studentRequest.getFirstName());

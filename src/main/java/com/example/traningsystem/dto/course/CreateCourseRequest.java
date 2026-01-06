@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class CreateCourseRequest {
     @NotNull
-    private Long courseId;
+    private Long id;
     @Size(min = 3, max = 200)
     private String courseName;
     private String description;

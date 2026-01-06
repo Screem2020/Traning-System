@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class CreateScheduleRequest {
-    private Long scheduleId;
+    private Long id;
     private Long teacherId;
     private Long courseId;
     private Long GroupId;

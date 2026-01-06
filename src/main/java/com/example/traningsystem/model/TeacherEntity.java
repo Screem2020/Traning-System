@@ -10,13 +10,13 @@ import java.util.List;
 public class TeacherEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "teacher_id", nullable = false)
+    @Column(nullable = false)
     private Long id;
     @Column(nullable = false)
     private String firstName;
     @Column(nullable = false)
     private String lastName;
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "teacher")
     private List<ScheduleEntity> schedule;
     @OneToOne
     @JoinColumn(name = "course_id",  nullable = false)

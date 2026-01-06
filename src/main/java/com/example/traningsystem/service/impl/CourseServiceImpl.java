@@ -44,9 +44,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CreateCourseRequest updateCourse(CreateCourseRequest courseRequest) {
-        CourseEntity course = repository.findById(courseRequest.getCourseId())
+        CourseEntity course = repository.findById(courseRequest.getId())
                 .orElseThrow(() -> new NotFoundException("Course not found"));
-        TeacherEntity teacher = teacherRepository.findById(courseRequest.getCourseId())
+        TeacherEntity teacher = teacherRepository.findById(courseRequest.getId())
                 .orElseThrow(() -> new NotFoundException("TeacherEntity not found"));
        courseMapper.updateEntityFromDto(courseRequest, course);
        course.setTeacher(teacher);

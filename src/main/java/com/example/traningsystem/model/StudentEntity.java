@@ -9,6 +9,7 @@ import lombok.Data;
 public class StudentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private Long id;
     @Column(nullable = false)
     private String firstName;

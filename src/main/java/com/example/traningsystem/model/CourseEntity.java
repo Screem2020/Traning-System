@@ -10,15 +10,15 @@ import java.util.List;
 public class CourseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "course_id", nullable = false)
+    @Column(nullable = false)
     private Long id;
     @Column(nullable = false)
     private String courseName;
     @Column(nullable = false)
     private String description;
-    @OneToMany(mappedBy = "course",  cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "course")
     private List<ScheduleEntity> schedule;
-    @OneToOne(mappedBy = "course", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "course")
     private TeacherEntity teacher;
     @OneToMany(mappedBy = "course")
     private List<GroupCourseEntity> groupCourse;

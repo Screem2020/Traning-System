@@ -51,8 +51,8 @@ public class    GroupsServiceImpl implements GroupsService {
 
     @Override
     public GroupDto updateGroup(GroupDto groupDto) {
-        GroupEntity group = repository.findById(groupDto.getGroupId())
-                .orElseThrow(() -> new NotFoundException("GroupEntity not found with id " + groupDto.getGroupId()));
+        GroupEntity group = repository.findById(groupDto.getId())
+                .orElseThrow(() -> new NotFoundException("GroupEntity not found with id " + groupDto.getId()));
         group.setGroupName(groupDto.getGroupName());
         return  groupMapper.toDto(repository.save(group));
     }

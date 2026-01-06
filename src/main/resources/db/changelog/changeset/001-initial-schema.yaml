@@ -7,7 +7,7 @@
               tableName: groups
               columns:
                 - column:
-                    name: groups_id
+                    name: id
                     type: bigserial
                     constraints:
                       primaryKey: true
@@ -25,7 +25,7 @@
               tableName: students
               columns:
                 - column:
-                    name: student_id
+                    name: id
                     type: bigserial
                     constraints:
                       primaryKey: true
@@ -49,9 +49,8 @@
               baseColumnNames: groups_id
               baseTableName: students
               constraintName: fk_students_group
-              onDelete: Cascade
               onUpdate: Cascade
-              referencedColumnNames: groups_id
+              referencedColumnNames: id
               referencedTableName: groups
     - changeSet:
         id: 3
@@ -61,7 +60,7 @@
               tableName: course
               columns:
                 - column:
-                    name: course_id
+                    name: id
                     type: bigserial
                     constraints:
                       nullable: false
@@ -84,7 +83,7 @@
               tableName: teacher
               columns:
                 - column:
-                    name: teacher_id
+                    name: id
                     type: bigserial
                     constraints:
                       nullable: false
@@ -109,9 +108,8 @@
               baseColumnNames: course_id
               baseTableName: teacher
               constraintName: fk_course_teacher
-              onDelete: Cascade
               onUpdate: Cascade
-              referencedColumnNames: course_id
+              referencedColumnNames: id
               referencedTableName: course
     - changeSet:
         id: 5
@@ -121,7 +119,7 @@
               tableName: schedule
               columns:
                 - column:
-                    name: schedule_id
+                    name: id
                     type: bigserial
                     constraints:
                       nullable: false
@@ -142,25 +140,22 @@
               baseColumnNames: groups_id
               baseTableName: schedule
               constraintName: fk_group_schedule
-              onDelete: Cascade
               onUpdate: Cascade
-              referencedColumnNames: groups_id
+              referencedColumnNames: id
               referencedTableName: groups
           - addForeignKeyConstraint:
               baseColumnNames: teacher_id
               baseTableName: schedule
               constraintName: fk_teacher_schedule
-              onDelete: Cascade
               onUpdate: Cascade
-              referencedColumnNames: teacher_id
+              referencedColumnNames: id
               referencedTableName: teacher
           - addForeignKeyConstraint:
               baseColumnNames: course_id
               baseTableName: schedule
               constraintName: fk_course_schedule
-              onDelete: Cascade
               onUpdate: Cascade
-              referencedColumnNames: course_id
+              referencedColumnNames: id
               referencedTableName: course
     - changeSet:
         id: 6
@@ -185,15 +180,13 @@
               baseColumnNames: groups_id
               baseTableName: group_course
               constraintName: fk_group_group_course
-              onDelete: Cascade
               onUpdate: Cascade
-              referencedColumnNames: groups_id
+              referencedColumnNames: id
               referencedTableName: groups
           - addForeignKeyConstraint:
               baseColumnNames: course_id
               baseTableName: group_course
               constraintName: fk_course_group_course
-              onDelete: Cascade
               onUpdate: Cascade
-              referencedColumnNames: course_id
+              referencedColumnNames: id
               referencedTableName: course
