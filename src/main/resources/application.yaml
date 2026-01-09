@@ -1,3 +1,9 @@
+logging:
+  file:
+    name: logs/Schedule.log
+  level:
+    root: INFO
+    com.example.service: DEBUG
 spring:
    liquibase:
      change-log: classpath:/db/changelog/db.changelog-master.yaml

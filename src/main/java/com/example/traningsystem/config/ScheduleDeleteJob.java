@@ -22,4 +22,5 @@ public class ScheduleDeleteJob {
         repository.deleteAllOlderThan(timeEnd);
         log.info("Schedule delete by time end");
     }
+
 }

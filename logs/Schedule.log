@@ -1,0 +1,50 @@
+2026-01-09T13:25:39.221+02:00  INFO 804 --- [main] c.e.t.TraningsystemApplication           : Starting TraningsystemApplication using Java 24.0.2 with PID 804 (C:\Users\DNS\IdeaProject\traningsystem\target\classes started by DNS in C:\Users\DNS\IdeaProject\traningsystem)
+2026-01-09T13:25:39.223+02:00  INFO 804 --- [main] c.e.t.TraningsystemApplication           : No active profile set, falling back to 1 default profile: "default"
+2026-01-09T13:25:39.841+02:00  INFO 804 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-09T13:25:39.905+02:00  INFO 804 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 56 ms. Found 5 JPA repository interfaces.
+2026-01-09T13:25:40.205+02:00  INFO 804 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-01-09T13:25:40.215+02:00  INFO 804 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-01-09T13:25:40.216+02:00  INFO 804 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2026-01-09T13:25:40.279+02:00  INFO 804 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-01-09T13:25:40.280+02:00  INFO 804 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1021 ms
+2026-01-09T13:25:40.432+02:00  INFO 804 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-01-09T13:25:40.577+02:00  INFO 804 --- [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5438fa43
+2026-01-09T13:25:40.579+02:00  INFO 804 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-01-09T13:25:40.698+02:00  INFO 804 --- [main] liquibase.database                       : Set default schema name to public
+2026-01-09T13:25:40.940+02:00  INFO 804 --- [main] liquibase.changelog                      : Reading from public.databasechangelog
+2026-01-09T13:25:41.001+02:00  INFO 804 --- [main] liquibase.ui                             : Database is up to date, no changesets to execute
+2026-01-09T13:25:41.004+02:00  INFO 804 --- [main] liquibase.changelog                      : Reading from public.databasechangelog
+2026-01-09T13:25:41.014+02:00  INFO 804 --- [main] liquibase.util                           : UPDATE SUMMARY
+2026-01-09T13:25:41.014+02:00  INFO 804 --- [main] liquibase.util                           : Run:                          0
+2026-01-09T13:25:41.014+02:00  INFO 804 --- [main] liquibase.util                           : Previously run:               6
+2026-01-09T13:25:41.014+02:00  INFO 804 --- [main] liquibase.util                           : Filtered out:                 0
+2026-01-09T13:25:41.015+02:00  INFO 804 --- [main] liquibase.util                           : -------------------------------
+2026-01-09T13:25:41.015+02:00  INFO 804 --- [main] liquibase.util                           : Total change sets:            6
+2026-01-09T13:25:41.015+02:00  INFO 804 --- [main] liquibase.util                           : Update summary generated
+2026-01-09T13:25:41.016+02:00  INFO 804 --- [main] liquibase.command                        : Command execution complete
+2026-01-09T13:25:42.118+02:00  INFO 804 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-09T13:25:42.149+02:00  INFO 804 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.33.Final
+2026-01-09T13:25:42.172+02:00  INFO 804 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-01-09T13:25:42.357+02:00  INFO 804 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-09T13:25:42.388+02:00  WARN 804 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-09T13:25:42.401+02:00  INFO 804 --- [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 18.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-09T13:25:43.110+02:00  INFO 804 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-09T13:25:43.113+02:00  INFO 804 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-09T13:25:43.266+02:00  INFO 804 --- [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-09T13:25:43.715+02:00  WARN 804 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-09T13:25:44.052+02:00  INFO 804 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-01-09T13:25:44.058+02:00  INFO 804 --- [main] c.e.t.TraningsystemApplication           : Started TraningsystemApplication in 5.201 seconds (process running for 5.62)
+2026-01-09T13:25:44.060+02:00  WARN 804 --- [main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-01-09T13:25:44.060+02:00  WARN 804 --- [main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-01-09T13:36:01.278+02:00  INFO 804 --- [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-09T13:36:01.290+02:00  INFO 804 --- [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2026-01-09T13:36:01.297+02:00  INFO 804 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-09T13:36:01.302+02:00  INFO 804 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-01-09T13:36:01.309+02:00  INFO 804 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

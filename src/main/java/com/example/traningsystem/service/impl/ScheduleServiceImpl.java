@@ -114,10 +114,4 @@ public class ScheduleServiceImpl implements ScheduleService {
         return repository.findAllByTeacher_id(pageable, teacherId)
                 .map(scheduleMapper::toDto);
     }
-//    @Scheduled(cron = "0 0 0 1 1 *", zone = "Europe/Moscow")
-//    @Override
-//    public void deleteScheduleByTimeEnd() {
-//        LocalDateTime timeEnd = LocalDateTime.now().minusYears(1);
-//        repository.deleteAllOlderThan(timeEnd);
-//    }
 }
