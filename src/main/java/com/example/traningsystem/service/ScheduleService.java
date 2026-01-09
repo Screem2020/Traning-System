@@ -9,7 +9,6 @@ public interface ScheduleService {
     ScheduleDto addSchedule(CreateScheduleRequest scheduleRequest);
     ScheduleDto updateSchedule(CreateScheduleRequest scheduleRequest);
     void deleteSchedule(Long id);
-    Page<ScheduleDto> getScheduleForCourse(Pageable pageable, Long courseId);
     Page<ScheduleDto> getScheduleCourseForGroup(Pageable pageable, Long groupId);
     Page<ScheduleDto> getScheduleForTeacher(Pageable pageable,Long teacherId);
 }

@@ -14,7 +14,6 @@ import com.example.traningsystem.model.GroupEntity;
 import com.example.traningsystem.model.ScheduleEntity;
 import com.example.traningsystem.model.TeacherEntity;
 import com.example.traningsystem.service.ScheduleService;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -98,16 +97,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<ScheduleDto> getScheduleForCourse(Pageable pageable, @NotNull Long courseId) {
-        if (!courseRepository.existsById(courseId)) {
-            throw new NotFoundException("Course not found");
-        }
-        return repository.findAllByCourse_id(pageable, courseId)
-                .map(scheduleMapper::toDto);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
     public Page<ScheduleDto> getScheduleCourseForGroup(Pageable pageable, Long groupId) {
         if (!groupRepository.existsById(groupId)) {
             throw new NotFoundException("GroupEntity not found");
@@ -125,4 +114,10 @@ public class ScheduleServiceImpl implements ScheduleService {
         return repository.findAllByTeacher_id(pageable, teacherId)
                 .map(scheduleMapper::toDto);
     }
+//    @Scheduled(cron = "0 0 0 1 1 *", zone = "Europe/Moscow")
+//    @Override
+//    public void deleteScheduleByTimeEnd() {
+//        LocalDateTime timeEnd = LocalDateTime.now().minusYears(1);
+//        repository.deleteAllOlderThan(timeEnd);
+//    }
 }
