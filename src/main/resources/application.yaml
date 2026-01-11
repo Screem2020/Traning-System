@@ -12,6 +12,7 @@ spring:
     username: postgres
     password: 12345
     driver-class-name: org.postgresql.Driver
+
    jpa:
       hibernate:
         ddl-auto: none
@@ -20,3 +21,7 @@ spring:
           dialect: org.hibernate.dialect.PostgreSQLDialect
           format_sql: true
       show-sql: true
+app:
+  timezone: Europe/Moscow
+  schedule:
+    cleanup-cron: "0 0 0 1 1 *"

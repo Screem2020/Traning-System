@@ -1,6 +1,7 @@
 package com.example.traningsystem.config;
 
 import com.example.traningsystem.dao.ScheduleRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
@@ -16,7 +17,11 @@ public class ScheduleDeleteJob {
 
     private ScheduleRepository repository;
 
-    @Scheduled(cron = "0 0 0 1 1 *", zone = "Europe/Moscow")
+    @Transactional
+    @Scheduled(
+            cron = "${app.schedule.cleanup-cron}",
+            zone = "${app.timezone}"
+    )
     public void deleteScheduleByTimeEnd() {
         LocalDateTime timeEnd = LocalDateTime.now().minusYears(1);
         repository.deleteAllOlderThan(timeEnd);
