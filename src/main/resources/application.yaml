@@ -1,6 +1,4 @@
 logging:
-  file:
-    name: logs/Schedule.log
   level:
     root: INFO
     com.example.service: DEBUG
@@ -12,7 +10,6 @@ spring:
     username: postgres
     password: 12345
     driver-class-name: org.postgresql.Driver
-
    jpa:
       hibernate:
         ddl-auto: none
