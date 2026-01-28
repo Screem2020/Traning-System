@@ -6,9 +6,9 @@ spring:
    liquibase:
      change-log: classpath:/db/changelog/db.changelog-master.yaml
    datasource:
-    url: jdbc:postgresql://localhost:5432/test_db
+    url: jdbc:postgresql://localhost:5432/trsystem
     username: postgres
-    password: 12345
+    password: postgres
     driver-class-name: org.postgresql.Driver
    jpa:
       hibernate:

@@ -1,9 +1,11 @@
 package com.example.traningsystem.controller;
 
 import com.example.traningsystem.AbstractIntegrationTest;
+import com.example.traningsystem.dao.CourseRepository;
 import com.example.traningsystem.dao.TeacherRepository;
+import com.example.traningsystem.factory.TestDataFactory;
+import com.example.traningsystem.model.CourseEntity;
 import com.example.traningsystem.model.TeacherEntity;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +15,13 @@ class TeacherControllerTest extends AbstractIntegrationTest {
 
     @Autowired
     TeacherRepository teacherRepository;
+    @Autowired
+    CourseRepository courseRepository;
 
     @BeforeEach
     void setUp() {
-        var teacher = new TeacherEntity();
-        teacher.setFirstName("John");
-        teacher.setLastName("Doe");
-        TeacherEntity saveTeacher = teacherRepository.save(teacher);
-    }
-
-    @AfterEach
-    void tearDown() {
+        courseRepository.deleteAll();
+        teacherRepository.deleteAll();
     }
 
     @Test
@@ -33,11 +31,26 @@ class TeacherControllerTest extends AbstractIntegrationTest {
 
     @Test
     void findAllTeachers() {
+        CourseEntity course = courseRepository.save(TestDataFactory.course());
+        teacherRepository.save(TestDataFactory.teacher(course));
+
+
+        var allTeacher = teacherRepository.findAll();
+
+        assertThat(allTeacher).isNotEmpty();
+        assertThat(allTeacher).hasSize(1);
+        assertThat(allTeacher.get(0).getFirstName()).isEqualTo("test_teacher");
     }
 
     @Test
     void save() {
+        CourseEntity course = courseRepository.save(TestDataFactory.course());
+        TeacherEntity teacher = TestDataFactory.teacher(course);
 
+        teacherRepository.save(teacher);
+
+        assertThat(teacherRepository.count()).isEqualTo(1);
+        assertThat(teacherRepository.count()).isNotNull();
     }
 
     @Test

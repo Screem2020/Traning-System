@@ -26,7 +26,6 @@
         <liquibase.version>5.0.0</liquibase.version>
         <quartz.scheduler.version>2.5.0</quartz.scheduler.version>
         <junit.jupiter.version>5.10.0</junit.jupiter.version>
-        <testcontainers.version>1.21.3</testcontainers.version>
     </properties>
 
     <dependencies>
@@ -97,15 +96,14 @@
         <!-- Testcontainers -->
         <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>testcontainers</artifactId>
+            <artifactId>postgresql</artifactId>
             <version>${testcontainers.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>${testcontainers.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
 
