@@ -45,9 +45,7 @@ class TeacherControllerTest extends AbstractIntegrationTest {
     @Test
     void save() {
         CourseEntity course = courseRepository.save(TestDataFactory.course());
-        TeacherEntity teacher = TestDataFactory.teacher(course);
-
-        teacherRepository.save(teacher);
+        teacherRepository.save(TestDataFactory.teacher(course));
 
         assertThat(teacherRepository.count()).isEqualTo(1);
         assertThat(teacherRepository.count()).isNotNull();
@@ -55,13 +53,38 @@ class TeacherControllerTest extends AbstractIntegrationTest {
 
     @Test
     void updateTeacher() {
+        CourseEntity course = courseRepository.save(TestDataFactory.course());
+        TeacherEntity teacher = teacherRepository.save(TestDataFactory.teacher(course));
+
+        teacher.setLastName("updated_teacher");
+        teacherRepository.save(teacher);
+        TeacherEntity updateTeacher = teacherRepository.findById(teacher.getId()).orElseThrow();
+
+        assertThat(updateTeacher.getLastName()).isEqualTo("updated_teacher");
     }
 
     @Test
     void findTeacherById() {
+        CourseEntity course = courseRepository.save(TestDataFactory.course());
+        TeacherEntity teacher = teacherRepository.save(TestDataFactory.teacher(course));
+
+        TeacherEntity findTeacher = teacherRepository.findById(teacher.getId()).orElseThrow();
+
+        assertThat(findTeacher.getLastName()).isEqualTo("test_teacher_desc");
     }
 
     @Test
     void deleteTeacherById() {
+        CourseEntity course = courseRepository.save(TestDataFactory.course());
+        TeacherEntity teacher = TestDataFactory.teacher(course);
+
+        teacher.setCourse(course);
+        course.setTeacher(teacher);
+
+        teacherRepository.save(teacher);
+
+        teacherRepository.deleteById(teacher.getId());
+
+        assertThat(teacherRepository.findById(teacher.getId()).isEmpty());
     }
 }

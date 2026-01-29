@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 @Transactional
 @RequiredArgsConstructor
@@ -51,9 +52,11 @@ public class TeacherServiceImpl implements TeacherService {
         TeacherEntity teacher = repository.findById(id).orElseThrow(() -> new NotFoundException("TeacherEntity not found"));
         repository.delete(teacher);
     }
-
+    @Transactional
     @Override
     public TeacherDto updateTeacher(TeacherDto teacherDto) {
+        System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
+
         TeacherEntity teacher = repository.findById(teacherDto.getId())
                 .orElseThrow(() -> new NotFoundException("TeacherEntity not found with id: " + teacherDto.getId()));
         CourseEntity course = courseRepository.findById(teacherDto.getCourseId())
@@ -61,6 +64,6 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setFirstName(teacherDto.getFirstName());
         teacher.setLastName(teacherDto.getLastName());
         teacher.setCourse(course);
-        return teacherMapper.toDto(repository.save(teacher));
+        return teacherMapper.toDto(teacher);
     }
 }

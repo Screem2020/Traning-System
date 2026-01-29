@@ -18,7 +18,7 @@ public class CourseEntity {
     private String description;
     @OneToMany(mappedBy = "course")
     private List<ScheduleEntity> schedule;
-    @OneToOne(mappedBy = "course")
+    @OneToOne(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private TeacherEntity teacher;
     @OneToMany(mappedBy = "course")
     private List<GroupCourseEntity> groupCourse;
