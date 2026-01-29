@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -40,7 +42,9 @@ public class TeacherController {
         return service.findTeacherById(id);
     }
     @DeleteMapping("/{id}")
-    public void deleteTeacherById(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> deleteTeacherById(@PathVariable Long id) {
         service.deleteTeacherById(id);
+        return ResponseEntity.noContent().build();
     }
 }

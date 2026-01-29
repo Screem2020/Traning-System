@@ -55,7 +55,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Transactional
     @Override
     public TeacherDto updateTeacher(TeacherDto teacherDto) {
-        System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
 
         TeacherEntity teacher = repository.findById(teacherDto.getId())
                 .orElseThrow(() -> new NotFoundException("TeacherEntity not found with id: " + teacherDto.getId()));

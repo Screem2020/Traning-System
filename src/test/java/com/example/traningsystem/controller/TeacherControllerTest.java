@@ -9,6 +9,12 @@ import com.example.traningsystem.model.TeacherEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class TeacherControllerTest extends AbstractIntegrationTest {
@@ -17,6 +23,8 @@ class TeacherControllerTest extends AbstractIntegrationTest {
     TeacherRepository teacherRepository;
     @Autowired
     CourseRepository courseRepository;
+    @Autowired
+    private TestRestTemplate restTemplate;
 
     @BeforeEach
     void setUp() {
@@ -76,14 +84,12 @@ class TeacherControllerTest extends AbstractIntegrationTest {
     @Test
     void deleteTeacherById() {
         CourseEntity course = courseRepository.save(TestDataFactory.course());
-        TeacherEntity teacher = TestDataFactory.teacher(course);
+        TeacherEntity teacher = teacherRepository.save(TestDataFactory.teacher(course));
 
-        teacher.setCourse(course);
-        course.setTeacher(teacher);
+        ResponseEntity<Void> response = restTemplate.exchange("/api/v1/teacher/" +
+                teacher.getId(), HttpMethod.DELETE, null, Void.class);
 
-        teacherRepository.save(teacher);
-
-        teacherRepository.deleteById(teacher.getId());
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
 
         assertThat(teacherRepository.findById(teacher.getId()).isEmpty());
     }
