@@ -18,7 +18,7 @@ public class TeacherEntity {
     private String lastName;
     @OneToMany(mappedBy = "teacher")
     private List<ScheduleEntity> schedule;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "course_id",  nullable = false)
     private CourseEntity course;
 }

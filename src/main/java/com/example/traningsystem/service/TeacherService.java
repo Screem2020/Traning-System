@@ -10,5 +10,5 @@ public interface TeacherService {
     Page<TeacherDto> findAllTeachers(Pageable pageable);
     TeacherDto findTeacherById(Long id);
     void deleteTeacherById(Long id);
-    TeacherDto updateTeacher(TeacherDto teacherDto);
+    TeacherDto updateTeacher(Long id, TeacherDto teacherDto);
 }
